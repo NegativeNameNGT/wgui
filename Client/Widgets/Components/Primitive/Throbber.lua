@@ -1,3 +1,4 @@
+-- A Throbber widget that shows several zooming circles in a row.
 ---@class Throbber : BaseWidget
 Throbber = BaseWidget.Inherit("Throbber")
 

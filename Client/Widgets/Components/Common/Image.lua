@@ -1,3 +1,4 @@
+-- The image widget allows you to display a Brush, or texture or material in the UI.
 ---@class Image : BaseWidget
 Image = BaseWidget.Inherit("Image")
 
@@ -12,4 +13,14 @@ function Image:SetBrush(oBrush)
     self:CallBlueprintEvent("SetBrush", oBrush)
 
     self.__CachedBrush = oBrush
+end
+
+-- Gets the brush of the border.
+---@return Brush
+function Image:GetBrush()
+    local oBrush = self.__CachedBrush
+    if not oBrush then
+        oBrush = Brush(DrawMode.Image)
+    end
+    return oBrush
 end

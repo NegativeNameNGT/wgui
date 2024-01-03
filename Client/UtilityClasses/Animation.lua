@@ -1,12 +1,12 @@
 ---@class WidgetAnimation
-local AnimationMT = {}
-AnimationMT.__index = AnimationMT
+WidgetAnimationMT = {}
+WidgetAnimationMT.__index = WidgetAnimationMT
 
 local tAnimationObjects = {}
 
 -- Updates the animation.
 local function Tick()
-    for _, oAnimation in ipairs(tAnimationObjects) do
+    for _, oAnimation in pairs(tAnimationObjects) do
         -- Checks if the animation is still valid.
         if not (oAnimation.oWidget and oAnimation.oWidget:IsValid()) then
             -- Destroys the animation.
@@ -41,11 +41,13 @@ Client.Subscribe("Tick", Tick)
 ---@param fnSetter function
 ---@param fEndValue number | Vector2D
 ---@param fDuration number
----@param fnCompleted function | nil
+---@param fnCompleted fun(self: WidgetAnimation, IsReverse: boolean) | nil
+---@param bAutoDestroy boolean | nil
 ---@param fnEasingFunction function | nil
 ---@return WidgetAnimation
-function BaseWidget:Animate( fnGetter, fnSetter, fEndValue, fDuration, fnCompleted, fnEasingFunction )
-    local oAnimation = setmetatable({}, AnimationMT)
+function BaseWidget:CreateAnimationObject(fnGetter, fnSetter, fEndValue, fDuration, fnCompleted, bAutoDestroy, fnEasingFunction)
+    ---@class WidgetAnimation
+    local oAnimation = setmetatable({}, WidgetAnimationMT)
 
     oAnimation.oWidget = self
     oAnimation.fnGetter = fnGetter
@@ -59,46 +61,64 @@ function BaseWidget:Animate( fnGetter, fnSetter, fEndValue, fDuration, fnComplet
 
     oAnimation.fDuration = fDuration
     oAnimation.fnCompleted = fnCompleted
+    oAnimation.bAutoDestroy = bAutoDestroy or false
     oAnimation.fnEasingFunction = fnEasingFunction
     oAnimation.bIsCompleted = false
     oAnimation.fStartTime = os.clock()
 
-    oAnimation.iID = #tAnimationObjects + 1
-    tAnimationObjects[oAnimation.iID] = oAnimation
     return oAnimation
 end
 
--- Plays the animation in forward direction.
-function AnimationMT:Forward()
+-- Plays the animation relative to its current state forward.
+function WidgetAnimationMT:PlayForward()
+    -- Check if the animation is already playing in the reverse direction.
     if self.bIsReverse then
-        self:RecalculateStartTime()
-    end
-
-    self.fStartValue = self.fOriginalStartValue
-    self.fEndValue = self.fOriginalEndValue
-    self.bIsReverse = nil
-    self:Play()
-end
-
--- Plays the animation in reverse direction.
-function AnimationMT:Reverse()
-    if not self.bIsReverse then
-        -- Check if animation has completed, if so reset the start time
+        local fTempValue = self.fStartValue
+        self.fStartValue = self.fEndValue
+        self.fEndValue = fTempValue
+        self.bIsReverse = false
         if self.bIsCompleted then
+            -- Reset the start time if the animation had finished.
             self.fStartTime = os.clock()
         else
+            -- Recalculate the start time based on the current state.
             self:RecalculateStartTime()
         end
+    else
+        self.fStartTime = os.clock()
     end
 
-    self.fStartValue = self.fOriginalEndValue
-    self.fEndValue = self.fOriginalStartValue
-    self.bIsReverse = true
     self:Play()
+
+    return self
 end
 
--- Forces the animation to play.
-function AnimationMT:Play()
+-- Plays the animation in the reverse direction.
+function WidgetAnimationMT:PlayReverse()
+    if not self.bIsReverse then
+        -- Swap the start and end values for reversing the animation.
+        self.fStartValue, self.fEndValue = self.fEndValue, self.fStartValue
+
+        if self.bIsCompleted then
+            -- Reset the start time if the animation had finished.
+            self.fStartTime = os.clock()
+        else
+            -- Recalculate the start time based on the current state.
+            self:RecalculateStartTime()
+        end
+
+        self.bIsReverse = true
+        self.bIsCompleted = false
+    end
+
+    -- Start or resume the animation.
+    self:Play()
+
+    return self
+end
+
+-- Forces the animation to play. Used internally.
+function WidgetAnimationMT:Play()
     if self.iID then
         return
     end
@@ -110,18 +130,38 @@ function AnimationMT:Play()
 end
 
 -- Stops the animation.
-function AnimationMT:Stop()
+function WidgetAnimationMT:Stop()
     self.bIsCompleted = true
 
     if self.fnCompleted then
-        self.fnCompleted()
+        self.fnCompleted(self, self.bIsReverse or false)
+    end
+
+    if self.bAutoDestroy then
+        self:Destroy()
+        return
     end
 
     tAnimationObjects[self.iID] = nil
+    self.iID = nil
+
+    return self
+end
+
+-- Returns whether the animation is playing.
+function WidgetAnimationMT:IsPlaying()
+    return self.iID ~= nil
+end
+
+-- Destroys the animation.
+function WidgetAnimationMT:Destroy()
+    if self.iID then
+        tAnimationObjects[self.iID] = nil
+    end
     setmetatable(self, nil)
 end
 
 -- Recalculates the start time of the animation.
-function AnimationMT:RecalculateStartTime()
+function WidgetAnimationMT:RecalculateStartTime()
     self.fStartTime = os.clock() - (self.fDuration - (os.clock() - self.fStartTime))
 end

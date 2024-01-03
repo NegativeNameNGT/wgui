@@ -15,7 +15,7 @@ function Brush(iDrawMode, cTintColor, sSrcImage, tSrcSize, xDrawModeSetting)
 
     ---@param iDrawMode DrawMode
     function oBrush.SetDrawMode(iDrawMode)
-        oBrush.DrawMode = iDrawMode
+        oBrush.DrawAs = iDrawMode
         return oBrush
     end
 
@@ -26,7 +26,7 @@ function Brush(iDrawMode, cTintColor, sSrcImage, tSrcSize, xDrawModeSetting)
     end
 
     ---@param SrcImage string
-    function oBrush.SetImage(SrcImage)
+    function oBrush.SetSrc(SrcImage)
         if not SrcImage then
             return oBrush
         end
@@ -54,9 +54,22 @@ function Brush(iDrawMode, cTintColor, sSrcImage, tSrcSize, xDrawModeSetting)
         return oBrush
     end
 
+    ---@param tNewSrcSize Vector2D
+    function oBrush.SetSrcSize(tNewSrcSize)
+        oBrush.SrcSize = tNewSrcSize
+        return oBrush
+    end
+
+    -- Only for URL images.
+    ---@param bCanCacheImage boolean
+    function oBrush.SetCanCacheURLSrc(bCanCacheImage)
+        oBrush.SrcCanCache = bCanCacheImage
+        return oBrush
+    end
+
     ---@param Material MaterialInstance
     function oBrush.SetMaterial(Material)
-        oBrush.WeakData = oBrush.WeakData or setmetatable({}, {__mode = "v"})
+        oBrush.WeakData = oBrush.WeakData or setmetatable({}, { __mode = "v" })
         oBrush.WeakData.Material = Material
         oBrush.SrcTexture = nil
         oBrush.Src = tostring(Material.__ID)
@@ -64,8 +77,26 @@ function Brush(iDrawMode, cTintColor, sSrcImage, tSrcSize, xDrawModeSetting)
         return oBrush
     end
 
+    ---@param tOutlineSettings OutlineSettings
+    function oBrush.SetOutlineSettings(tOutlineSettings)
+        oBrush.OutlineSettings = tOutlineSettings
+        return oBrush
+    end
+
+    ---@param tMargin Margin
+    function oBrush.SetMargin(tMargin)
+        oBrush.Margin = tMargin
+        return oBrush
+    end
+
+    ---@param tTiling TileMode
+    function oBrush.SetTiling(tTiling)
+        oBrush.Tiling = tTiling
+        return oBrush
+    end
+
     if sSrcImage then
-        oBrush.SetImage(sSrcImage)
+        oBrush.SetSrc(sSrcImage)
     end
 
     -- Draw Mode custom settings

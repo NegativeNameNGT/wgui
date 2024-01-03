@@ -1,3 +1,4 @@
+-- The combobox allows you to display a list of options to the user in a dropdown menu for them to select one.
 ---@class ComboBox : BaseWidget
 ComboBox = BaseWidget.Inherit("ComboBox")
 
@@ -7,29 +8,39 @@ function ComboBox:Constructor()
 end
 
 -- Sets the style of the combo box.
----@param oStyle ButtonStyle
+---@param oStyle ComboBoxStyle
 function ComboBox:SetStyleSheet(oStyle)
-    self:CallBlueprintEvent("SetStyleSheet", oStyle.Normal or {}, oStyle.Hovered or {}, oStyle.Pressed or {})
+    self:CallBlueprintEvent("SetStyleSheet",
+        oStyle.ButtonStyle.Normal or {},
+        oStyle.ButtonStyle.Hovered or {},
+        oStyle.ButtonStyle.Pressed or {},
+        oStyle.ButtonStyle.NormalPadding or Margin(12, 1.5, 12, 1.5),
+        oStyle.ButtonStyle.PressedPadding or Margin(12, 2.5, 12, 0.5),
+        oStyle.Arrow or {}
+    )
 
     self.__StyleSheet = oStyle
 end
 
 -- Gets the style of the combo box.
----@return ButtonStyle
+---@return ComboBoxStyle
 function ComboBox:GetStyleSheet()
     if not self.__StyleSheet then
-        self.__StyleSheet = ButtonStyle(
-            Brush(DrawMode.RoundedBox, Color.FromHSV(0, 0, 0.0047), nil, nil, OutlineSettings(
-                Quat(4), Color.FromHSV(0, 0, 0.0356), 1
-            )),
-            Brush(DrawMode.RoundedBox, Color.FromHSV(0, 0, 0.0047), nil, nil, OutlineSettings(
-                Quat(4), Color.FromHSV(0, 0, 0.0742), 1
-            )),
-            Brush(DrawMode.RoundedBox, Color.FromHSV(0, 0, 0.0047), nil, nil, OutlineSettings(
-                Quat(4), Color.FromHSV(0, 0, 0.0356), 1
-            )),
-            Margin(),
-            Margin(0, 1.5, 0, 0)
+        self.__StyleSheet = ComboBoxStyle(
+            ButtonStyle(
+                Brush(DrawMode.RoundedBox, Color.FromHSV(0, 0, 0.0047), nil, nil, OutlineSettings(
+                    Quat(4), Color.FromHSV(0, 0, 0.0356), 1
+                )),
+                Brush(DrawMode.RoundedBox, Color.FromHSV(0, 0, 0.0047), nil, nil, OutlineSettings(
+                    Quat(4), Color.FromHSV(0, 0, 0.0742), 1
+                )),
+                Brush(DrawMode.RoundedBox, Color.FromHSV(0, 0, 0.0047), nil, nil, OutlineSettings(
+                    Quat(4), Color.FromHSV(0, 0, 0.0356), 1
+                )),
+                Margin(),
+                Margin(0, 1.5, 0, 0)
+            ),
+            Brush(DrawMode.Image, Color.FromHSV(0, 0, 0.527), "/WGui/Textures/ComboBox/Arrow", Vector2D(16))
         )
     end
     return self.__StyleSheet
@@ -37,27 +48,66 @@ end
 
 -- Sets the menu widget of the combo box.
 ---@param oMenu BaseWidget
-function ComboBox:SetMenu(oMenu)
+function ComboBox:SetCustomMenu(oMenu)
     self:SetBlueprintPropertyValue("MenuWidget", oMenu)
+
+    self:SetValue("__MenuWidget", oMenu)
+end
+
+-- Gets the menu widget of the combo box.
+---@return BaseWidget
+function ComboBox:GetCustomMenu()
+    return self:GetValue("__MenuWidget", nil)
 end
 
 -- Adds an option to the combo box.
 ---@param sOption string
 function ComboBox:AddOption(sOption)
     self:CallBlueprintEvent("AddOption", sOption)
+
+    -- Stores the option
+    local tOptions = self:GetValue("__Options", {})
+    tOptions[sOption] = true
+    self:SetValue("__Options", tOptions)
 end
 
 -- Removes an option from the combo box.
 ---@param sOption string
 ---@return boolean
 function ComboBox:RemoveOption(sOption)
-    return self:CallBlueprintEvent("RemoveOption", sOption)
+    local bSuccess = self:CallBlueprintEvent("RemoveOption", sOption)
+
+    if bSuccess then
+        -- Removes the option
+        local tOptions = self:GetValue("__Options", {})
+        tOptions[sOption] = nil
+        self:SetValue("__Options", tOptions)
+    end
+
+    return bSuccess
 end
 
 -- Sets the options of the combo box.
----@param tOptions table<string>
+---@param tOptions table<integer, string>
 function ComboBox:SetOptions(tOptions)
     self:SetBlueprintPropertyValue("DefaultOptions", tOptions)
+
+    local tTempOptions = {}
+    for _, sOption in ipairs(tOptions) do
+        tTempOptions[sOption] = true
+    end
+    self:SetValue("__Options", tTempOptions)
+end
+
+-- Gets the options of the combo box.
+---@return table<integer, string>
+function ComboBox:GetOptions()
+    local tOptions = self:GetValue("__Options", {})
+    local tTempOptions = {}
+    for sOption, _ in pairs(tOptions) do
+        table.insert(tTempOptions, sOption)
+    end
+    return tTempOptions
 end
 
 -- Refreshes the list of options. If you added new ones, and want to update the list even if it's currently being displayed use this.
@@ -82,7 +132,14 @@ end
 function ComboBox:RemoveSelectedOption(sOption)
     -- Removes the selected option
     local tSelectedOptions = self:GetValue("__SelectedOptions", {})
-    tSelectedOptions[sOption] = nil
+
+    for i, sSelectedOption in ipairs(tSelectedOptions) do
+        if sSelectedOption == sOption then
+            table.remove(tSelectedOptions, i)
+            break
+        end
+    end
+    self:SetValue("__SelectedOptions", tSelectedOptions)
 
     return self:CallBlueprintEvent("RemoveSelectedOption", sOption)
 end
@@ -148,4 +205,10 @@ end
 ---@return table
 function ComboBox:GetFont()
     return self:GetValue("__Font", {})
+end
+
+-- Sets the color of the text.
+---@param Color Color
+function ComboBox:SetTextColor(Color)
+    self:SetForegroundColor(Color, ColorMode.SpecifiedColor)
 end

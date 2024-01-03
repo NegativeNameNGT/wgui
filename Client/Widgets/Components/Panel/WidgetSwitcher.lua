@@ -1,3 +1,4 @@
+-- A widget switcher is like a tab control, but without tabs. At most one widget is visible at time.
 ---@class WidgetSwitcher : PanelWidget
 WidgetSwitcher = PanelWidget.Inherit("WidgetSwitcher")
 

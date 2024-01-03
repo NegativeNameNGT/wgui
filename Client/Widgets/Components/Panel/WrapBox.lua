@@ -1,3 +1,4 @@
+-- Arranges widgets left-to-right or top-to-bottom dependently of the orientation.
 ---@class WrapBox : PanelWidget
 WrapBox = PanelWidget.Inherit("WrapBox")
 

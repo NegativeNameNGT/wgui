@@ -1,3 +1,4 @@
+-- A widget that allows you to specify the size it reports to have and desire.
 ---@class SizeBox : PanelWidget
 SizeBox = PanelWidget.Inherit("SizeBox")
 

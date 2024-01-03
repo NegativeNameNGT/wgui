@@ -1,3 +1,4 @@
+-- A simple widget that shows a sliding bar with a handle that allows you to control the value between 0-1.
 ---@class Slider : BaseWidget
 Slider = BaseWidget.Inherit("Slider")
 

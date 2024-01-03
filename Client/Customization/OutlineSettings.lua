@@ -15,4 +15,5 @@ function OutlineSettings(tCornerRadius, cOutlineColor, fOutlineWidth, iRoundingT
 
     return oOutlineSettings
 end
+
 Package.Export("OutlineSettings", OutlineSettings)

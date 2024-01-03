@@ -1,3 +1,4 @@
+-- Allows you to place content with a desired size and have it scale to meet the constraints placed on this box's allocated area.
 ---@class ScaleBox : PanelWidget
 ScaleBox = PanelWidget.Inherit("ScaleBox")
 

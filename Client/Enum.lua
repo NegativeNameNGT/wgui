@@ -105,16 +105,32 @@ ScrollWhenFocusChanges = {
 ---@enum WGUIVisibility
 WGUIVisibility = {
     Visible = 0,
-    Collapsed = 2,
-    Hidden = 3,
-    NotHitTestableAll = 4,
-    NotHitTestableSelf = 5,
+    Collapsed = 1,
+    Hidden = 2,
+    NotHitTestableAll = 3,
+    NotHitTestableSelf = 4,
 }
 
 ---@enum Orientation
 Orientation = {
     Horizontal = 0,
     Vertical = 1
+}
+
+---@enum BarFillDirection
+BarFillDirection = {
+    LeftToRight = 0,
+    RightToLeft = 1,
+    FillFromCenter = 2,
+    FillFromCenterHorizontal = 3,
+    FillFromCenterVertical = 4,
+    TopToBottom = 5,
+    BottomToTop = 6
+}
+---@enum BarFillStyle
+BarFillStyle = {
+    Mask = 0,
+    Scale = 1
 }
 
 ---@enum ConsumeMouseWheel
@@ -135,6 +151,14 @@ Stretch = {
     ScaleBySafeZone = 6,
     UserSpecified = 7,
     UserSpecifiedWithClipping = 8
+}
+
+---@enmu TextCommit
+TextCommit = {
+    Default = 0,
+    OnEnter = 1,
+    OnUserMovedFocus = 2,
+    OnCleared = 3
 }
 
 ---@enum StretchDirection

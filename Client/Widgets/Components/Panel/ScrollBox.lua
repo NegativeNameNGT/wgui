@@ -1,3 +1,4 @@
+-- An arbitrary scrollable collection of widgets.
 ---@class ScrollBox : PanelWidget
 ScrollBox = PanelWidget.Inherit("ScrollBox")
 
@@ -163,4 +164,9 @@ end
 -- Scrolls the ScrollBox to the bottom instantly.
 function ScrollBox:ScrollToEnd()
     self:CallBlueprintEvent("ScrollToEnd")
+end
+
+-- Instantly stops any inertial scrolling that is currently occurring.
+function ScrollBox:EndInertialScrolling()
+    self:CallBlueprintEvent("EndInertialScrolling")
 end

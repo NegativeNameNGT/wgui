@@ -1,3 +1,4 @@
+-- The Retainer Box renders children widgets to a render target first before later rendering that render target to the screen.
 ---@class RetainerBox : PanelWidget
 RetainerBox = PanelWidget.Inherit("RetainerBox", {
     -- The background blur can only have one child widget.

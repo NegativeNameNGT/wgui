@@ -1,3 +1,4 @@
+-- A table-like panel that retains the width of every column throughout the table.
 ---@class GridPanel : PanelWidget
 GridPanel = PanelWidget.Inherit("GridPanel", {
     CustomAddChild = true,

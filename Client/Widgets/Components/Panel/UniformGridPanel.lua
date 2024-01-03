@@ -1,3 +1,4 @@
+-- A panel that evenly divides up available space between all of its children.
 ---@class UniformGridPanel : PanelWidget
 UniformGridPanel = PanelWidget.Inherit("UniformGridPanel", {
     CustomAddChild = true,
@@ -24,17 +25,9 @@ function UniformGridPanel:AddChild(oContent, iInRow, iInColumn)
 end
 
 -- Sets the padding of the panel's slots.
----@param Left number
----@param Top number
----@param Right number
----@param Bottom number
-function UniformGridPanel:SetSlotPadding(Left, Top, Right, Bottom)
-    self:CallBlueprintEvent("SetSlotPadding", {
-        ["Left"] = Left or 0,
-        ["Top"] = Top or 0,
-        ["Right"] = Right or 0,
-        ["Bottom"] = Bottom or 0
-    })
+---@param Padding Margin
+function UniformGridPanel:SetSlotPadding(Padding)
+    self:CallBlueprintEvent("SetSlotPadding", Padding or {})
 end
 
 -- Sets the minimum desired slot width.

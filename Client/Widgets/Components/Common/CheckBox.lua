@@ -1,3 +1,4 @@
+-- The checkbox widget allows you to display a toggled state of 'unchecked' and 'checked'.
 ---@class CheckBox : PanelWidget
 CheckBox = PanelWidget.Inherit("CheckBox", {
     -- The checkbox can only have one child widget.

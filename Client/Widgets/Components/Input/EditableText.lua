@@ -3,6 +3,10 @@ EditableText = BaseWidget.Inherit("EditableText")
 
 function EditableText:Constructor()
     self.Super:Constructor("wgui-assets::WBP_WGUI_EditableText")
+
+    self:BindDispatcher("OnTextChanged", function (_, sText)
+        self:SetValue("__CachedText", sText)
+    end)
     return self
 end
 
@@ -52,7 +56,7 @@ end
 -- Gets the widget text
 ---@return string
 function EditableText:GetText()
-    return self:GetValue("__CachedText", "Text")
+    return self:GetValue("__CachedText", "")
 end
 
 -- Sets the color of the text.
@@ -155,7 +159,7 @@ function EditableText:GetLetterSpacing()
 end
 
 -- Sets the font outline settings of the text.
----@param tOutlineSettings OutlineSettings
+---@param tOutlineSettings FontOutlineSettings
 function EditableText:SetFontOutlineSettings(tOutlineSettings)
     self:CallBlueprintEvent("SetFontOutlineSettings", tOutlineSettings)
 
@@ -163,7 +167,7 @@ function EditableText:SetFontOutlineSettings(tOutlineSettings)
 end
 
 -- Gets the font outline settings of the text.
----@return OutlineSettings
+---@return FontOutlineSettings
 function EditableText:GetFontOutlineSettings()
     return self.__FontOutlineSettings or {}
 end

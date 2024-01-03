@@ -1,3 +1,4 @@
+-- The LinearGradientBox introduces a linear gradient effect to the children widget it is associated with.
 ---@class LinearGradientBox : PanelWidget
 LinearGradientBox = PanelWidget.Inherit("LinearGradientBox", {
     -- The linear gradient box can only have one child widget.

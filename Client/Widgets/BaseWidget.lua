@@ -63,7 +63,7 @@ end
 ---@param cParentClass PanelWidget
 ---@return boolean
 function BaseWidget:IsChildOfParent(cParentClass)
-    return self:GetParent():GetClass() == cParentClass
+    return self:GetParent():IsA(cParentClass)
 end
 
 -- Sets the padding of the widget, putting a larger gap between the widget border and it's root widget.
@@ -161,7 +161,7 @@ end
 -- Gets the scale of the widget.
 ---@return Vector2D
 function BaseWidget:GetScale()
-    return self:GetValue("__Scale", Vector2D())
+    return self:GetValue("__Scale", Vector2D(1))
 end
 
 -- Sets the opacity of the widget.
@@ -189,7 +189,7 @@ end
 -- Gets the tint of the widget.
 ---@return Color
 function BaseWidget:GetColor()
-    return self:GetValue("__Color", Color())
+    return self:GetValue("__Color", Color.WHITE)
 end
 
 -- Sets the foreground color of the widget.
@@ -307,5 +307,5 @@ end
 ---@param iPivot DragPivot | nil
 ---@param tOffset Vector2D | nil
 function BaseWidget:CreateDragDropOperation(oDragVisual, oPayload, sMetaData, iPivot, tOffset)
-    self:CallBlueprintEvent("CreateDragDropOperation", sMetaData or "", oPayload, oDragVisual)
+    self:CallBlueprintEvent("CreateDragDropOperation", sMetaData or "", oPayload, oDragVisual, iPivot or DragPivot.MouseDown, tOffset or Vector2D())
 end

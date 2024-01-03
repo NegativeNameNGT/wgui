@@ -37,3 +37,12 @@ end
 for _, sPath in pairs(Package.GetFiles("Client/Widgets/Slots/", ".lua")) do
     Package.Require(sPath)
 end
+
+WGUI.RegisterFont("Roboto", "/Engine/EngineFonts/Roboto")
+
+-- Auto export classes, enums and functions
+for sKey, xValue in pairs(_ENV) do
+    if not _G[sKey] then
+        Package.Export(sKey, xValue)
+    end
+end

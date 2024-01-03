@@ -1,3 +1,4 @@
+-- A numerical entry box that allows for direct entry of the number or allows the user to click and slide the number.
 ---@class SpinBox : BaseWidget
 SpinBox = BaseWidget.Inherit("SpinBox")
 
@@ -85,6 +86,12 @@ function SpinBox:GetFont()
     return self:GetValue("__Font", {})
 end
 
+-- Sets the color of the text.
+---@param Color Color
+function SpinBox:SetTextColor(Color)
+    self:SetForegroundColor(Color, ColorMode.SpecifiedColor)
+end
+
 -- Sets the spacing of the letters of the text.
 ---@param fLetterSpacing number
 function SpinBox:SetLetterSpacing(fLetterSpacing)
@@ -100,7 +107,7 @@ function SpinBox:GetLetterSpacing()
 end
 
 -- Sets the font outline settings of the text.
----@param tOutlineSettings OutlineSettings
+---@param tOutlineSettings FontOutlineSettings
 function SpinBox:SetFontOutlineSettings(tOutlineSettings)
     self:CallBlueprintEvent("SetFontOutlineSettings", tOutlineSettings)
 
@@ -108,7 +115,7 @@ function SpinBox:SetFontOutlineSettings(tOutlineSettings)
 end
 
 -- Gets the font outline settings of the text.
----@return OutlineSettings
+---@return FontOutlineSettings
 function SpinBox:GetFontOutlineSettings()
     return self.__FontOutlineSettings or {}
 end

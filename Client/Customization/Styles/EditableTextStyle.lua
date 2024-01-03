@@ -1,4 +1,4 @@
--- Creates a new editable text style table.
+-- UNUSED: Creates a new editable text style table.
 ---@param tSelectedBackground Brush | nil
 ---@param tComposingBackground Brush | nil
 ---@param tCaret Brush | nil
