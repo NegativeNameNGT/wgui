@@ -107,6 +107,7 @@ function WGUI.RegisterFont(sFontName, sFontPath)
 
     -- Checks if the font path is a asset reference path
     if not sFontPath:find("package://") then
+        sFontPath = Assets.GetAssetPath(sFontPath, AssetType.Other)
         sFontPath = sFontPath .. "." .. sFontPath:match(".*/(.*)")
 
         if not WGUI.ToolkitBlueprint:CallBlueprintEvent("LoadAsset", sFontPath) then

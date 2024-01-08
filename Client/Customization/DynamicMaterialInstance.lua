@@ -20,6 +20,8 @@ function DynamicMaterialInstance(sMaterialPath, sOptionalName, iCreationFlags)
     end
 
     -- Initializes the material properties
+    sMaterialPath = Assets.GetAssetPath(sMaterialPath, AssetType.Material)
+
     sMaterialPath = sMaterialPath .. "." .. sMaterialPath:match(".*/(.*)")
     iID = iID + 1
 

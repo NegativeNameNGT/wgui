@@ -25,9 +25,11 @@ function Brush(iDrawMode, cTintColor, sSrcImage, tSrcSize, xDrawModeSetting)
         return oBrush
     end
 
-    ---@param SrcImage string
+    ---@param SrcImage string | nil
     function oBrush.SetSrc(SrcImage)
         if not SrcImage then
+            oBrush.Src = nil
+            oBrush.SrcTexture = nil
             return oBrush
         end
 
@@ -67,8 +69,15 @@ function Brush(iDrawMode, cTintColor, sSrcImage, tSrcSize, xDrawModeSetting)
         return oBrush
     end
 
-    ---@param Material MaterialInstance
+    ---@param Material MaterialInstance | WebUI | Canvas | SceneCapture
     function oBrush.SetMaterial(Material)
+        if not Material.__ID then
+            oBrush.SrcTexture = nil
+            oBrush.Src = nil
+
+            oBrush.SrcMaterial = Material
+            return oBrush
+        end
         oBrush.WeakData = oBrush.WeakData or setmetatable({}, { __mode = "v" })
         oBrush.WeakData.Material = Material
         oBrush.SrcTexture = nil
