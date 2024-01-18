@@ -16,3 +16,10 @@ end
 function Geometry.LocalToAbsolute(oWidget, tLocalCoordinate)
     return oWidget:CallBlueprintEvent("LocalToAbsolute", tLocalCoordinate)
 end
+
+-- Returns the local top/left of the geometry in local coordinates.
+---@param oWidget BaseWidget
+---@return Vector2D
+function Geometry.GetLocalTopLeft(oWidget)
+    return oWidget:CallBlueprintEvent("GetLocalTopLeft")
+end

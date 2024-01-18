@@ -1,6 +1,3 @@
-Input.SetInputEnabled(true)
-Input.SetMouseEnabled(true)
-
 -- Load WGUI
 Package.Require("WGUI.lua")
 
