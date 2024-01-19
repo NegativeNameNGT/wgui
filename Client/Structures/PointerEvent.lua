@@ -1,0 +1,5 @@
+---@class PointerEvent
+---@field public CursorDelta Vector2D
+---@field public Key string
+---@field public WheelDelta number
+---@field public ScreenPosition Vector2D

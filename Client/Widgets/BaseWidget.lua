@@ -15,17 +15,29 @@ BaseWidget.Subscribe("Destroy", OnWidgetDestroy)
 
 -- Assigns and Binds a Blueprint Event Dispatcher
 ---@param sEventName string
----@param fCallback function
+---@param fnCallback function
+---@overload fun(self: BaseWidget, sEventName: "MouseButtonDown", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
+---@overload fun(self: BaseWidget, sEventName: "MouseButtonUp", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
+---@overload fun(self: BaseWidget, sEventName: "MouseMove", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
+---@overload fun(self: BaseWidget, sEventName: "MouseEnter", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
+---@overload fun(self: BaseWidget, sEventName: "MouseLeave", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
+---@overload fun(self: BaseWidget, sEventName: "MouseWheel", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
+---@overload fun(self: BaseWidget, sEventName: "MouseDoubleClick", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
+---@overload fun(self: BaseWidget, sEventName: "FocusReceived", fnCallback: fun(self: BaseWidget))
+---@overload fun(self: BaseWidget, sEventName: "FocusLost", fnCallback: fun(self: BaseWidget))
+---@overload fun(self: BaseWidget, sEventName: "DragDetected", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
+---@overload fun(self: BaseWidget, sEventName: "Drop", fnCallback: fun(self: BaseWidget, PayloadID: integer, Tag: string))
+---@overload fun(self: BaseWidget, sEventName: "DragCancelled", fnCallback: fun(self: BaseWidget, PayloadID: integer, Tag: string))
 ---@return function | nil
-function BaseWidget:BindDispatcher(sEventName, fCallback)
-    return self:BindBlueprintEventDispatcher(sEventName, fCallback)
+function BaseWidget:BindDispatcher(sEventName, fnCallback)
+    return self:BindBlueprintEventDispatcher(sEventName, fnCallback)
 end
 
 -- Unbinds a Blueprint Event Dispatcher
 ---@param sEventName string
----@param fCallback function | nil
-function BaseWidget:UnbindDispatcher(sEventName, fCallback)
-    self:UnbindBlueprintEventDispatcher(sEventName, fCallback)
+---@param fnCallback function | nil
+function BaseWidget:UnbindDispatcher(sEventName, fnCallback)
+    self:UnbindBlueprintEventDispatcher(sEventName, fnCallback)
 end
 
 -- Removes the widget from its parent panel.

@@ -6,17 +6,17 @@ Package.Require("Widgets/BaseWidget.lua")
 Package.Require("Widgets/PanelWidget.lua")
 
 -- Load styling files
-Package.Require("Customization/Brush.lua")
-Package.Require("Customization/OutlineSettings.lua")
-Package.Require("Customization/FontOutlineSettings.lua")
-Package.Require("Customization/DynamicMaterialInstance.lua")
-Package.Require("Customization/Margin.lua")
+Package.Require("Structures/Brush.lua")
+Package.Require("Structures/OutlineSettings.lua")
+Package.Require("Structures/FontOutlineSettings.lua")
+Package.Require("Structures/DynamicMaterialInstance.lua")
+Package.Require("Structures/Margin.lua")
 
 -- Enumerations
 Package.Require("Enum.lua")
 
 -- Auto-load styling files
-for _, sPath in pairs(Package.GetFiles("Client/Customization/Styles/", ".lua")) do
+for _, sPath in pairs(Package.GetFiles("Client/Structures/Styles/", ".lua")) do
     Package.Require(sPath)
 end
 

@@ -153,7 +153,7 @@ Stretch = {
     UserSpecifiedWithClipping = 8
 }
 
----@enmu TextCommit
+---@enum TextCommit
 TextCommit = {
     Default = 0,
     OnEnter = 1,
