@@ -36,6 +36,11 @@ for _, sPath in pairs(Package.GetFiles("Client/Widgets/Slots/", ".lua")) do
 end
 
 WGUI.RegisterFont("Roboto", "/Engine/EngineFonts/Roboto")
+WGUI.RegisterFont("Rufing", "/Game/NanosWorld/UI/Fonts/Rufing/Font_Rufing")
+WGUI.RegisterFont("Oswald", "/Game/NanosWorld/UI/Fonts/Oswald/Font_Oswald")
+WGUI.RegisterFont("PoiretOne", "/Game/NanosWorld/UI/Fonts/PoiretOne/Font_PoiretOne")
+WGUI.RegisterFont("GothicA1", "/Game/NanosWorld/UI/Fonts/GothicA1/Font_GothicA1")
+WGUI.RegisterFont("OpenSans", "/Game/NanosWorld/UI/Fonts/OpenSans/Font_OpenSans")
 
 -- Auto export classes, enums and functions
 for sKey, xValue in pairs(_ENV) do

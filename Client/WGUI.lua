@@ -27,6 +27,7 @@ function WGUI.Create(cClass, oParentPanel, ...)
     end
 
     local oWidget = cClass(...)
+
     -- Gives the widget a unique ID
     iCurWidgetID = iCurWidgetID + 1
     oWidget:SetValue("__ID", iCurWidgetID)

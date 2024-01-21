@@ -25,6 +25,13 @@ function Brush(iDrawMode, cTintColor, sSrcImage, tSrcSize, xDrawModeSetting)
         return oBrush
     end
 
+    ---@param cOutlineColor Color
+    function oBrush.SetOutlineColor(cOutlineColor)
+        oBrush.OutlineSettings = oBrush.OutlineSettings or {}
+        oBrush.OutlineSettings.OutlineColor = cOutlineColor
+        return oBrush
+    end
+
     ---@param SrcImage string | nil
     function oBrush.SetSrc(SrcImage)
         if not SrcImage then
