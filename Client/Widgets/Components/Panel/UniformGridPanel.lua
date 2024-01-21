@@ -2,6 +2,7 @@
 ---@class UniformGridPanel : PanelWidget
 UniformGridPanel = PanelWidget.Inherit("UniformGridPanel", {
     CustomAddChild = true,
+    Slot = UniformGridPanelSlot
 })
 
 function UniformGridPanel:Constructor()

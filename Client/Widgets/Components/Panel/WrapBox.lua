@@ -1,6 +1,8 @@
 -- Arranges widgets left-to-right or top-to-bottom dependently of the orientation.
 ---@class WrapBox : PanelWidget
-WrapBox = PanelWidget.Inherit("WrapBox")
+WrapBox = PanelWidget.Inherit("WrapBox", {
+    Slot = WrapBoxSlot
+})
 
 function WrapBox:Constructor(iOrientation)
     self.Super:Constructor("wgui-assets::WBP_WGUI_WrapBox")

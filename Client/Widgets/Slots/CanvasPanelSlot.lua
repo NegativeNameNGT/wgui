@@ -162,7 +162,7 @@ end
 
 -- Sizes the slot to fit the content.
 ---@param self BaseWidget
-function CanvasPanelSlot.FitToContent(self)
+function CanvasPanelSlot.SizeToContent(self)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
         return
     end
@@ -174,7 +174,7 @@ end
 
 -- Sizes the slot within its boundaries.
 ---@param self BaseWidget
-function CanvasPanelSlot.FitContentToSize(self)
+function CanvasPanelSlot.SizeWithinBounds(self)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
         return
     end

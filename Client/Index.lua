@@ -25,13 +25,13 @@ for _, sPath in pairs(Package.GetFiles("Client/UtilityClasses/", ".lua")) do
     Package.Require(sPath)
 end
 
--- Auto-load widget components
-for _, sPath in pairs(Package.GetFiles("Client/Widgets/Components/", ".lua")) do
+-- Auto-load widget slots
+for _, sPath in pairs(Package.GetFiles("Client/Widgets/Slots/", ".lua")) do
     Package.Require(sPath)
 end
 
--- Auto-load widget slots
-for _, sPath in pairs(Package.GetFiles("Client/Widgets/Slots/", ".lua")) do
+-- Auto-load widget components
+for _, sPath in pairs(Package.GetFiles("Client/Widgets/Components/", ".lua")) do
     Package.Require(sPath)
 end
 
@@ -48,3 +48,6 @@ for sKey, xValue in pairs(_ENV) do
         Package.Export(sKey, xValue)
     end
 end
+
+local oTextBlock = WGUI.Create(TextBlock, WGUI.Create(CanvasPanel))
+oTextBlock:SetAnchor(Anchor.Center)

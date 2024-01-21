@@ -1,5 +1,8 @@
 ---@class FlexBox : PanelWidget
-FlexBox = PanelWidget.Inherit("FlexBox")
+FlexBox = PanelWidget.Inherit("FlexBox", {
+    Slot = FlexBoxSlot
+})
+
 FlexBox.Horizontal = 0
 FlexBox.Vertical = 1
 

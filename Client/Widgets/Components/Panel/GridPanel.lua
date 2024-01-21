@@ -2,6 +2,7 @@
 ---@class GridPanel : PanelWidget
 GridPanel = PanelWidget.Inherit("GridPanel", {
     CustomAddChild = true,
+    Slot = GridPanelSlot
 })
 
 function GridPanel:Constructor()

@@ -45,6 +45,14 @@ function PanelWidget:AddChild(oContent, ...)
 
     -- Sets the content widget's slot table.
     oContent:SetValue("__Slot", {})
+
+    -- Dynamically adds the slot class functions to the content widget.
+    local oSlotClass = self.Slot
+    if oSlotClass then
+        for k,v in pairs(oSlotClass) do
+            oContent[k] = v
+        end
+    end
 end
 
 -- Removes a child widget from the panel.
@@ -82,6 +90,15 @@ function PanelWidget:RemoveChild(oContent)
 
     -- Removes the content widget's slot table.
     oContent:SetValue("__Slot", nil)
+
+    -- Removes the slot class functions from the content widget.
+    local oSlotClass = self.Slot
+    if oSlotClass then
+        for k,v in pairs(oSlotClass) do
+            oContent[k] = nil
+        end
+    end
+
     return true
 end
 

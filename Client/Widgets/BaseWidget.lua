@@ -122,7 +122,7 @@ end
 
 -- Sets the render translation of the widget.
 ---@param tTranslation Vector2D
-function BaseWidget:SetPos(tTranslation)
+function BaseWidget:SetTranslation(tTranslation)
     self:CallBlueprintEvent("SetRenderTranslation", tTranslation)
 
     self:SetValue("__RenderTranslation", tTranslation)
@@ -130,7 +130,7 @@ end
 
 -- Gets the render translation of the widget.
 ---@return Vector2D
-function BaseWidget:GetPos()
+function BaseWidget:GetTranslation()
     return self:GetValue("__RenderTranslation", Vector2D())
 end
 

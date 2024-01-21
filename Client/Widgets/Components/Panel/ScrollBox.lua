@@ -1,6 +1,8 @@
 -- An arbitrary scrollable collection of widgets.
 ---@class ScrollBox : PanelWidget
-ScrollBox = PanelWidget.Inherit("ScrollBox")
+ScrollBox = PanelWidget.Inherit("ScrollBox", {
+    Slot = ScrollBoxSlot
+})
 
 function ScrollBox:Constructor()
     self.Super:Constructor("wgui-assets::WBP_WGUI_ScrollBox")
