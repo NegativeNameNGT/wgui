@@ -59,6 +59,11 @@ function BaseWidget:ForceVolatile(bForce)
     self:CallBlueprintEvent("ForceVolatile", bForce)
 end
 
+-- Forces a pre-pass. A pre-pass caches the desired size of the widget hierarchy owned by this widget.
+function BaseWidget:ForceLayoutPrepass()
+    self:CallBlueprintEvent("ForceLayoutPrepass")
+end
+
 -- Returns the parent panel of the widget.
 ---@return PanelWidget
 function BaseWidget:GetParent()
@@ -174,6 +179,12 @@ end
 ---@return Vector2D
 function BaseWidget:GetScale()
     return self:GetValue("__Scale", Vector2D(1))
+end
+
+-- Returns the desired size of the widget.
+---@return Vector2D
+function BaseWidget:GetDesiredSize()
+    return self:CallBlueprintEvent("GetDesiredSize")
 end
 
 -- Sets the opacity of the widget.

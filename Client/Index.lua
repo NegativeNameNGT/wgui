@@ -48,6 +48,3 @@ for sKey, xValue in pairs(_ENV) do
         Package.Export(sKey, xValue)
     end
 end
-
-local oTextBlock = WGUI.Create(TextBlock, WGUI.Create(CanvasPanel))
-oTextBlock:SetAnchor(Anchor.Center)
