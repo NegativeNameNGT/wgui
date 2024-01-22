@@ -235,3 +235,17 @@ function EditableText:GetShadowSettings()
     local tShadowSettings = self:GetValue("__ShadowSettings", {Color = Color(), Offset = Vector2D()})
     return tShadowSettings.Color, tShadowSettings.Offset
 end
+
+-- Sets a mask character to be replaced for each display character. Only for single-line text.
+---@param sMaskCharacter string
+function EditableText:ApplyMaskCharacter(sMaskCharacter)
+    self:CallBlueprintEvent("ApplyMaskCharacter", sMaskCharacter)
+
+    self:SetValue("__MaskCharacter", sMaskCharacter)
+end
+
+-- Gets the mask character to be replaced for each display character. Only for single-line text.
+---@return string
+function EditableText:GetMaskCharacter()
+    return self:GetValue("__MaskCharacter", "")
+end
