@@ -25,6 +25,12 @@ function PanelWidget:AddChild(oContent, ...)
         return
     end
 
+    -- Checks if the children count limit is reached.
+    if self.ChildrenLimit and #self:GetAllChildren() >= self.ChildrenLimit then
+        assert(false, "A " .. tostring(self:GetClass()) .. " can only have " .. tostring(self.ChildrenLimit) .. " children(s).")
+        return false
+    end
+
     -- Adds the content widget to the panel.
     if ... then
         self:CallBlueprintEvent("_CustomAddChild", oContent, ...)

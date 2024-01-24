@@ -1,6 +1,9 @@
 -- A widget that allows you to specify the size it reports to have and desire.
 ---@class SizeBox : PanelWidget
 SizeBox = PanelWidget.Inherit("SizeBox", {
+    -- The size box can only have one child widget.
+    ChildrenLimit = 1,
+
     Slot = SizeBoxSlot
 })
 

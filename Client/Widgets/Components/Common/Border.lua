@@ -1,8 +1,10 @@
 -- A border is a container widget that can contain one child widget, providing an opportunity to surround it with a background image.
 ---@class Border : PanelWidget
 Border = PanelWidget.Inherit("Border", {
-    -- The button can only have one child widget.
+    -- The border can only have one child widget.
     ChildrenLimit = 1,
+
+    Slot = BorderSlot
 })
 
 function Border:Constructor()

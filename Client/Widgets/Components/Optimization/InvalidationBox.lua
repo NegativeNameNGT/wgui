@@ -1,7 +1,7 @@
 -- Widgets that are wrapped with an Invalidation Box allows the child widget geometry to be cached to speed up rendering.
 ---@class InvalidationBox : PanelWidget
 InvalidationBox = PanelWidget.Inherit("InvalidationBox", {
-    -- The background blur can only have one child widget.
+    -- The invalidation box can only have one child widget.
     ChildrenLimit = 1,
 })
 

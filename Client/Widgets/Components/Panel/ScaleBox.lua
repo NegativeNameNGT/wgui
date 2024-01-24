@@ -1,6 +1,9 @@
 -- Allows you to place content with a desired size and have it scale to meet the constraints placed on this box's allocated area.
 ---@class ScaleBox : PanelWidget
 ScaleBox = PanelWidget.Inherit("ScaleBox", {
+    -- The scale box can only have one child widget.
+    ChildrenLimit = 1,
+
     Slot = ScaleBoxSlot
 })
 
