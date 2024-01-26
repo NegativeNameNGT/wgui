@@ -40,6 +40,9 @@ function WGUI.Create(cClass, oParentPanel, ...)
 
     -- Checks if the parent panel is valid
     if oParentPanel and oParentPanel:IsValid() then
+        -- Redirects the panel if needed
+        oParentPanel = oParentPanel:GetValue("__RedirectedPanelFunctions") or oParentPanel
+
         -- Adds the widget to the parent panel
         if oParentPanel.CustomAddChild then
             oParentPanel:AddChild(oWidget, ...)
@@ -172,3 +175,26 @@ local function OnImagePreLoaded(_, iCallbackID, bSuccess)
     tURLImageCallbacks[iCallbackID] = nil
 end
 WGUI.ToolkitBlueprint:BindBlueprintEventDispatcher("OnImagePreLoaded", OnImagePreLoaded)
+
+---@param oSourceWidget PanelWidget
+---@param oTargetWidget PanelWidget
+function WGUI.RedirectPanelFunctions(oSourceWidget, oTargetWidget)
+    if not oSourceWidget:IsA(PanelWidget) then
+        return
+    end
+
+    if not oTargetWidget:IsA(PanelWidget) then
+        return
+    end
+
+    oSourceWidget["AddChild"] = function(...) oTargetWidget:AddChild(...) end
+    oSourceWidget["RemoveChild"] = function(...) oTargetWidget:RemoveChild(...) end
+    oSourceWidget["ClearChildren"] = function() oTargetWidget:ClearChildren() end
+    oSourceWidget["RemoveChildAt"] = function(...) oTargetWidget:RemoveChildAt(...) end
+    oSourceWidget["GetChildrenIndex"] = function(...) return oTargetWidget:GetChildrenIndex(...) end
+    oSourceWidget["GetChildrenAt"] = function(...) return oTargetWidget:GetChildrenAt(...) end
+    oSourceWidget["GetAllChildren"] = function() return oTargetWidget:GetAllChildren() end
+
+    -- Store the target widget
+    oSourceWidget:SetValue("__RedirectedPanelFunctions", oTargetWidget)
+end

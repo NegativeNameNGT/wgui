@@ -42,6 +42,15 @@ WGUI.RegisterFont("PoiretOne", "/Game/NanosWorld/UI/Fonts/PoiretOne/Font_PoiretO
 WGUI.RegisterFont("GothicA1", "/Game/NanosWorld/UI/Fonts/GothicA1/Font_GothicA1")
 WGUI.RegisterFont("OpenSans", "/Game/NanosWorld/UI/Fonts/OpenSans/Font_OpenSans")
 
+-- Creating the default WGUI canvas panel widget.
+local Layout = WGUI.Create(CanvasPanel)
+
+-- Returns the default WGUI canvas panel widget.
+---@return CanvasPanel
+function WGUI.GetLayout()
+    return Layout
+end
+
 -- Auto export classes, enums and functions
 for sKey, xValue in pairs(_ENV) do
     if not _G[sKey] then

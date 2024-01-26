@@ -2,8 +2,12 @@
 ---@class TextBlock : BaseWidget
 TextBlock = BaseWidget.Inherit("Text")
 
-function TextBlock:Constructor()
+function TextBlock:Constructor(sDefaultText)
     self.Super:Constructor("wgui-assets::WBP_WGUI_Text")
+
+    if sDefaultText then
+        self:SetText(sDefaultText)
+    end
     return self
 end
 

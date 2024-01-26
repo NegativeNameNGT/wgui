@@ -7,8 +7,18 @@ SizeBox = PanelWidget.Inherit("SizeBox", {
     Slot = SizeBoxSlot
 })
 
-function SizeBox:Constructor()
+---@param tMinDesiredSize Vector2D | nil
+---@param tMaxDesiredSize Vector2D | nil
+function SizeBox:Constructor(tMinDesiredSize, tMaxDesiredSize)
     self.Super:Constructor("wgui-assets::WBP_WGUI_SizeBox")
+
+    if tMinDesiredSize then
+        self:SetMinDesiredSize(tMinDesiredSize)
+    end
+
+    if tMaxDesiredSize then
+        self:SetMaxDesiredSize(tMaxDesiredSize)
+    end
     return self
 end
 
@@ -24,6 +34,12 @@ function SizeBox:SetHeightOverride(fHeight)
     self:CallBlueprintEvent("SetHeightOverride", fHeight)
 end
 
+-- Sets the size override of the widget.
+---@param tSize Vector2D
+function SizeBox:SetSizeOverride(tSize)
+    self:CallBlueprintEvent("SetSizeOverride", tSize)
+end
+
 -- When specified, will report the MinDesiredWidth if larger than the content's desired width.
 ---@param fMinWidth number
 function SizeBox:SetMinDesiredWidth(fMinWidth)
@@ -36,6 +52,12 @@ function SizeBox:SetMinDesiredHeight(fMinHeight)
     self:CallBlueprintEvent("SetMinDesiredHeight", fMinHeight)
 end
 
+-- When specified, will report the MinDesiredSize (width and height) if larger than the content's desired size.
+---@param tMinSize Vector2D
+function SizeBox:SetMinDesiredSize(tMinSize)
+    self:CallBlueprintEvent("SetMinDesiredSize", tMinSize)
+end
+
 -- When specified, will report the MaxDesiredWidth if smaller than the content's desired width.
 ---@param fMaxWidth number
 function SizeBox:SetMaxDesiredWidth(fMaxWidth)
@@ -46,6 +68,12 @@ end
 ---@param fMaxHeight number
 function SizeBox:SetMaxDesiredHeight(fMaxHeight)
     self:CallBlueprintEvent("SetMaxDesiredHeight", fMaxHeight)
+end
+
+-- When specified, will report the MaxDesiredSize (width and height) if smaller than the content's desired size.
+---@param tMaxSize Vector2D
+function SizeBox:SetMaxDesiredSize(tMaxSize)
+    self:CallBlueprintEvent("SetMaxDesiredSize", tMaxSize)
 end
 
 -- Sets the minimum aspect ratio allowed for this slot.

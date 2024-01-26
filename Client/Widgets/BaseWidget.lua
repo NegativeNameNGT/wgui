@@ -84,11 +84,15 @@ function BaseWidget:IsChildOfParent(cParentClass)
 end
 
 -- Sets the padding of the widget, putting a larger gap between the widget border and it's root widget.
----@param tPadding Margin
-function BaseWidget:SetPadding(tPadding)
-    self:CallBlueprintEvent("SetPadding", tPadding)
+---@param Padding Margin | number
+function BaseWidget:SetPadding(Padding)
+    if type(Padding) == "number" then
+        Padding = Margin(Padding)
+    end
 
-    self:SetValue("__Padding", tPadding)
+    self:CallBlueprintEvent("SetPadding", Padding)
+
+    self:SetValue("__Padding", Padding)
 end
 
 -- Gets the padding of the widget.

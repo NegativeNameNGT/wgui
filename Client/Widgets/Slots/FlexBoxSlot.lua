@@ -3,19 +3,21 @@ FlexBoxSlot = {}
 
 -- Sets the size of the slot.
 ---@param self BaseWidget
----@param SizeValue number
----@param SizeRule SizeRule
-function FlexBoxSlot.SetSize(self, SizeValue, SizeRule)
+---@param Value number
+---@param Rule SizeRule
+function FlexBoxSlot.SetSize(self, Value, Rule)
     if not (self and self:IsChildOfParent(FlexBox)) then
         return
     end
 
-    self:GetParent():CallBlueprintEvent("_SetSize", self, SizeValue, SizeRule)
+    Rule = Rule or SizeRule.Fill
+
+    self:GetParent():CallBlueprintEvent("_SetSize", self, Value, Rule)
 
     -- Sets the slot data.
     local tSlot = self:GetSlotData()
-    tSlot.SizeValue = SizeValue
-    tSlot.SizeRule = SizeRule
+    tSlot.SizeValue = Value
+    tSlot.SizeRule = Rule
     self:SetValue("__Slot", tSlot)
 
     return FlexBoxSlot
