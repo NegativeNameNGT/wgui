@@ -125,6 +125,8 @@ function CanvasPanelSlot.SetAnchor(self, tAnchor)
         return
     end
 
+    tAnchor = tAnchor or Anchor.TopLeft
+
     local tNewSize = CanvasPanelSlot.GetSize(self)
 
     if tAnchor.bResetOffsetRight then

@@ -132,6 +132,8 @@ end
 -- Sets the render translation of the widget.
 ---@param tTranslation Vector2D
 function BaseWidget:SetTranslation(tTranslation)
+    tTranslation = tTranslation or Vector2D()
+
     self:CallBlueprintEvent("SetRenderTranslation", tTranslation)
 
     self:SetValue("__RenderTranslation", tTranslation)
@@ -146,7 +148,7 @@ end
 -- Sets the angle of the widget.
 ---@param fAngle number
 function BaseWidget:SetAngle(fAngle)
-    self:CallBlueprintEvent("SetAngle", fAngle)
+    self:CallBlueprintEvent("SetRenderTransformAngle", fAngle)
 
     self:SetValue("__Angle", fAngle)
 end
@@ -160,7 +162,7 @@ end
 -- Sets the shear of the widget.
 ---@param tShear Vector2D
 function BaseWidget:SetShear(tShear)
-    self:CallBlueprintEvent("SetShear", tShear)
+    self:CallBlueprintEvent("SetRenderShear", tShear)
 
     self:SetValue("__Shear", tShear)
 end
@@ -208,6 +210,8 @@ end
 -- Sets the tint of the widget, this affects all children.
 ---@param tColor Color
 function BaseWidget:SetColor(tColor)
+    tColor = tColor or Color.WHITE
+
     self:CallBlueprintEvent("SetColorAndOpacity", tColor)
 
     self:SetValue("__Color", tColor)
@@ -335,4 +339,16 @@ end
 ---@param tOffset Vector2D | nil
 function BaseWidget:CreateDragDropOperation(oDragVisual, oPayload, sMetaData, iPivot, tOffset)
     self:CallBlueprintEvent("CreateDragDropOperation", sMetaData or "", oPayload, oDragVisual, iPivot or DragPivot.MouseDown, tOffset or Vector2D())
+end
+
+-- Applies the WSS style tags of the widget.
+---@param tTags table | string
+function BaseWidget:ApplyStyleTags(tTags)
+    if type(tTags) == "string" then
+        tTags = {tTags}
+    end
+
+    for _, sTag in ipairs(tTags) do
+        WSS.ApplyTag(self, sTag)
+    end
 end

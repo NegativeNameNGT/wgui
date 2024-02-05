@@ -59,6 +59,9 @@ function PanelWidget:AddChild(oContent, ...)
             oContent[k] = v
         end
     end
+
+    do return end
+    UStyle.ApplySlotProperties(oContent)
 end
 
 -- Removes a child widget from the panel.

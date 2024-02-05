@@ -12,6 +12,11 @@ Package.Require("Structures/FontOutlineSettings.lua")
 Package.Require("Structures/DynamicMaterialInstance.lua")
 Package.Require("Structures/Margin.lua")
 
+-- Load UStyle files
+Package.Require("UStyle/UStyle.lua")
+Package.Require("UStyle/UStyleApplier.lua")
+Package.Require("UStyle/UStyleParser.lua")
+
 -- Enumerations
 Package.Require("Enum.lua")
 
@@ -34,6 +39,9 @@ end
 for _, sPath in pairs(Package.GetFiles("Client/Widgets/Components/", ".lua")) do
     Package.Require(sPath)
 end
+
+-- Load WSS (Widget Style Sheets)
+Package.Require("WSS/WSS.lua")
 
 WGUI.RegisterFont("Roboto", "/Engine/EngineFonts/Roboto")
 WGUI.RegisterFont("Rufing", "/Game/NanosWorld/UI/Fonts/Rufing/Font_Rufing")

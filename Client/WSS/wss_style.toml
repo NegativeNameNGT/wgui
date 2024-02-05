@@ -1,0 +1,13 @@
+# Example WSS file
+
+[".BaseWidget"]
+Text = ".BaseWidget"
+
+[".TextBlock"]
+Text = ".TextBlock"
+
+[".MyCustomTextBlock"]
+Text = ".MyCustomTextBlock"
+
+["#MyText"]
+Text = "#MyText"

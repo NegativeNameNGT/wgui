@@ -13,6 +13,21 @@ local iCurrentURLImageCallbackID = -1
 WGUI.Widgets = {}
 local iCurWidgetID = 0
 
+-- Adds a child to the specified parent panel.
+---@param oParentPanel PanelWidget
+---@param oContent BaseWidget
+---@vararg any
+local function AddChild(oParentPanel, oContent, ...)
+    -- Redirects the panel if needed
+    oParentPanel = oParentPanel:GetValue("__RedirectedPanelFunctions") or oParentPanel
+
+    -- Adds the widget to the parent panel
+    if oParentPanel.CustomAddChild then
+        oParentPanel:AddChild(oContent, ...)
+    else
+        oParentPanel:AddChild(oContent)
+    end
+end
 -- Creates a WGUI component by the specified class.
 ---@generic T : BaseWidget
 ---@param cClass T
@@ -40,17 +55,32 @@ function WGUI.Create(cClass, oParentPanel, ...)
 
     -- Checks if the parent panel is valid
     if oParentPanel and oParentPanel:IsValid() then
-        -- Redirects the panel if needed
-        oParentPanel = oParentPanel:GetValue("__RedirectedPanelFunctions") or oParentPanel
-
-        -- Adds the widget to the parent panel
-        if oParentPanel.CustomAddChild then
-            oParentPanel:AddChild(oWidget, ...)
-        else
-            oParentPanel:AddChild(oWidget)
-        end
+        AddChild(oParentPanel, oWidget)
     end
 
+    return oWidget
+end
+
+-- Creates a WGUI component by the specified class with a UStyle tag.
+---@generic T : BaseWidget
+---@param cClass T
+---@param sStyleTag string
+---@param oParentPanel PanelWidget | nil
+---@vararg any
+---@return T
+function WGUI.CreateWithTag(cClass, sStyleTag, oParentPanel, ...)
+    local oWidget = WGUI.Create(cClass, nil)
+
+    -- Applies the widget class style if it exists
+    if (UStyle.HasTagStyleSheet(sStyleTag)) then
+        UStyle.ApplyWidgetStyle(oWidget, UStyle.GetTagStyleSheet(sStyleTag), false)
+    end
+
+    if oParentPanel and oParentPanel:IsValid() then
+        AddChild(oParentPanel, oWidget)
+    end
+
+    oWidget:SetValue("__StyleTag", sStyleTag)
     return oWidget
 end
 
