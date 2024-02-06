@@ -1,0 +1,25 @@
+["#HUD"]
+    Anchor = "Anchor.StretchBottom"
+    Padding = 10
+    IsSizedToContent = true
+
+["#IndicatorBorder"]
+    DrawMode = "DrawMode.RoundedBox"
+    OutlineCorner = 4
+    BackgroundColor = "rgba: 0.041, 0.041, 0.041, 0.8"
+
+["#IndicatorContent"]
+    HAlign = "HAlign.Center"
+    VAlign = "VAlign.Center"
+
+["#HealthIcon"]
+    BackgroundImage = "package://wgui/Client/Example/health-icon.png"
+    HAlign = "HAlign.Center"
+    VAlign = "VAlign.Center"
+
+["#HealthText"]
+    Text = "$Health"
+    Font = ["Oswald", "Bold", 26]
+    HAlign = "HAlign.Center"
+    VAlign = "VAlign.Top"
+    Padding = [10, 0, 0, 0]

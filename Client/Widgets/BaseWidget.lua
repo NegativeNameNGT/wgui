@@ -342,13 +342,22 @@ function BaseWidget:CreateDragDropOperation(oDragVisual, oPayload, sMetaData, iP
 end
 
 -- Applies the WSS style tags of the widget.
----@param tTags table | string
-function BaseWidget:ApplyStyleTags(tTags)
-    if type(tTags) == "string" then
-        tTags = {tTags}
+---@vararg string
+function BaseWidget:SetStyleTags(...)
+    local tTags = {...}
+
+    -- Remove the first character of each tag
+    for i = 1, #tTags do
+        tTags[i] = string.sub(tTags[i], 2)
     end
 
-    for _, sTag in ipairs(tTags) do
-        WSS.ApplyTag(self, sTag)
-    end
+    self:SetValue("__StyleTags", tTags)
+end
+
+-- Applies the WSS style of the widget.
+function BaseWidget:ApplyWSS()
+    local tFields, tDynamicStyleSheet = _WSS.CollectFields(self)
+
+    _WSS.ApplyStyleSheet(self, tFields)
+    _WSS.ApplyDynamicStyleSheet(self, tDynamicStyleSheet)
 end

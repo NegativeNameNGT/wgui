@@ -60,8 +60,7 @@ function PanelWidget:AddChild(oContent, ...)
         end
     end
 
-    do return end
-    UStyle.ApplySlotProperties(oContent)
+    _WSS.ApplySlotFields(oContent)
 end
 
 -- Removes a child widget from the panel.

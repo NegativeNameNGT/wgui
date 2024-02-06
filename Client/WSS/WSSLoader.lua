@@ -25,7 +25,8 @@ end
 -- Utility function to split a string by a delimiter
 function SplitString(str, delimiter)
     local result = {}
-    local pattern = "(.-)" .. delimiter
+    -- Escape the delimiter if it's a dot
+    local pattern = "(.-)" .. (delimiter == "." and "%." or delimiter)
     for match in (str..delimiter):gmatch(pattern) do
         table.insert(result, match)
     end
@@ -51,17 +52,17 @@ local function ParseStyleSheetData(sStyleSheet)
 
         -- Check if the layer is a class.
         if iLayerType == LayerType.Class then
-            WSS.StyleSheets.Class[sLayer] = tLayerFields
+            _WSS.StyleSheets.Class[sLayer .. " Class"] = tLayerFields
         end
 
         -- Check if the layer is a tag.
         if iLayerType == LayerType.Tag then
-            WSS.StyleSheets.Tag[sLayer] = tLayerFields
+            _WSS.StyleSheets.Tag[sLayer] = tLayerFields
         end
 
         -- Check if the layer is a dynamic style.
         if iLayerType == LayerType.Dynamic then
-            local tDynamicSplitted = SplitString(sLayer, "::")
+            local tDynamicSplitted = SplitString(sLayer, "->")
 
             local sDynamicLayer = tDynamicSplitted[1]
             local sDynamicEvent = tDynamicSplitted[2]
@@ -71,26 +72,28 @@ local function ParseStyleSheetData(sStyleSheet)
                 goto continue
             end
 
+            sDynamicLayer = sDynamicLayer .. " Class"
             if not WSS.StyleSheets.Dynamic[sDynamicLayer] then
-                WSS.StyleSheets.Dynamic[sDynamicLayer] = {}
+                _WSS.StyleSheets.Dynamic[sDynamicLayer] = {}
             end
 
-            WSS.StyleSheets.Dynamic[sDynamicLayer][sDynamicEvent] = tLayerFields
+            _WSS.StyleSheets.Dynamic[sDynamicLayer][sDynamicEvent] = tLayerFields
         end
 
         ::continue::
 
         -- Process the layer fields for efficent use.
         for sField, xFieldValue in pairs(tLayerFields) do
-            if WSS.Fields[sField] then
-                local iFieldType = WSS.Fields[sField][2]
+            if _WSS.Fields[sField] then
+                local iFieldType = _WSS.Fields[sField][2]
 
-                tLayerFields[sField] = WSS.GetParser(iFieldType)(xFieldValue)
+                -- Checks whether or not the field is a dynamic attribute.
+                if not (type(xFieldValue) == "string" and xFieldValue:sub(1, 1) == "$") then
+                    tLayerFields[sField] = _WSS.GetParser(iFieldType)(xFieldValue)
+                end
             end
         end
     end
-
-    print(NanosTable.Dump(WSS.StyleSheets))
 end
 
 -- Load a style file.
@@ -137,21 +140,14 @@ end
 ---@param sLayer string
 ---@param Type LayerType
 ---@return table | nil
-function WSS.GetStyleSheet(sLayer, Type)
+function _WSS.GetStyleSheet(sLayer, Type)
     if Type == LayerType.Class then
-        return WSS.StyleSheets.Class[sLayer]
+        return _WSS.StyleSheets.Class[sLayer]
     elseif Type == LayerType.Tag then
-        return WSS.StyleSheets.Tag[sLayer]
+        return _WSS.StyleSheets.Tag[sLayer]
     elseif Type == LayerType.Dynamic then
-        return WSS.StyleSheets.Dynamic[sLayer]
+        return _WSS.StyleSheets.Dynamic[sLayer]
     end
 
     return nil
 end
-
---- Updates the style sheet by applying new fields and removing obsolete ones.
----@param sNewStyleSheet string
-function WSS.RefreshStyle(sNewStyleSheet)
-    print("Refreshing")
-end
-Events.SubscribeRemote("WSS::RefreshStyle", WSS.RefreshStyle)

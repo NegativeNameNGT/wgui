@@ -1,6 +1,0 @@
-[".Image"]
-Size = [400, 400]
-Color = "rgba: 255, 0, 0, 255"
-
-["#MyImage"]
-Src = "https://docs.nanos.world/img/nanos-world.png"

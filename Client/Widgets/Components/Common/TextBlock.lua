@@ -1,6 +1,6 @@
 -- A simple static text widget.
 ---@class TextBlock : BaseWidget
-TextBlock = BaseWidget.Inherit("Text")
+TextBlock = BaseWidget.Inherit("TextBlock")
 
 function TextBlock:Constructor(sDefaultText)
     self.Super:Constructor("wgui-assets::WBP_WGUI_Text")

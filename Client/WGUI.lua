@@ -28,6 +28,7 @@ local function AddChild(oParentPanel, oContent, ...)
         oParentPanel:AddChild(oContent)
     end
 end
+
 -- Creates a WGUI component by the specified class.
 ---@generic T : BaseWidget
 ---@param cClass T
@@ -61,26 +62,19 @@ function WGUI.Create(cClass, oParentPanel, ...)
     return oWidget
 end
 
--- Creates a WGUI component by the specified class with a UStyle tag.
+-- Creates a WGUI component by the specified class with the specified WSS tags.
 ---@generic T : BaseWidget
 ---@param cClass T
----@param sStyleTag string
+---@param tStyleTags table | string
 ---@param oParentPanel PanelWidget | nil
 ---@vararg any
 ---@return T
-function WGUI.CreateWithTag(cClass, sStyleTag, oParentPanel, ...)
-    local oWidget = WGUI.Create(cClass, nil)
+function WGUI.CreateWithTags(cClass, tStyleTags, oParentPanel, ...)
+    local oWidget = WGUI.Create(cClass, oParentPanel, ...) ---@type BaseWidget
 
-    -- Applies the widget class style if it exists
-    if (UStyle.HasTagStyleSheet(sStyleTag)) then
-        UStyle.ApplyWidgetStyle(oWidget, UStyle.GetTagStyleSheet(sStyleTag), false)
-    end
+    oWidget:SetStyleTags(tStyleTags)
+    oWidget:ApplyWSS()
 
-    if oParentPanel and oParentPanel:IsValid() then
-        AddChild(oParentPanel, oWidget)
-    end
-
-    oWidget:SetValue("__StyleTag", sStyleTag)
     return oWidget
 end
 

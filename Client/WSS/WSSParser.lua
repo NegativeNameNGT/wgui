@@ -4,6 +4,11 @@ WSSParserType = {
     Number = 1,
     String = 2,
     Color = 3,
+    Vector2D = 4,
+    Margin = 5,
+    Enum = 6,
+    Quat = 7,
+    FontData = 8
 }
 
 local tColorProperties = {
@@ -59,7 +64,7 @@ local function ParseColor(sColorStr)
     local sFunctionName, tFunctionParameters = ParseFunction(sColorStr)
 
     if #tFunctionParameters == 0 then
-        local xColor = tColorVoidFunctions[sFunctionName]
+        local xColor = tColorProperties[sFunctionName]
         if type(xColor) == "function" then
             return xColor()
         end
@@ -72,12 +77,12 @@ local function ParseColor(sColorStr)
     end
 
     if sFunctionName == "rgba" then
-        return Color.FromRGBA(table.unpack(tNumberParameters))
+        return Color(table.unpack(tNumberParameters))
     end
 
     if sFunctionName == "rgb" then
         tNumberParameters[4] = 1
-        return Color.FromRGBA(table.unpack(tNumberParameters))
+        return Color(table.unpack(tNumberParameters))
     end
 
     if sFunctionName == "cymk" then
@@ -95,18 +100,61 @@ local function ParseColor(sColorStr)
     return Color()
 end
 
+local function ParseVector2D(tValue)
+    if type(tValue) == "number" then
+        return Vector2D(tValue, tValue)
+    end
+
+    return Vector2D(tValue[1], tValue[2])
+end
+
+local function ParseMargin(tMarginData)
+    if type(tMarginData) == "number" then
+        return Margin(tMarginData)
+    end
+
+    return Margin(tMarginData[1], tMarginData[2], tMarginData[3], tMarginData[4])
+end
+
+local function ParseQuat(tQuatData)
+    if type(tQuatData) == "number" then
+        return Quat(tQuatData)
+    end
+
+    return Quat(tQuatData[1], tQuatData[2], tQuatData[3], tQuatData[4])
+end
+
+local function ParseEnum(sEnumKey)
+    local tSplit = SplitString(sEnumKey, ".")
+    local sEnumName = tSplit[1]
+    local sEnumValue = tSplit[2]
+
+    return _G[sEnumName][sEnumValue]
+end
+
+local function ParseFontData(tFontData)
+    return {tFontData[1], tFontData[2], tFontData[3]}
+end
+
 local function ParsePrimitiveValue(xValue)
     return xValue
 end
 
 local tTypeParser = {
-    [WSSParserType.Color] = ParseColor,
     [WSSParserType.String] = ParsePrimitiveValue,
+    [WSSParserType.Number] = ParsePrimitiveValue,
+    [WSSParserType.Boolean] = ParsePrimitiveValue,
+    [WSSParserType.Color] = ParseColor,
+    [WSSParserType.Vector2D] = ParseVector2D,
+    [WSSParserType.Margin] = ParseMargin,
+    [WSSParserType.Enum] = ParseEnum,
+    [WSSParserType.Quat] = ParseQuat,
+    [WSSParserType.FontData] = ParseFontData
 }
 
 -- Gets the parser for a style type.
 ---@param iType UStyleType
 ---@return function
-function WSS.GetParser(iType)
+function _WSS.GetParser(iType)
     return tTypeParser[iType]
 end

@@ -1,3 +1,4 @@
+--[[
 UStyle = UStyle or {}
 local iReloadTimer = nil
 local tAutoReloadFiles = {}
@@ -93,10 +94,4 @@ Package.Subscribe("Unload", function ()
         oFile = nil
     end
 end)
-
-UStyle.StartInterval(0.1)
-UStyle.AddFileToAutoReload("wgui/Client/WSS/wss_style.toml")
-
-Events.SubscribeRemote("test", function (_, st)
-    print(NanosTable.Dump(st))
-end)
+--]]
