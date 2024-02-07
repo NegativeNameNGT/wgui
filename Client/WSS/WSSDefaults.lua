@@ -49,10 +49,15 @@ WSS.Extend({
 WSS.Extend({
     HAlign = {"SetHAlign", WSSParserType.Enum},
     VAlign = {"SetVAlign", WSSParserType.Enum},
+    FlexSize = {"SetSize", WSSParserType.FlexSize, true},
 })
 
 -- 'Text' properties
 WSS.Extend({
     Text = {"SetText", WSSParserType.String},
-    Font = {"SetFont", WSSParserType.FontData, true},
+
+    -- Font properties
+    ["Font-Family"] = {"SetFont", WSSParserType.String, nil, IsBatchable = true},
+    ["Font-Typeface"] = {"SetFont", WSSParserType.String, nil, IsBatchable = true},
+    ["Font-Size"] = {"SetFont", WSSParserType.Number, nil, IsBatchable = true},
 })

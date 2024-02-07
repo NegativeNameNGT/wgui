@@ -56,7 +56,7 @@ function WGUI.Create(cClass, oParentPanel, ...)
 
     -- Checks if the parent panel is valid
     if oParentPanel and oParentPanel:IsValid() then
-        AddChild(oParentPanel, oWidget)
+        AddChild(oParentPanel, oWidget, ...)
     end
 
     return oWidget

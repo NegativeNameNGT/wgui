@@ -21,7 +21,7 @@ function WSS.SetDynamicAttributeValue(sAttribute, xValue)
         end
 
         for _, sField in ipairs(tFields) do
-            WSS.ApplyStyleSheet(oWidget, {
+            _WSS.ApplyStyleSheet(oWidget, {
                 [sField] = xValue
             })
         end
@@ -62,4 +62,20 @@ end
 ---@return any
 function WSS.GetDynamicAttributeValue(sAttribute)
     return _WSS.DynamicAttributes[sAttribute] and _WSS.DynamicAttributes[sAttribute].Value
+end
+
+-- Returns whether or not a dynamic attribute exists.
+---@param sAttribute string
+---@return boolean
+function _WSS.DoesAttributeExists(sAttribute)
+    return _WSS.DynamicAttributes[sAttribute] ~= nil
+end
+
+-- Returns whether or not a widget is subscribed to a dynamic attribute.
+---@param sAttribute string
+---@param oWidget BaseWidget
+---@return boolean
+function _WSS.IsWidgetSubscribedToAttribute(sAttribute, oWidget)
+    local iWidgetID = oWidget:GetValue("__ID")
+    return _WSS.DynamicAttributes[sAttribute] and _WSS.DynamicAttributes[sAttribute].Widgets[iWidgetID] ~= nil
 end

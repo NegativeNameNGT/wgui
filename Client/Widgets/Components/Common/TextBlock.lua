@@ -58,7 +58,8 @@ end
 ---@param sFontTypeface string | nil
 ---@param fFontSize number | nil
 function TextBlock:SetFont(sFontName, sFontTypeface, fFontSize)
-    -- Checks if the font is
+    sFontName = sFontName or "Roboto"
+
     local sFontPath = WGUI.Fonts[sFontName]
     if not sFontPath then
         assert(false, "WGUI.Text:SetFont: Font '" .. sFontName .. "' is not registered.")

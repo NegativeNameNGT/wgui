@@ -67,11 +67,32 @@ function _WSS.CollectFields(oWidget)
     return tFields, tDynamicStyleSheet
 end
 
+local function CallFieldSetter(oWidget, sSetterFunction, xValue, bShouldUnpack)
+    if type(sSetterFunction) == "function" then
+        sSetterFunction(oWidget, xValue)
+        return
+    end
+
+    if not oWidget[sSetterFunction] then
+        _WSS.StoreSlotValue(oWidget, sSetterFunction, xValue)
+        return
+    end
+
+    if bShouldUnpack then
+        oWidget[sSetterFunction](oWidget, table.unpack(xValue))
+    else
+        oWidget[sSetterFunction](oWidget, xValue)
+    end
+end
+
 -- Applies a style sheet to a widget.
 ---@param oWidget BaseWidget
 ---@param tStyleSheet table
 function _WSS.ApplyStyleSheet(oWidget, tStyleSheet)
     local bBrushPropertyChanged = false
+
+    local tBatchedOperations = {}
+
     for sField, xValue in pairs(tStyleSheet) do
         if not _WSS.Fields[sField] then
             goto continue
@@ -79,17 +100,31 @@ function _WSS.ApplyStyleSheet(oWidget, tStyleSheet)
 
         if type(xValue) == "string" and xValue:sub(1, 1) == "$" then
             local sAttribute = xValue:sub(2)
-            _WSS.AddWidgetToDynamicAttribute(sAttribute, sField, oWidget)
+            if not _WSS.IsWidgetSubscribedToAttribute(sAttribute, oWidget) then
+                _WSS.AddWidgetToDynamicAttribute(sAttribute, sField, oWidget)
+            end
 
-            xValue = WSS.GetDynamicAttributeValue(sAttribute)
-            if xValue == nil then
-                goto continue
+            local xDynamicValue = WSS.GetDynamicAttributeValue(sAttribute)
+            if xDynamicValue ~= nil then
+                xValue = xDynamicValue
             end
         end
 
-        Console.Warn("[WSS] Applying field '" .. sField .. "' with value '" .. tostring(xValue) .. "'")
+        --Console.Warn("[WSS] Applying field '" .. sField .. "' with value '" .. tostring(xValue) .. "'")
 
         local sSetterFunction = _WSS.Fields[sField][1]
+        local bIsBatched = _WSS.Fields[sField]["IsBatchable"] or false
+
+        if bIsBatched then
+            if not tBatchedOperations[sSetterFunction] then
+                tBatchedOperations[sSetterFunction] = {}
+            end
+
+            tBatchedOperations[sSetterFunction][sField] = xValue
+
+            goto continue
+        end
+
         if _WSS.BrushExtension[sField] then
             bBrushPropertyChanged = true
             _WSS.HandleBrushProperty(oWidget, sField, xValue)
@@ -100,28 +135,27 @@ function _WSS.ApplyStyleSheet(oWidget, tStyleSheet)
             goto continue
         end
 
-        local bShouldUnpack = _WSS.Fields[sField][3]
+        local bShouldUnpack = _WSS.Fields[sField][3] or false
 
-        if type(sSetterFunction) == "function" then
-            sSetterFunction(oWidget, xValue)
-            goto continue
-        end
-
-        if not oWidget[sSetterFunction] then
-            _WSS.StoreSlotValue(oWidget, sSetterFunction, xValue)
-            goto continue
-        end
-
-        if bShouldUnpack then
-            oWidget[sSetterFunction](oWidget, table.unpack(xValue))
-        else
-            oWidget[sSetterFunction](oWidget, xValue)
-        end
+        CallFieldSetter(oWidget, sSetterFunction, xValue, bShouldUnpack)
         ::continue::
     end
 
+    -- Apply brush properties
     if bBrushPropertyChanged then
         oWidget:SetBrush(oWidget:GetBrush())
+    end
+
+    -- Handle batched operations
+    for sFunction, tFields in pairs(tBatchedOperations) do
+        local tOrderedFields = {}
+
+        -- Make sure the fields are ordered correctly for each function
+        if sFunction == "SetFont" then
+            tOrderedFields = {tFields["Font-Family"], tFields["Font-Typeface"], tFields["Font-Size"]}
+        end
+
+        oWidget[sFunction](oWidget, table.unpack(tOrderedFields))
     end
 end
 
@@ -160,6 +194,4 @@ function _WSS.ApplyDynamicStyleSheet(oWidget, tDynamicStyleSheet)
     end
 
     oWidget["SetStyleSheet"](oWidget, oStyleSheet)
-
-    print(oStyleSheet["NormalPadding"])
 end

@@ -342,9 +342,11 @@ function BaseWidget:CreateDragDropOperation(oDragVisual, oPayload, sMetaData, iP
 end
 
 -- Applies the WSS style tags of the widget.
----@vararg string
-function BaseWidget:SetStyleTags(...)
-    local tTags = {...}
+---@param tTags table<string> | string
+function BaseWidget:SetStyleTags(tTags)
+    if type(tTags) ~= "table" then
+        tTags = {tTags}
+    end
 
     -- Remove the first character of each tag
     for i = 1, #tTags do

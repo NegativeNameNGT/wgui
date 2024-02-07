@@ -91,3 +91,23 @@ function FlexBoxSlot.GetVAlign(self)
 
     return self:GetSlotData().VerticalAlignment or VAlign.Auto
 end
+
+-- Sets the alignments of the slot.
+---@param self BaseWidget
+---@param HorizontalAlignment HAlign
+---@param VerticalAlignment VAlign
+---@return FlexBoxSlot
+function FlexBoxSlot.SetAlignment(self, HorizontalAlignment, VerticalAlignment)
+    if not (self and self:IsChildOfParent(FlexBox)) then
+        return
+    end
+
+    self:GetParent():CallBlueprintEvent("_SetAlign", self, HorizontalAlignment, VerticalAlignment)
+
+    local tSlot = self:GetSlotData()
+    tSlot.HorizontalAlignment = HorizontalAlignment
+    tSlot.VerticalAlignment = VerticalAlignment
+    self:SetValue("__Slot", tSlot)
+
+    return FlexBoxSlot
+end

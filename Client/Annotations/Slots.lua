@@ -14,6 +14,11 @@ function BaseWidget:SetVAlign(Alignment) end
 ---@return VAlign
 function BaseWidget:GetVAlign() end
 
+-- Sets the alignments of the slot.
+---@param HorizontalAlignment HAlign
+---@param VerticalAlignment VAlign
+function BaseWidget:SetAlign(HorizontalAlignment, VerticalAlignment) end
+
 -- Sets the position of the slot.
 ---@param Position Vector2D
 function BaseWidget:SetPos(Position) end

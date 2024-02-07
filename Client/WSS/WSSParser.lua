@@ -8,7 +8,8 @@ WSSParserType = {
     Margin = 5,
     Enum = 6,
     Quat = 7,
-    FontData = 8
+    FontData = 8,
+    FlexSize = 9
 }
 
 local tColorProperties = {
@@ -136,6 +137,18 @@ local function ParseFontData(tFontData)
     return {tFontData[1], tFontData[2], tFontData[3]}
 end
 
+local function ParseFlexSize(tFlexSizeData)
+    if type(tFlexSizeData) == "number" then
+        return {tFlexSizeData, nil}
+    end
+
+    if type(tFlexSizeData[2]) == "string" then
+        tFlexSizeData[2] = ParseEnum(tFlexSizeData[2])
+    end
+
+    return {tFlexSizeData[1], tFlexSizeData[2]}
+end
+
 local function ParsePrimitiveValue(xValue)
     return xValue
 end
@@ -149,11 +162,12 @@ local tTypeParser = {
     [WSSParserType.Margin] = ParseMargin,
     [WSSParserType.Enum] = ParseEnum,
     [WSSParserType.Quat] = ParseQuat,
-    [WSSParserType.FontData] = ParseFontData
+    [WSSParserType.FontData] = ParseFontData,
+    [WSSParserType.FlexSize] = ParseFlexSize
 }
 
 -- Gets the parser for a style type.
----@param iType UStyleType
+---@param iType WSSParserType
 ---@return function
 function _WSS.GetParser(iType)
     return tTypeParser[iType]

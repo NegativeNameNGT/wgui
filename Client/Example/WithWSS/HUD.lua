@@ -13,9 +13,11 @@ function WSS_HUD:Constructor()
 
     -- Creates the HealthIndicator and WeaponIndicator widgets
     local HealthIndicator = WGUI.Create(WSS_HealthIndicator, self)
+    local WeaponIndicator = WGUI.CreateWithTags(WSS_WeaponIndicator, "#WeaponIndicator", self)
 end
 
 WSS.LoadFile("wgui/Client/Example/WithWSS/HUD.toml")
 
 Package.Require("Indicator.lua")
 Package.Require("HealthIndicator.lua")
+Package.Require("WeaponIndicator.lua")

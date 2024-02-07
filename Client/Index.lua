@@ -12,11 +12,6 @@ Package.Require("Structures/FontOutlineSettings.lua")
 Package.Require("Structures/DynamicMaterialInstance.lua")
 Package.Require("Structures/Margin.lua")
 
--- Load UStyle files
-Package.Require("UStyle/UStyle.lua")
-Package.Require("UStyle/UStyleApplier.lua")
-Package.Require("UStyle/UStyleParser.lua")
-
 -- Enumerations
 Package.Require("Enum.lua")
 

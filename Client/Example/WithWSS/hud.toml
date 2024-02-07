@@ -1,13 +1,23 @@
+# This is an example of a HUD element that displays the player's health and ammo.
+
+# The HUD element is a container that holds the health and ammo indicators.
 ["#HUD"]
     Anchor = "Anchor.StretchBottom"
     Padding = 10
     IsSizedToContent = true
 
+# A tag to easily edit the text font of the HUD.
+["#HUDText"]
+    Font-Family = "Oswald"
+    Font-Typeface = "Bold"
+
+# The indicator border is the background of the indicator.
 ["#IndicatorBorder"]
     DrawMode = "DrawMode.RoundedBox"
     OutlineCorner = 4
     BackgroundColor = "rgba: 0.041, 0.041, 0.041, 0.8"
 
+# The indicator content a flex box that holds the health icon and text.
 ["#IndicatorContent"]
     HAlign = "HAlign.Center"
     VAlign = "VAlign.Center"
@@ -17,9 +27,25 @@
     HAlign = "HAlign.Center"
     VAlign = "VAlign.Center"
 
+# HealthText represents the text displaying the player's health.
 ["#HealthText"]
     Text = "$Health"
-    Font = ["Oswald", "Bold", 26]
+    Font-Size = 26
     HAlign = "HAlign.Center"
     VAlign = "VAlign.Top"
     Padding = [10, 0, 0, 0]
+
+["#WeaponIndicator"]
+    IsVisible = "$HasWeapon"
+    HAlign = "HAlign.Right"
+    FlexSize = 1
+
+["#AmmoText"]
+    Text = "$Ammo"
+    Font-Size = 28
+
+["#AmmoBagText"]
+    Text = "$AmmoBag"
+    Font-Size = 18
+    Padding = [0, 0, 0, 5]
+    VAlign = "VAlign.Bottom"
