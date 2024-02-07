@@ -59,6 +59,8 @@ function PanelWidget:AddChild(oContent, ...)
             oContent[k] = v
         end
     end
+
+    _WSS.ApplySlotFields(oContent)
 end
 
 -- Removes a child widget from the panel.

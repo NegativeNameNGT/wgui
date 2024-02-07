@@ -32,6 +32,34 @@ function Brush(iDrawMode, cTintColor, sSrcImage, tSrcSize, xDrawModeSetting)
         return oBrush
     end
 
+    ---@param fOutlineWidth number
+    function oBrush.SetOutlineWidth(fOutlineWidth)
+        oBrush.OutlineSettings = oBrush.OutlineSettings or {}
+        oBrush.OutlineSettings.OutlineWidth = fOutlineWidth
+        return oBrush
+    end
+
+    ---@param tOutlineCorners Quat
+    function oBrush.SetOutlineCorners(tOutlineCorners)
+        oBrush.OutlineSettings = oBrush.OutlineSettings or {}
+        oBrush.OutlineSettings.OutlineCorners = tOutlineCorners
+        return oBrush
+    end
+
+    ---@param iOutlineType number
+    function oBrush.SetOutlineType(iOutlineType)
+        oBrush.OutlineSettings = oBrush.OutlineSettings or {}
+        oBrush.OutlineSettings.OutlineType = iOutlineType
+        return oBrush
+    end
+
+    ---@param bUseAlpha boolean
+    function oBrush.SetOutlineUseAlpha(bUseAlpha)
+        oBrush.OutlineSettings = oBrush.OutlineSettings or {}
+        oBrush.OutlineSettings.UseBrushTransparency = bUseAlpha
+        return oBrush
+    end
+
     ---@param SrcImage string | nil
     function oBrush.SetSrc(SrcImage)
         if not SrcImage then

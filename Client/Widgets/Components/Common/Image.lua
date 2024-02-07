@@ -12,13 +12,13 @@ end
 function Image:SetBrush(oBrush)
     self:CallBlueprintEvent("SetBrush", oBrush)
 
-    self.__CachedBrush = oBrush
+    self.__Brush = oBrush
 end
 
 -- Gets the brush of the border.
 ---@return Brush
 function Image:GetBrush()
-    local oBrush = self.__CachedBrush
+    local oBrush = self.__Brush
     if not oBrush then
         oBrush = Brush(DrawMode.Image)
     end

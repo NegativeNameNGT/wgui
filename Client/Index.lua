@@ -35,6 +35,9 @@ for _, sPath in pairs(Package.GetFiles("Client/Widgets/Components/", ".lua")) do
     Package.Require(sPath)
 end
 
+-- Load WSS (Widget Style Sheets)
+Package.Require("WSS/WSS.lua")
+
 WGUI.RegisterFont("Roboto", "/Engine/EngineFonts/Roboto")
 WGUI.RegisterFont("Rufing", "/Game/NanosWorld/UI/Fonts/Rufing/Font_Rufing")
 WGUI.RegisterFont("Oswald", "/Game/NanosWorld/UI/Fonts/Oswald/Font_Oswald")
