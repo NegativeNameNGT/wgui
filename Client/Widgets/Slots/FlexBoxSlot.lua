@@ -97,7 +97,7 @@ end
 ---@param HorizontalAlignment HAlign
 ---@param VerticalAlignment VAlign
 ---@return FlexBoxSlot
-function FlexBoxSlot.SetAlignment(self, HorizontalAlignment, VerticalAlignment)
+function FlexBoxSlot.SetAlign(self, HorizontalAlignment, VerticalAlignment)
     if not (self and self:IsChildOfParent(FlexBox)) then
         return
     end
