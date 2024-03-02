@@ -182,3 +182,13 @@ function TextBlock:GetShadowSettings()
     local tShadowSettings = self:GetValue("__ShadowSettings", {Color = Color(), Offset = Vector2D()})
     return tShadowSettings.Color, tShadowSettings.Offset
 end
+
+-- Sets the text color.
+---@param tColor Color
+function TextBlock:SetColor(tColor)
+    tColor = tColor or Color.WHITE
+
+    self:CallBlueprintEvent("SetTextColor", tColor)
+
+    self:SetValue("__Color", tColor)
+end
