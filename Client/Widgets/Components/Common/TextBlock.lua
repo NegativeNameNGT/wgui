@@ -12,11 +12,16 @@ function TextBlock:Constructor(sDefaultText)
 end
 
 -- Sets the text to display.
+---@generic T
+---@param self T
 ---@param sText string
+---@return T
 function TextBlock:SetText(sText)
     self:CallBlueprintEvent("SetText", sText)
 
     self:SetValue("__CachedText", sText)
+
+    return self
 end
 
 -- Gets the widget text
@@ -26,11 +31,16 @@ function TextBlock:GetText()
 end
 
 -- Sets the minimum desired width for the text.
+---@generic T
+---@param self T
 ---@param fMinDesiredWidth number
+---@return T
 function TextBlock:SetMinDesiredWidth(fMinDesiredWidth)
     self:CallBlueprintEvent("SetMinDesiredWidth", fMinDesiredWidth)
 
     self:SetValue("__MinDesiredWidth", fMinDesiredWidth)
+
+    return self
 end
 
 -- Gets the minimum desired width for the text.
@@ -40,11 +50,16 @@ function TextBlock:GetMinDesiredWidth()
 end
 
 -- Sets the auto wrap text setting of the text.
+---@generic T
+---@param self T
 ---@param bAutoWrapText boolean
+---@return T
 function TextBlock:SetAutoWrapText(bAutoWrapText)
     self:CallBlueprintEvent("SetAutoWrapText", bAutoWrapText)
 
     self:SetValue("__AutoWrapText", bAutoWrapText)
+
+    return self
 end
 
 -- Gets the auto wrap text setting of the text.
@@ -54,16 +69,19 @@ function TextBlock:GetAutoWrapText()
 end
 
 -- Sets the font of the text.
+---@generic T
+---@param self T
 ---@param sFontName string
 ---@param sFontTypeface string | nil
 ---@param fFontSize number | nil
+---@return T
 function TextBlock:SetFont(sFontName, sFontTypeface, fFontSize)
     sFontName = sFontName or "Roboto"
 
     local sFontPath = WGUI.Fonts[sFontName]
     if not sFontPath then
         assert(false, "WGUI.Text:SetFont: Font '" .. sFontName .. "' is not registered.")
-        return
+        return self
     end
 
     -- Gets the current font data.
@@ -83,6 +101,8 @@ function TextBlock:SetFont(sFontName, sFontTypeface, fFontSize)
 
     -- Sets the new font data.
     self:SetValue("__Font", tFontData)
+
+    return self
 end
 
 -- Gets the font of the text.
@@ -92,11 +112,16 @@ function TextBlock:GetFont()
 end
 
 -- Sets the spacing of the letters of the text.
+---@generic T
+---@param self T
 ---@param fLetterSpacing number
+---@return T
 function TextBlock:SetLetterSpacing(fLetterSpacing)
     self:CallBlueprintEvent("SetLetterSpacing", fLetterSpacing)
 
     self:SetValue("__LetterSpacing", fLetterSpacing)
+
+    return self
 end
 
 -- Gets the spacing of the letters of the text.
@@ -106,11 +131,16 @@ function TextBlock:GetLetterSpacing()
 end
 
 -- Sets the font outline settings of the text.
+---@generic T
+---@param self T
 ---@param tOutlineSettings FontOutlineSettings
+---@return T
 function TextBlock:SetFontOutlineSettings(tOutlineSettings)
     self:CallBlueprintEvent("SetFontOutlineSettings", tOutlineSettings)
 
     self.__FontOutlineSettings = tOutlineSettings
+
+    return self
 end
 
 -- Gets the font outline settings of the text.
@@ -120,7 +150,10 @@ function TextBlock:GetFontOutlineSettings()
 end
 
 -- Sets how the text should be aligned with the margin.
+---@generic T
+---@param self T
 ---@param iJustification TextJustify
+---@return T
 function TextBlock:SetJustification(iJustification)
     self:CallBlueprintEvent("SetJustification", iJustification)
 
@@ -128,6 +161,8 @@ function TextBlock:SetJustification(iJustification)
 
     -- Stores the justification.
     self.__Justification = iJustification
+
+    return self
 end
 
 -- Gets how the text should be aligned with the margin.
@@ -137,11 +172,16 @@ function TextBlock:GetJustification()
 end
 
 -- Sets the case of the text.
+---@generic T
+---@param self T
 ---@param iTextCase CaseMode
+---@return T
 function TextBlock:SetCaseMode(iTextCase)
     self:CallBlueprintEvent("SetCaseMode", iTextCase)
 
     self:SetValue("__TextCase", iTextCase)
+
+    return self
 end
 
 -- Gets the case of the text.
@@ -152,11 +192,16 @@ end
 
 -- Sets the overflow mode of the text.
 -- Sets what happens to text that is clipped and doesn't fit within the clip rect for this widget.
+---@generic T
+---@param self T
 ---@param iOverflowMode OverflowMode
+---@return T
 function TextBlock:SetOverflowMode(iOverflowMode)
     self:CallBlueprintEvent("SetOverflowMode", iOverflowMode)
 
     self:SetValue("__OverflowMode", iOverflowMode)
+
+    return self
 end
 
 -- Gets the overflow mode of the text.
@@ -166,14 +211,19 @@ function TextBlock:GetOverflowMode()
 end
 
 -- Sets the shadow settings (Color and Offset) of the text.
+---@generic T
+---@param self T
 ---@param Color Color | nil
 ---@param Offset Vector2D | nil
+---@return T
 function TextBlock:SetShadowSettings(Color, Offset)
     local CurrentColor, CurrentOffset = self:GetShadowSettings()
 
     self:CallBlueprintEvent("SetShadowSettings", Color or CurrentColor or Color.TRANSPARENT, Offset or CurrentOffset or Vector2D())
 
     self:SetValue("__ShadowSettings", {Color = Color, Offset = Offset})
+
+    return self
 end
 
 -- Gets the shadow settings (Color and Offset) of the text.
@@ -184,11 +234,16 @@ function TextBlock:GetShadowSettings()
 end
 
 -- Sets the text color.
+---@generic T
+---@param self T
 ---@param tColor Color
+---@return T
 function TextBlock:SetColor(tColor)
     tColor = tColor or Color.WHITE
 
     self:CallBlueprintEvent("SetTextColor", tColor)
 
     self:SetValue("__Color", tColor)
+
+    return self
 end

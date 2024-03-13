@@ -11,11 +11,16 @@ function EditableText:Constructor()
 end
 
 -- Sets the style of the text box.
+---@generic T
+---@param self T
 ---@param oStyle TextBlockStyle
+---@return T
 function EditableText:SetStyleSheet(oStyle)
     self:CallBlueprintEvent("SetStyleSheet", oStyle.HighlightShape, oStyle.StrikeBrush, oStyle.UnderlineBrush)
 
     self.__StyleSheet = oStyle
+
+    return self
 end
 
 -- Gets the style of the text box.
@@ -32,11 +37,16 @@ function EditableText:GetStyleSheet()
 end
 
 -- Sets whether or not the text should be multi-line.
+---@generic T
+---@param self T
 ---@param bIsMultiLine boolean
+---@return T
 function EditableText:SetIsMultiLine(bIsMultiLine)
     self:CallBlueprintEvent("SetIsMultiLine", bIsMultiLine)
 
     self:SetValue("__IsMultiLine", bIsMultiLine)
+
+    return self
 end
 
 -- Gets whether or not the text should be multi-line.
@@ -46,11 +56,16 @@ function EditableText:GetIsMultiLine()
 end
 
 -- Sets the text to display.
+---@generic T
+---@param self T
 ---@param sText string
+---@return T
 function EditableText:SetText(sText)
     self:CallBlueprintEvent("SetText", sText)
 
     self:SetValue("__CachedText", sText)
+
+    return self
 end
 
 -- Gets the widget text
@@ -60,25 +75,40 @@ function EditableText:GetText()
 end
 
 -- Sets the color of the text.
+---@generic T
+---@param self T
 ---@param Color Color
+---@return T
 function EditableText:SetTextColor(Color)
     self:SetForegroundColor(Color, ColorMode.SpecifiedColor)
+
+    return self
 end
 
 -- Sets the selected background color of the text.
+---@generic T
+---@param self T
 ---@param Color Color
+---@return T
 function EditableText:SetSelectedColor(Color)
     self:CallBlueprintEvent("SetSelectedColor", {
         SelectedBackgroundColor = {SpecifiedColor = Color, ColorUseRule = 0}
     })
+
+    return self
 end
 
 -- Sets the hint text to display.
+---@generic T
+---@param self T
 ---@param sHintText string
+---@return T
 function EditableText:SetHintText(sHintText)
     self:CallBlueprintEvent("SetHintText", sHintText)
 
     self:SetValue("__CachedHintText", sHintText)
+
+    return self
 end
 
 -- Gets the hint text to display.
@@ -88,17 +118,27 @@ function EditableText:GetHintText()
 end
 
 -- Sets whether this text box can actually be modfied interactively by the user.
+---@generic T
+---@param self T
 ---@param bIsReadOnly boolean
+---@return T
 function EditableText:SetIsReadOnly(bIsReadOnly)
     self:CallBlueprintEvent("SetIsReadOnly", bIsReadOnly)
+
+    return self
 end
 
 -- Sets the minimum desired width for the text.
+---@generic T
+---@param self T
 ---@param fMinDesiredWidth number
+---@return T
 function EditableText:SetMinDesiredWidth(fMinDesiredWidth)
     self:CallBlueprintEvent("SetMinDesiredWidth", fMinDesiredWidth)
 
     self:SetValue("__MinDesiredWidth", fMinDesiredWidth)
+
+    return self
 end
 
 -- Gets the minimum desired width for the text.
@@ -108,15 +148,18 @@ function EditableText:GetMinDesiredWidth()
 end
 
 -- Sets the font of the text.
+---@generic T
+---@param self T
 ---@param sFontName string
 ---@param sFontTypeface string | nil
 ---@param fFontSize number | nil
+---@return T
 function EditableText:SetFont(sFontName, sFontTypeface, fFontSize)
     -- Checks if the font is
     local sFontPath = WGUI.Fonts[sFontName]
     if not sFontPath then
-        assert(false, "WGUI.Text:SetFont: Font '" .. sFontName .. "' is not registered.")
-        return
+        assert(false, "WGUI.EditableText:SetFont: Font '" .. sFontName .. "' is not registered.")
+        return self
     end
 
     -- Gets the current font data.
@@ -136,6 +179,8 @@ function EditableText:SetFont(sFontName, sFontTypeface, fFontSize)
 
     -- Sets the new font data.
     self:SetValue("__Font", tFontData)
+
+    return self
 end
 
 -- Gets the font of the text.
@@ -145,11 +190,16 @@ function EditableText:GetFont()
 end
 
 -- Sets the spacing of the letters of the text.
+---@generic T
+---@param self T
 ---@param fLetterSpacing number
+---@return T
 function EditableText:SetLetterSpacing(fLetterSpacing)
     self:CallBlueprintEvent("SetLetterSpacing", fLetterSpacing)
 
     self:SetValue("__LetterSpacing", fLetterSpacing)
+
+    return self
 end
 
 -- Gets the spacing of the letters of the text.
@@ -159,11 +209,16 @@ function EditableText:GetLetterSpacing()
 end
 
 -- Sets the font outline settings of the text.
+---@generic T
+---@param self T
 ---@param tOutlineSettings FontOutlineSettings
+---@return T
 function EditableText:SetFontOutlineSettings(tOutlineSettings)
     self:CallBlueprintEvent("SetFontOutlineSettings", tOutlineSettings)
 
     self.__FontOutlineSettings = tOutlineSettings
+
+    return self
 end
 
 -- Gets the font outline settings of the text.
@@ -173,7 +228,10 @@ function EditableText:GetFontOutlineSettings()
 end
 
 -- Sets how the text should be aligned with the margin.
+---@generic T
+---@param self T
 ---@param iJustification TextJustify
+---@return T
 function EditableText:SetJustification(iJustification)
     self:CallBlueprintEvent("SetJustification", iJustification)
 
@@ -181,6 +239,8 @@ function EditableText:SetJustification(iJustification)
 
     -- Stores the justification.
     self.__Justification = iJustification
+
+    return self
 end
 
 -- Gets how the text should be aligned with the margin.
@@ -191,11 +251,16 @@ end
 
 -- Sets the overflow mode of the text.
 -- Sets what happens to text that is clipped and doesn't fit within the clip rect for this widget.
+---@generic T
+---@param self T
 ---@param iOverflowMode OverflowMode
+---@return T
 function EditableText:SetOverflowMode(iOverflowMode)
     self:CallBlueprintEvent("SetOverflowMode", iOverflowMode)
 
     self:SetValue("__OverflowMode", iOverflowMode)
+
+    return self
 end
 
 -- Gets the overflow mode of the text.
@@ -205,11 +270,16 @@ function EditableText:GetOverflowMode()
 end
 
 -- Sets the case of the text .
+---@generic T
+---@param self T
 ---@param iTextCase CaseMode
+---@return T
 function EditableText:SetCaseMode(iTextCase)
     self:CallBlueprintEvent("SetCaseMode", iTextCase)
 
     self:SetValue("__TextCase", iTextCase)
+
+    return self
 end
 
 -- Gets the case of the text.
@@ -219,14 +289,19 @@ function EditableText:GetCaseMode()
 end
 
 -- Sets the shadow settings (Color and Offset) of the text.
+---@generic T
+---@param self T
 ---@param Color Color | nil
 ---@param Offset Vector2D | nil
+---@return T
 function EditableText:SetShadowSettings(Color, Offset)
     local CurrentColor, CurrentOffset = self:GetShadowSettings()
 
     self:CallBlueprintEvent("SetShadowSettings", Color or CurrentColor or Color.TRANSPARENT, Offset or CurrentOffset or Vector2D())
 
     self:SetValue("__ShadowSettings", {Color = Color, Offset = Offset})
+
+    return self
 end
 
 -- Gets the shadow settings (Color and Offset) of the text.
@@ -237,11 +312,16 @@ function EditableText:GetShadowSettings()
 end
 
 -- Sets a mask character to be replaced for each display character. Only for single-line text.
+---@generic T
+---@param self T
 ---@param sMaskCharacter string
+---@return T
 function EditableText:ApplyMaskCharacter(sMaskCharacter)
     self:CallBlueprintEvent("ApplyMaskCharacter", sMaskCharacter)
 
     self:SetValue("__MaskCharacter", sMaskCharacter)
+
+    return self
 end
 
 -- Gets the mask character to be replaced for each display character. Only for single-line text.

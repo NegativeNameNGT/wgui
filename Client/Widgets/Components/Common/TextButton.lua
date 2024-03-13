@@ -28,3 +28,7 @@ function TextButton:index(sKey)
         return xReturnValue
     end
 end
+
+function TextButton:test()
+    
+end

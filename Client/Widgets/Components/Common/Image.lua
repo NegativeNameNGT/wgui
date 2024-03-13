@@ -8,11 +8,16 @@ function Image:Constructor()
 end
 
 -- Sets the brush to display.
+---@generic T
+---@param self T
 ---@param oBrush Brush
+---@return T
 function Image:SetBrush(oBrush)
     self:CallBlueprintEvent("SetBrush", oBrush)
 
     self.__Brush = oBrush
+
+    return self
 end
 
 -- Gets the brush of the border.
@@ -26,7 +31,11 @@ function Image:GetBrush()
 end
 
 -- Sets the Brush to the specified Texture.
+---@generic T
+---@param self T
 ---@param sSrc string
+---@param tSrcSize Vector2D | nil
+---@return T
 function Image:SetBrushFromSrc(sSrc, tSrcSize)
     local oCurrentBrush = self:GetBrush()
     oCurrentBrush.SetDrawMode(DrawMode.Image)
@@ -34,14 +43,21 @@ function Image:SetBrushFromSrc(sSrc, tSrcSize)
     oCurrentBrush.SetSrcSize(tSrcSize or oCurrentBrush.SrcSize)
 
     self:SetBrush(oCurrentBrush)
+
+    return self
 end
 
 -- Sets the Brush to the specified Material.
+---@generic T
+---@param self T
 ---@param Material MaterialInstance | WebUI | Canvas | SceneCapture
+---@return T
 function Image:SetBrushFromMaterial(Material)
     local oCurrentBrush = self:GetBrush()
     oCurrentBrush.SetDrawMode(DrawMode.Image)
     oCurrentBrush.SetMaterial(Material)
 
     self:SetBrush(oCurrentBrush)
+
+    return self
 end

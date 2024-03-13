@@ -12,13 +12,18 @@ function RetainerBox:Constructor()
 end
 
 -- Sets the dynamic material instance to use for rendering.
+---@generic T
+---@param self T
 ---@param oMaterial MaterialInstance
+---@return T
 function RetainerBox:SetMaterial(oMaterial)
     self:CallBlueprintEvent("SetEffectMaterial", oMaterial.__ID)
 
     -- Stores the value
     self.WeakData = self.WeakData or setmetatable({}, {__mode = "v"})
     self.WeakData.Material = oMaterial
+
+    return self
 end
 
 -- Gets the dynamic material instance to use for rendering.
@@ -28,12 +33,17 @@ function RetainerBox:GetMaterial()
 end
 
 -- Sets the name of the texture parameter to set the render target to on the material.
+---@generic T
+---@param self T
 ---@param sTextureParameterName string
+---@return T
 function RetainerBox:SetTextureParameter(sTextureParameterName)
     self:CallBlueprintEvent("SetTextureParameter", sTextureParameterName)
 
     -- Stores the value
     self:SetValue("__TextureParameterName", sTextureParameterName)
+
+    return self
 end
 
 -- Gets the name of the texture parameter to set the render target to on the material.
@@ -42,13 +52,18 @@ function RetainerBox:GetTextureParameter()
     return self:GetValue("__TextureParameterName", "")
 end
 
--- Sets the flag for if we retain the render or pass-trough.
+-- Sets the flag for if we retain the render or pass-through.
+---@generic T
+---@param self T
 ---@param bRetainRender boolean
+---@return T
 function RetainerBox:SetRetainRender(bRetainRender)
     self:CallBlueprintEvent("SetRetainRender", bRetainRender)
 
     -- Stores the value
     self:SetValue("__RetainRender", bRetainRender)
+
+    return self
 end
 
 -- Gets the flag for if we retain the render or pass-trough.
@@ -57,10 +72,15 @@ function RetainerBox:GetRetainRender()
     return self:GetValue("__RetainRender", false)
 end
 
+---@generic T
+---@param self T
 ---@param iRenderPhase integer
 ---@param iTotalCount integer
+---@return T
 function RetainerBox:SetRenderingPhase(iRenderPhase, iTotalCount)
     self:CallBlueprintEvent("SetRenderingPhase", iRenderPhase, iTotalCount)
+
+    return self
 end
 
 -- Requests the retainer redrawn the contents it has.

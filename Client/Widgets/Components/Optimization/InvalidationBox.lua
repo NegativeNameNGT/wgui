@@ -12,12 +12,17 @@ function InvalidationBox:Constructor()
 end
 
 -- Sets whether or not the invalidation panel can cache the widget.
+---@generic T
+---@param self T
 ---@param bCanCache boolean
+---@return T
 function InvalidationBox:SetCanCache(bCanCache)
     self:CallBlueprintEvent("SetCanCache", bCanCache)
 
     -- Stores the value
     self:SetValue("__CanCache", bCanCache)
+
+    return self
 end
 
 -- Gets whether or not the invalidation panel can cache the widget.

@@ -11,7 +11,10 @@ function CheckBox:Constructor()
 end
 
 -- Sets the style of the checkbox.
+---@generic T
+---@param self T
 ---@param oStyle CheckBoxStyle
+---@return T
 function CheckBox:SetStyleSheet(oStyle)
     self:CallBlueprintEvent("SetStyleSheet",
         oStyle.Background or {},
@@ -26,6 +29,8 @@ function CheckBox:SetStyleSheet(oStyle)
     )
 
     self.__StyleSheet = oStyle
+
+    return self
 end
 
 -- Gets the style of the checkbox.
@@ -57,11 +62,16 @@ function CheckBox:GetStyleSheet()
 end
 
 -- Sets the checked state of the checkbox.
+---@generic T
+---@param self T
 ---@param bChecked boolean
+---@return T
 function CheckBox:SetChecked(bChecked)
     self:CallBlueprintEvent("SetChecked", bChecked)
 
     self:SetValue("__CachedChecked", bChecked)
+
+    return self
 end
 
 -- Gets the checked state of the checkbox.

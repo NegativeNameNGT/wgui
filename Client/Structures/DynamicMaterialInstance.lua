@@ -60,8 +60,9 @@ end
 ---@param sTexturePath string
 ---@param bShouldCacheURLImage boolean | nil
 function MaterialInstance:SetTextureParameter(sParameterName, sTexturePath, bShouldCacheURLImage)
+    print(sTexturePath)
     if string.sub(sTexturePath, 1, 1) == ("p" or "s") then
-        WGUI.ToolkitBlueprint:CallBlueprintEvent("SetTextureParameterValue", self.__ID, sParameterName, nil, sTexturePath)
+        WGUI.ToolkitBlueprint:CallBlueprintEvent("SetTextureParameterValue", self.__ID, sParameterName, "", sTexturePath)
         return
     end
 

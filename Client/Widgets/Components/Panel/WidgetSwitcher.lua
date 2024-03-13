@@ -10,20 +10,28 @@ function WidgetSwitcher:Constructor()
 end
 
 -- Activates the widget and makes it the active index
+---@generic T
+---@param self T
 ---@param oWidget BaseWidget
+---@return T
 function WidgetSwitcher:SetActiveWidget(oWidget)
     if not (oWidget or oWidget:IsValid()) then
-        return
+        return self
     end
 
     self:CallBlueprintEvent("SetActiveWidget", oWidget)
 
     -- Stores the current widget.
     self:SetValue("__CurrentWidget", oWidget)
+
+    return self
 end
 
 -- Activates the widget at the specified index.
+---@generic T
+---@param self T
 ---@param iIndex integer
+---@return T
 function WidgetSwitcher:SetActiveWidgetIndex(iIndex)
     self:CallBlueprintEvent("SetActiveWidgetIndex", iIndex - 1)
 
@@ -32,6 +40,8 @@ function WidgetSwitcher:SetActiveWidgetIndex(iIndex)
 
     -- Stores the current widget.
     self:SetValue("__CurrentWidget", self:GetChildrenAt(iIndex))
+
+    return self
 end
 
 -- Gets the active widget.

@@ -14,11 +14,16 @@ function Border:Constructor()
 end
 
 -- Sets the brush of the border.
+---@generic T
+---@param self T
 ---@param oBrush Brush
+---@return T
 function Border:SetBrush(oBrush)
     self:CallBlueprintEvent("SetBrush", oBrush or {})
 
     self.__Brush = oBrush
+
+    return self
 end
 
 -- Gets the brush of the border.

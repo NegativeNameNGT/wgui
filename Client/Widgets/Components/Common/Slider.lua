@@ -8,7 +8,10 @@ function Slider:Constructor()
 end
 
 -- Sets the style of the slider.
+---@generic T
+---@param self T
 ---@param oStyle SliderStyle
+---@return T
 function Slider:SetStyleSheet(oStyle)
     self:CallBlueprintEvent("SetStyleSheet",
         oStyle.Normal or {},
@@ -43,7 +46,10 @@ function Slider:GetStyleSheet()
 end
 
 -- Sets the value of the slider.
+---@generic T
+---@param self T
 ---@param fValue number
+---@return T
 function Slider:SetSliderValue(fValue)
     self:CallBlueprintEvent("SetValue", fValue)
 
@@ -57,11 +63,16 @@ function Slider:GetSliderValue()
 end
 
 -- Sets the minimum value of the slider.
+---@generic T
+---@param self T
 ---@param fValue number
+---@return T
 function Slider:SetMinValue(fValue)
     self:CallBlueprintEvent("SetMinValue", fValue)
 
     self:SetValue("__MinValue", fValue)
+
+    return self
 end
 
 -- Gets the minimum value of the slider.
@@ -71,11 +82,16 @@ function Slider:GetMinValue()
 end
 
 -- Sets the maximum value of the slider.
+---@generic T
+---@param self T
 ---@param fValue number
+---@return T
 function Slider:SetMaxValue(fValue)
     self:CallBlueprintEvent("SetMaxValue", fValue)
 
     self:SetValue("__MaxValue", fValue)
+
+    return self
 end
 
 -- Gets the maximum value of the slider.
@@ -85,11 +101,16 @@ function Slider:GetMaxValue()
 end
 
 -- Sets the orientation of the slider.
+---@generic T
+---@param self T
 ---@param iOrientation Orientation
+---@return T
 function Slider:SetOrientation(iOrientation)
     self:CallBlueprintEvent("SetOrientation", iOrientation)
 
     self:SetValue("__Orientation", iOrientation)
+
+    return self
 end
 
 -- Gets the orientation of the slider.
@@ -99,17 +120,27 @@ function Slider:GetOrientation()
 end
 
 -- Sets if the slidable area should be indented to fit the handle.
+---@generic T
+---@param self T
 ---@param bIndentHandle boolean
+---@return T
 function Slider:SetIndentHandle(bIndentHandle)
     self:CallBlueprintEvent("SetIndentHandle", bIndentHandle)
+
+    return self
 end
 
 -- Sets the handle to be interactive or fixed.
+---@generic T
+---@param self T
 ---@param bLocked boolean
+---@return T
 function Slider:SetIsLocked(bLocked)
     self:CallBlueprintEvent("SetIsLocked", bLocked)
 
     self:SetValue("__Locked", bLocked)
+
+    return self
 end
 
 -- Gets if the handle is interactive or fixed.
@@ -119,11 +150,16 @@ function Slider:GetIsLocked()
 end
 
 -- Sets the color of the slider bar.
+---@generic T
+---@param self T
 ---@param oColor Color
+---@return T
 function Slider:SetBarColor(oColor)
     self:CallBlueprintEvent("SetBarColor", oColor)
 
     self:SetValue("__BarColor", oColor)
+
+    return self
 end
 
 -- Gets the color of the slider bar.
@@ -133,11 +169,16 @@ function Slider:GetBarColor()
 end
 
 -- Sets the color of the slider handle.
+---@generic T
+---@param self T
 ---@param oColor Color
+---@return T
 function Slider:SetHandleColor(oColor)
     self:CallBlueprintEvent("SetHandleColor", oColor)
 
     self:SetValue("__HandleColor", oColor)
+
+    return self
 end
 
 -- Gets the color of the slider handle.

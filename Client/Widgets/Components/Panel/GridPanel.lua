@@ -13,9 +13,12 @@ end
 local _AddChild = GridPanel.AddChild
 
 -- Adds a new child widget to the panel.
+---@generic T
+---@param self T
 ---@param oContent BaseWidget
 ---@param iInRow integer
 ---@param iInColumn integer
+---@return T
 function GridPanel:AddChild(oContent, iInRow, iInColumn)
     -- Checks if the content widget is valid.
     if not (oContent or oContent:IsValid()) then
@@ -25,14 +28,20 @@ function GridPanel:AddChild(oContent, iInRow, iInColumn)
     _AddChild(self, oContent, iInRow or 0, iInColumn or 0)
 end
 
+---@generic T
+---@param self T
 ---@param iColumnIndex integer
 ---@param fCoefficient number
+---@return T
 function GridPanel:SetColumnFill(iColumnIndex, fCoefficient)
     self:CallBlueprintEvent("SetColumnFill", iColumnIndex, fCoefficient)
 end
 
+---@generic T
+---@param self T
 ---@param iRowIndex integer
 ---@param fCoefficient number
+---@return T
 function GridPanel:SetRowFill(iRowIndex, fCoefficient)
     self:CallBlueprintEvent("SetRowFill", iRowIndex, fCoefficient)
 end

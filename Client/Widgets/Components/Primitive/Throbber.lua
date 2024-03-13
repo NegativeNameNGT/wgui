@@ -8,36 +8,61 @@ function Throbber:Constructor()
 end
 
 -- Sets the number of pieces in the throbber.
+---@generic T
+---@param self T
 ---@param iNumberOfPieces integer
+---@return T
 function Throbber:SetNumberOfPieces(iNumberOfPieces)
     self:CallBlueprintEvent("SetNumberOfPieces", iNumberOfPieces)
+
+    return self
 end
 
 -- Sets whether the pieces animate horizontally.
+---@generic T
+---@param self T
 ---@param bAnimateHorizontally boolean
+---@return T
 function Throbber:SetAnimateHorizontally(bAnimateHorizontally)
     self:CallBlueprintEvent("SetAnimateHorizontally", bAnimateHorizontally)
+
+    return self
 end
 
 -- Sets whether the pieces animate vertically.
+---@generic T
+---@param self T
 ---@param bAnimateVertically boolean
+---@return T
 function Throbber:SetAnimateVertically(bAnimateVertically)
     self:CallBlueprintEvent("SetAnimateVertically", bAnimateVertically)
+
+    return self
 end
 
 -- Sets whether the pieces animate the opacity.
+---@generic T
+---@param self T
 ---@param bAnimateOpacity boolean
+---@return T
 function Throbber:SetAnimateOpacity(bAnimateOpacity)
     self:CallBlueprintEvent("SetAnimateOpacity", bAnimateOpacity)
+
+    return self
 end
 
 -- Sets the brush of the throbber.
+---@generic T
+---@param self T
 ---@param oBrush Brush
+---@return T
 function Throbber:SetBrush(oBrush)
     self:CallBlueprintEvent("SetBrush", oBrush or {})
 
     -- Stores the brush.
     self.__Brush = oBrush
+
+    return self
 end
 
 -- Gets the brush of the throbber.

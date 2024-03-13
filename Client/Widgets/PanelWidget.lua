@@ -18,17 +18,20 @@ end
 PanelWidget.Subscribe("Destroy", OnPanelDestroy)
 
 -- Adds a new child widget to the panel.
+---@generic T
+---@param self T
 ---@param oContent BaseWidget
+---@return T
 function PanelWidget:AddChild(oContent, ...)
     -- Checks if the content widget is valid.
     if not (oContent or oContent:IsValid()) then
-        return
+        return self
     end
 
     -- Checks if the children count limit is reached.
     if self.ChildrenLimit and #self:GetAllChildren() >= self.ChildrenLimit then
         assert(false, "A " .. tostring(self:GetClass()) .. " can only have " .. tostring(self.ChildrenLimit) .. " children(s).")
-        return false
+        return self
     end
 
     -- Adds the content widget to the panel.
@@ -56,11 +59,20 @@ function PanelWidget:AddChild(oContent, ...)
     local oSlotClass = self.Slot
     if oSlotClass then
         for k,v in pairs(oSlotClass) do
-            oContent[k] = v
+            oContent[k] = function (...)
+                local xRet = v(...)
+                if xRet == oSlotClass then
+                    return oContent
+                else
+                    return xRet
+                end
+            end
         end
     end
 
     _WSS.ApplySlotFields(oContent)
+
+    return self
 end
 
 -- Removes a child widget from the panel.
@@ -111,10 +123,15 @@ function PanelWidget:RemoveChild(oContent)
 end
 
 -- Removes all children from the panel.
+---@generic T
+---@param self T
+---@return T
 function PanelWidget:ClearChildren()
     for _,v in ipairs(self:GetAllChildren()) do
         self:RemoveChild(v)
     end
+
+    return self
 end
 
 -- Removes a child widget from the panel by index.

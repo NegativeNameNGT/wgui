@@ -12,11 +12,16 @@ function Button:Constructor()
 end
 
 -- Sets the style of the button.
+---@generic T
+---@param self T
 ---@param oStyle ButtonStyle
+---@return T
 function Button:SetStyleSheet(oStyle)
     self:CallBlueprintEvent("SetStyleSheet", oStyle.Normal or {}, oStyle.Hovered or {}, oStyle.Pressed or {}, oStyle.NormalPadding or Margin(12, 1.5, 12, 1.5), oStyle.PressedPadding or Margin(12, 2.5, 12, 0.5))
 
     self.__StyleSheet = oStyle
+
+    return self
 end
 
 -- Gets the style of the button.
@@ -39,19 +44,34 @@ function Button:GetStyleSheet()
 end
 
 -- Sets the type of mouse action required by the user to trigger the button.
+---@generic T
+---@param self T
 ---@param iClickMethod ClickMethod
+---@return T
 function Button:SetClickMethod(iClickMethod)
     self:CallBlueprintEvent("SetClickMethod", iClickMethod)
+
+    return self
 end
 
 -- Sets the type of touch action required by the user to trigger the button.
+---@generic T
+---@param self T
 ---@param iTouchMethod TouchMethod
+---@return T
 function Button:SetTouchMethod(iTouchMethod)
     self:CallBlueprintEvent("SetTouchMethod", iTouchMethod)
+
+    return self
 end
 
 -- Sets the type of keyboard/gamepad action required by the user to trigger the button.
+---@generic T
+---@param self T
 ---@param iPressMethod PressMethod
+---@return T
 function Button:SetPressMethod(iPressMethod)
     self:CallBlueprintEvent("SetPressMethod", iPressMethod)
+
+    return self
 end

@@ -7,7 +7,10 @@ function RichTextBlock:Constructor()
 end
 
 -- Sets the text to display.
+---@generic T
+---@param self T
 ---@param sText string
+---@return T
 function RichTextBlock:SetText(sText)
     self:CallBlueprintEvent("SetText", sText)
 
@@ -21,13 +24,18 @@ function RichTextBlock:GetText()
 end
 
 -- Sets the style of the text (Data Table asset reference).
+---@generic T
+---@param self T
 ---@param sStylePath string
+---@return T
 function RichTextBlock:SetStyleSheet(sStylePath)
     sStylePath = sStylePath .. "." .. sStylePath:match(".*/(.*)")
 
     self:CallBlueprintEvent("SetStyleSheet", sStylePath)
 
     self:SetValue("__CachedStyleSheet", sStylePath)
+
+    return self
 end
 
 -- Gets the style of the text (Data Table asset reference).
@@ -37,11 +45,16 @@ function RichTextBlock:GetStyleSheet()
 end
 
 -- Replaces the existing decorators with the list provided.
+---@generic T
+---@param self T
 ---@param tDecoratorPaths table<string>
+---@return T
 function RichTextBlock:SetDecoratorPaths(tDecoratorPaths)
     self:CallBlueprintEvent("SetDecoratorPaths", tDecoratorPaths)
 
     self:SetValue("__CachedDecoratorPaths", tDecoratorPaths)
+
+    return self
 end
 
 -- Gets the list of decorator paths.
@@ -51,11 +64,16 @@ function RichTextBlock:GetDecoratorPaths()
 end
 
 -- Sets the minimum desired width for the text.
+---@generic T
+---@param self T
 ---@param fMinDesiredWidth number
+---@return T
 function RichTextBlock:SetMinDesiredWidth(fMinDesiredWidth)
     self:CallBlueprintEvent("SetMinDesiredWidth", fMinDesiredWidth)
 
     self:SetValue("__MinDesiredWidth", fMinDesiredWidth)
+
+    return self
 end
 
 -- Gets the minimum desired width for the text.
@@ -65,11 +83,16 @@ function RichTextBlock:GetMinDesiredWidth()
 end
 
 -- Sets the auto wrap text setting of the text.
+---@generic T
+---@param self T
 ---@param bAutoWrapText boolean
+---@return T
 function RichTextBlock:SetAutoWrapText(bAutoWrapText)
     self:CallBlueprintEvent("SetAutoWrapText", bAutoWrapText)
 
     self:SetValue("__AutoWrapText", bAutoWrapText)
+
+    return self
 end
 
 -- Gets the auto wrap text setting of the text.
@@ -79,7 +102,10 @@ function RichTextBlock:GetAutoWrapText()
 end
 
 -- Sets how the text should be aligned with the margin.
+---@generic T
+---@param self T
 ---@param iJustification TextJustify
+---@return T
 function RichTextBlock:SetJustification(iJustification)
     self:CallBlueprintEvent("SetJustification", iJustification)
 
@@ -87,6 +113,8 @@ function RichTextBlock:SetJustification(iJustification)
 
     -- Stores the justification.
     self.__Justification = iJustification
+
+    return self
 end
 
 -- Gets how the text should be aligned with the margin.
@@ -96,11 +124,16 @@ function RichTextBlock:GetJustification()
 end
 
 -- Sets the case of the text.
+---@generic T
+---@param self T
 ---@param iTextCase CaseMode
+---@return T
 function RichTextBlock:SetCaseMode(iTextCase)
     self:CallBlueprintEvent("SetCaseMode", iTextCase)
 
     self:SetValue("__TextCase", iTextCase)
+
+    return self
 end
 
 -- Gets the case of the text.
@@ -111,11 +144,16 @@ end
 
 -- Sets the overflow mode of the text.
 -- Sets what happens to text that is clipped and doesn't fit within the clip rect for this widget.
+---@generic T
+---@param self T
 ---@param iOverflowMode OverflowMode
+---@return T
 function RichTextBlock:SetOverflowMode(iOverflowMode)
     self:CallBlueprintEvent("SetOverflowMode", iOverflowMode)
 
     self:SetValue("__OverflowMode", iOverflowMode)
+
+    return self
 end
 
 -- Gets the overflow mode of the text.

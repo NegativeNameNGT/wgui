@@ -7,11 +7,16 @@ function StepSlider:Constructor()
 end
 
 -- Sets the amount to adjust the value by when the slider is moved.
+---@generic T
+---@param self T
 ---@param fStep number
+---@return T
 function StepSlider:SetStepSize(fStep)
     self:CallBlueprintEvent("SetStep", fStep)
 
     self:SetValue("__CachedStep", fStep)
+
+    return self
 end
 
 -- Gets the amount to adjust the value by when the slider is moved.
