@@ -145,8 +145,12 @@ function CanvasPanelSlot.SetAnchor(self, tAnchor)
     tSlot.Anchor = tAnchor
     tSlot.Size = tNewSize
     tSlot.Alignment = tAnchor.Alignment
-    tSlot.Pos = nil
     self:SetValue("__Slot", tSlot)
+
+    if tSlot.Pos then
+        -- To do: add it in the SetAnchor function instead of recalling it here.
+        CanvasPanelSlot.SetPos(self, tSlot.Pos)
+    end
 
     return CanvasPanelSlot
 end

@@ -51,10 +51,12 @@ end
 ---@generic T
 ---@param self T
 ---@param Material MaterialInstance | WebUI | Canvas | SceneCapture
+---@param Size Vector2D | nil
 ---@return T
-function Image:SetBrushFromMaterial(Material)
+function Image:SetBrushFromMaterial(Material, Size)
     local oCurrentBrush = self:GetBrush()
     oCurrentBrush.SetDrawMode(DrawMode.Image)
+    oCurrentBrush.SetSrcSize(Size or oCurrentBrush.Size)
     oCurrentBrush.SetMaterial(Material)
 
     self:SetBrush(oCurrentBrush)

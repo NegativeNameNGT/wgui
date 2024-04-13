@@ -40,7 +40,8 @@ end
 -- Collects all the tag layers
 ---@param oWidget BaseWidget
 ---@param tOutput table
-function _WSS.CollectTagLayers(oWidget, tOutput)
+---@param tDynamicStyleSheet table
+function _WSS.CollectTagLayers(oWidget, tOutput, tDynamicStyleSheet)
     for _, sTag in pairs(oWidget:GetValue("__StyleTags", {})) do
         local tStyleSheet = _WSS.GetStyleSheet(sTag, LayerType.Tag)
         if not tStyleSheet then
@@ -48,7 +49,17 @@ function _WSS.CollectTagLayers(oWidget, tOutput)
         end
 
         CollectFields(tStyleSheet, tOutput)
+
         ::continue::
+
+        local tDynamicPseudoClasses = _WSS.GetStyleSheet(sTag, LayerType.Dynamic)
+        if not tDynamicPseudoClasses then
+            return
+        end
+    
+        for sField, xValue in pairs(tDynamicPseudoClasses) do
+            tDynamicStyleSheet[sField] = xValue
+        end
     end
 
     return tOutput
@@ -62,7 +73,7 @@ function _WSS.CollectFields(oWidget)
     local tDynamicStyleSheet = {}
 
     _WSS.CollectClassLayers(oWidget:GetClass(), tFields, tDynamicStyleSheet)
-    _WSS.CollectTagLayers(oWidget, tFields)
+    _WSS.CollectTagLayers(oWidget, tFields, tDynamicStyleSheet)
 
     return tFields, tDynamicStyleSheet
 end

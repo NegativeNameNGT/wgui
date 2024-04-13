@@ -72,8 +72,12 @@ local function ParseStyleSheetData(sStyleSheet)
                 goto continue
             end
 
-            sDynamicLayer = sDynamicLayer .. " Class"
-            if not WSS.StyleSheets.Dynamic[sDynamicLayer] then
+            -- Checks if the layer is a class.
+            if _WSS.WidgetClasses[sDynamicLayer .. " Class"] then
+                sDynamicLayer = sDynamicLayer .. " Class"
+            end
+        
+            if not _WSS.StyleSheets.Dynamic[sDynamicLayer] then
                 _WSS.StyleSheets.Dynamic[sDynamicLayer] = {}
             end
 

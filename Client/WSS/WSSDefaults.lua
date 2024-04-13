@@ -1,63 +1,69 @@
 -- 'Base Widget' properties
 WSS.Extend({
-    IsVolatile = {"ForceVolatile", WSSParserType.Boolean},
-    Padding = {"SetPadding", WSSParserType.Margin},
-    ToolTipText = {"SetToolTipText", WSSParserType.String},
-    Translation = {"SetTranslation", WSSParserType.Vector2D},
-    Angle = {"SetAngle", WSSParserType.Number},
-    Shear = {"SetShear", WSSParserType.Vector2D},
-    Scale = {"SetScale", WSSParserType.Vector2D},
-    Opacity = {"SetOpacity", WSSParserType.Number},
-    Color = {"SetColor", WSSParserType.Color},
-    IsEnabled = {"SetIsEnabled", WSSParserType.Boolean},
-    Cursor = {"SetCursor", WSSParserType.Enum},
-    Clipping = {"SetClipping", WSSParserType.Enum},
-    PixelSnapping = {"SetPixelSnapping", WSSParserType.Enum},
-    IsVisible = {function(self, bIsVisible) self:SetVisibility(bIsVisible and WGUIVisibility.Visible or WGUIVisibility.Hidden) end, WSSParserType.Boolean},
-    IsHitTestable = {function(self, bIsHitTestable) self:SetVisibility(bIsHitTestable and WGUIVisibility.Visible or WGUIVisibility.NotHitTestableSelf) end, WSSParserType.Boolean},
-    DragKey = {"SetDragKey", WSSParserType.String},
+    ["is-volatile"] = {"ForceVolatile", WSSParserType.Boolean},
+    ["padding"] = {"SetPadding", WSSParserType.Margin},
+    ["tooltip-text"] = {"SetToolTipText", WSSParserType.String},
+    ["translation"] = {"SetTranslation", WSSParserType.Vector2D},
+    ["angle"] = {"SetAngle", WSSParserType.Number},
+    ["shear"] = {"SetShear", WSSParserType.Vector2D},
+    ["scale"] = {"SetScale", WSSParserType.Vector2D},
+    ["opacity"] = {"SetOpacity", WSSParserType.Number},
+    ["color"] = {"SetColor", WSSParserType.Color},
+    ["is-enabled"] = {"SetIsEnabled", WSSParserType.Boolean},
+    ["cursor"] = {"SetCursor", WSSParserType.Enum},
+    ["clipping"] = {"SetClipping", WSSParserType.Enum},
+    ["pixel-snapping"] = {"SetPixelSnapping", WSSParserType.Enum},
+    ["is-visible"] = {function(self, bIsVisible) self:SetVisibility(bIsVisible and WGUIVisibility.Visible or WGUIVisibility.Hidden) end, WSSParserType.Boolean},
+    ["is-hit-testable"] = {function(self, bIsHitTestable) self:SetVisibility(bIsHitTestable and WGUIVisibility.Visible or WGUIVisibility.NotHitTestableSelf) end, WSSParserType.Boolean},
+    ["drag-key"] = {"SetDragKey", WSSParserType.String},
 })
 
 _WSS.BrushExtension = {
-    DrawMode = {"SetDrawMode", WSSParserType.Enum},
-    BackgroundColor = {"SetColor", WSSParserType.Color},
-    BackgroundImage = {"SetSrc", WSSParserType.String},
-    BackgroundImageSize = {"SetSrcSize", WSSParserType.Vector2D},
-    CanCacheImage = {"SetCanCacheURLSrc", WSSParserType.Boolean},
-    Margin = {"SetMargin", WSSParserType.Margin},
-    Tiling = {"SetTiling", WSSParserType.Vector2D},
-    OutlineColor = {"SetOutlineColor", WSSParserType.Color},
-    OutlineCorner = {"SetOutlineCorners", WSSParserType.Quat},
-    OutlineWidth = {"SetOutlineWidth", WSSParserType.Number},
-    OutlineType = {"SetOutlineType", WSSParserType.Enum},
-    OutlineUseAlpha = {"SetOutlineUseAlpha", WSSParserType.Boolean},
+    ["draw-mode"] = {"SetDrawMode", WSSParserType.Enum},
+    ["background-color"] = {"SetColor", WSSParserType.Color},
+    ["background-image"] = {"SetSrc", WSSParserType.String},
+    ["background-image-size"] = {"SetSrcSize", WSSParserType.Vector2D},
+    ["can-cache-image"] = {"SetCanCacheURLSrc", WSSParserType.Boolean},
+    ["margin"] = {"SetMargin", WSSParserType.Margin},
+    ["tiling"] = {"SetTiling", WSSParserType.Vector2D},
+    ["border-color"] = {"SetOutlineColor", WSSParserType.Color},
+    ["border-corner"] = {"SetOutlineCorners", WSSParserType.Quat},
+    ["border-width"] = {"SetOutlineWidth", WSSParserType.Number},
+    ["border-type"] = {"SetOutlineType", WSSParserType.Enum},
+    ["border-use-alpha"] = {"SetOutlineUseAlpha", WSSParserType.Boolean},
 }
 -- 'Brush' properties
 WSS.Extend(_WSS.BrushExtension)
 
 -- 'Canvas Panel' slot properties
 WSS.Extend({
-    Pos = {"SetPos", WSSParserType.Vector2D},
-    ZPos = {"SetZPosition", WSSParserType.Number},
-    Size = {"SetSize", WSSParserType.Vector2D},
-    Alignment = {"SetAlignment", WSSParserType.Vector2D},
-    Anchor = {"SetAnchor", WSSParserType.Enum},
-    IsSizedToContent = {"SizeToContent", WSSParserType.Boolean}
+    ["pos"] = {"SetPos", WSSParserType.Vector2D},
+    ["z-pos"] = {"SetZPosition", WSSParserType.Number},
+    ["size"] = {"SetSize", WSSParserType.Vector2D},
+    ["alignment"] = {"SetAlignment", WSSParserType.Vector2D},
+    ["anchor"] = {"SetAnchor", WSSParserType.Enum},
+    ["sized-to-content"] = {"SizeToContent", WSSParserType.Boolean}
 })
 
 -- Common slot properties
 WSS.Extend({
-    HAlign = {"SetHAlign", WSSParserType.Enum},
-    VAlign = {"SetVAlign", WSSParserType.Enum},
-    FlexSize = {"SetSize", WSSParserType.FlexSize, true},
+    ["h-align"] = {"SetHAlign", WSSParserType.Enum},
+    ["v-align"] = {"SetVAlign", WSSParserType.Enum},
+    ["flex-size"] = {"SetSize", WSSParserType.FlexSize, true},
 })
 
 -- 'Text' properties
 WSS.Extend({
-    Text = {"SetText", WSSParserType.String},
+    ["text"] = {"SetText", WSSParserType.String},
 
     -- Font properties
-    ["Font-Family"] = {"SetFont", WSSParserType.String, nil, IsBatchable = true},
-    ["Font-Typeface"] = {"SetFont", WSSParserType.String, nil, IsBatchable = true},
-    ["Font-Size"] = {"SetFont", WSSParserType.Number, nil, IsBatchable = true},
+    ["font-family"] = {"SetFont", WSSParserType.String, nil, IsBatchable = true},
+    ["font-typeface"] = {"SetFont", WSSParserType.String, nil, IsBatchable = true},
+    ["font-size"] = {"SetFont", WSSParserType.Number, nil, IsBatchable = true},
+})
+
+-- 'Progress Bar' properties
+WSS.Extend({
+    ["percent"] = {"SetPercent", WSSParserType.Number},
+    ["fill-color"] = {"SetFillColor", WSSParserType.Color},
 })
