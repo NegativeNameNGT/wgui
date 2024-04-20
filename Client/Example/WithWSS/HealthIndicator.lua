@@ -8,5 +8,5 @@ function WSS_HealthIndicator:Constructor()
     WGUI.CreateWithTags(Image, "#HealthIcon", self)
 
     -- Creates a text block to display the health value
-    WGUI.CreateWithTags(TextBlock, {"#HUDText", "#HealthText"}, self)
+    WGUI.CreateWithTags(TextBlock, {"#HUD-Text", "#HealthText"}, self)
 end

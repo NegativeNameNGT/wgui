@@ -42,7 +42,7 @@ function WGUI.Create(cClass, oParentPanel, ...)
         return nil
     end
 
-    local oWidget = cClass(...)
+    local oWidget = cClass(...) ---@type BaseWidget
 
     -- Gives the widget a unique ID
     iCurWidgetID = iCurWidgetID + 1

@@ -466,7 +466,6 @@ function BaseWidget:SetStyleTags(tTags)
     end
 
     self:SetValue("__StyleTags", tTags)
-
     return self
 end
 

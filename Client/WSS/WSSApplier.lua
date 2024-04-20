@@ -42,7 +42,9 @@ end
 ---@param tOutput table
 ---@param tDynamicStyleSheet table
 function _WSS.CollectTagLayers(oWidget, tOutput, tDynamicStyleSheet)
-    for _, sTag in pairs(oWidget:GetValue("__StyleTags", {})) do
+    local tStyleTags = oWidget:GetValue("__StyleTags", {})
+
+    for _, sTag in pairs(tStyleTags) do
         local tStyleSheet = _WSS.GetStyleSheet(sTag, LayerType.Tag)
         if not tStyleSheet then
             goto continue
@@ -53,12 +55,10 @@ function _WSS.CollectTagLayers(oWidget, tOutput, tDynamicStyleSheet)
         ::continue::
 
         local tDynamicPseudoClasses = _WSS.GetStyleSheet(sTag, LayerType.Dynamic)
-        if not tDynamicPseudoClasses then
-            return
-        end
-    
-        for sField, xValue in pairs(tDynamicPseudoClasses) do
-            tDynamicStyleSheet[sField] = xValue
+        if tDynamicPseudoClasses then
+            for sField, xValue in pairs(tDynamicPseudoClasses) do
+                tDynamicStyleSheet[sField] = xValue
+            end
         end
     end
 
@@ -118,6 +118,8 @@ function _WSS.ApplyStyleSheet(oWidget, tStyleSheet)
             local xDynamicValue = WSS.GetDynamicAttributeValue(sAttribute)
             if xDynamicValue ~= nil then
                 xValue = xDynamicValue
+            else
+                xValue = "null"
             end
         end
 
@@ -163,7 +165,7 @@ function _WSS.ApplyStyleSheet(oWidget, tStyleSheet)
 
         -- Make sure the fields are ordered correctly for each function
         if sFunction == "SetFont" then
-            tOrderedFields = {tFields["Font-Family"], tFields["Font-Typeface"], tFields["Font-Size"]}
+            tOrderedFields = {tFields["font_family"], tFields["font_typeface"], tFields["font_size"]}
         end
 
         oWidget[sFunction](oWidget, table.unpack(tOrderedFields))

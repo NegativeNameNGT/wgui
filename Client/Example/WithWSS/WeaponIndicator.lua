@@ -5,8 +5,8 @@ function WSS_WeaponIndicator:Constructor()
     WSS_Indicator.Constructor(self)
 
     -- Creates a text block to display the ammo value
-    WGUI.CreateWithTags(TextBlock, {"#HUDText", "#AmmoText"}, self)
+    WGUI.CreateWithTags(TextBlock, {"#HUD-Text", "#AmmoText"}, self)
 
     -- Creates a text block to display the ammo bag value
-    WGUI.CreateWithTags(TextBlock, {"#HUDText", "#AmmoBagText"}, self)
+    WGUI.CreateWithTags(TextBlock, {"#HUD-Text", "#AmmoBagText"}, self)
 end

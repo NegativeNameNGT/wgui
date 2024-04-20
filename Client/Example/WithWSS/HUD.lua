@@ -16,8 +16,7 @@ function WSS_HUD:Constructor()
     local WeaponIndicator = WGUI.CreateWithTags(WSS_WeaponIndicator, "#WeaponIndicator", self)
 end
 
-WSS.LoadFile("wgui/Client/Example/WithWSS/HUD.toml")
-
 Package.Require("Indicator.lua")
 Package.Require("HealthIndicator.lua")
 Package.Require("WeaponIndicator.lua")
+Package.Require("style.lua")

@@ -6,6 +6,11 @@ LayerType = {
     Dynamic = 3
 }
 
+--- A Stylesheet configuration where the first element is the ID and the second element is the Fields.
+--- @class Stylesheet
+--- @field [1] string | BaseWidget @The identifier of the stylesheet, either a string or a BaseWidget.
+--- @field [2] StylesheetFields @The fields of the stylesheet.
+
 -- Gets the layer type from the layer name.
 ---@param sLayerName string
 ---@return LayerType
@@ -76,7 +81,7 @@ local function ParseStyleSheetData(sStyleSheet)
             if _WSS.WidgetClasses[sDynamicLayer .. " Class"] then
                 sDynamicLayer = sDynamicLayer .. " Class"
             end
-        
+
             if not _WSS.StyleSheets.Dynamic[sDynamicLayer] then
                 _WSS.StyleSheets.Dynamic[sDynamicLayer] = {}
             end
@@ -100,45 +105,109 @@ local function ParseStyleSheetData(sStyleSheet)
     end
 end
 
--- Load a style file.
----@param sFilePath string
-function WSS.LoadFile(sFilePath)
-    if not sFilePath or type(sFilePath) ~= "string" then
+-- Processes a stylesheet.
+---@param xIdentifierOrClass string
+---@param tFields StylesheetFields
+local function ProcessStylesheet(xIdentifierOrClass, tFields)
+    -- Get the layer type.
+    local iLayerType = GetLayerType(xIdentifierOrClass)
+    if iLayerType == LayerType.Null then
+        Console.Warn("[WSS] Invalid layer type for layer '" .. xIdentifierOrClass .. "'")
         return
     end
 
-    sFilePath = "../" .. sFilePath
+    -- Remove the first character from the layer name.
+    xIdentifierOrClass = xIdentifierOrClass:sub(2)
 
-    local oFile = File(sFilePath)
-    if not oFile:IsGood() then
-        return
+    -- Check if the layer is a class.
+    if iLayerType == LayerType.Class then
+        _WSS.StyleSheets.Class[xIdentifierOrClass .. " Class"] = tFields
     end
 
-    local sStyleSheet = oFile:Read()
-    oFile:Close()
-    oFile = nil
-
-    if not sStyleSheet or sStyleSheet == "" then
-        Console.Warn("[WSS] Style sheet file located at '" .. sFilePath .. "' is empty.")
-        return
+    -- Check if the layer is a tag.
+    if iLayerType == LayerType.Tag then
+        _WSS.StyleSheets.Tag[xIdentifierOrClass] = tFields
     end
 
-    -- Parse the style sheet data with the file string data.
-    ParseStyleSheetData(sStyleSheet)
+    -- Check if the layer is a dynamic style.
+    if iLayerType == LayerType.Dynamic then
+        local tDynamicSplitted = SplitString(xIdentifierOrClass, "->")
+
+        local sDynamicLayer = tDynamicSplitted[1]
+        local sDynamicEvent = tDynamicSplitted[2]
+
+        if not sDynamicLayer or not sDynamicEvent then
+            Console.Warn("[WSS] Invalid dynamic layer name for layer '" .. xIdentifierOrClass .. "'")
+            return
+        end
+
+        -- Checks if the layer is a class.
+        if _WSS.WidgetClasses[sDynamicLayer .. " Class"] then
+            sDynamicLayer = sDynamicLayer .. " Class"
+        end
+        
+        if not _WSS.StyleSheets.Dynamic[sDynamicLayer] then
+            _WSS.StyleSheets.Dynamic[sDynamicLayer] = {}
+        end
+
+        _WSS.StyleSheets.Dynamic[sDynamicLayer][sDynamicEvent] = tFields
+    end
 end
 
--- Load a style from a string.
----@param sStyle string
----@return boolean
-function WSS.LoadString(sStyle)
-    if not sStyle or type(sStyle) ~= "string" then
-        return false
+--- Processes a list of Stylesheets.
+--- @vararg string | StylesheetFields
+function ExtendStylesheets(...)
+    local tStylesheets = {...}
+    if not tStylesheets or type(tStylesheets) ~= "table" or next(tStylesheets) == nil then
+        Console.Warn("[WSS] Invalid or empty style sheet data.")
+        return
     end
 
-    ParseStyleSheetData(sStyle)
+    local i = 1
+    while i <= #tStylesheets do
+        local xIdentifier = tStylesheets[i]
+        local tFields = nil
 
-    return true
+        -- Checking if the value is a string (pair of identifier and fields)
+        if type(xIdentifier) == "string" or (type(xIdentifier == "table") and getmetatable(xIdentifier) ~= nil and NanosUtils.IsEntityValid(xIdentifier)) then
+            xIdentifier = tStylesheets[i]
+
+            -- Checking if the next value is a table (fields)
+            if type(tStylesheets[i + 1]) == "table" then
+                tFields = tStylesheets[i + 1]
+            else
+                if type(tStylesheets[i + 1]) == "string" then
+                    if type(tStylesheets[i + 2]) == "table" then
+                        tFields = tStylesheets[i + 2]
+
+                        i = i - 1
+                        goto continue
+                    end
+                end
+                Console.Error("[WSS] The fields for the identifier '" .. xIdentifier .. "' should be a table.")
+                break
+            end
+        else
+            Console.Error("[WSS] The identifier should be a string or a BaseWidget.")
+            break
+        end
+
+        ::continue::
+
+        ProcessStylesheet(xIdentifier, tFields)
+
+        i = i + 2
+    end
 end
+Package.Export("ExtendStylesheets", ExtendStylesheets)
+
+--- Makes a table of stylesheet fields.
+--- @param tStylesheet StylesheetFields
+--- @return table
+function MakeStylesheet(tStylesheet)
+    return tStylesheet
+end
+Package.Export("MakeStylesheet", MakeStylesheet)
 
 -- Returns the stylesheet data of the specified layer.
 ---@param sLayer string

@@ -1,11 +1,11 @@
 # vault configurations
 [meta]
     # friendly name
-    title =                 "WGui"
+    title =                 "WGUI"
     # contributors
     author =                "NegativeName"
     # version
-    version =               "1.1.3"
+    version =               "1.1.4"
 
 # script configurations
 [script]
