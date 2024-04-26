@@ -395,6 +395,7 @@ function BaseWidget:SetVisibility(iVisibility)
 
     self:SetValue("__Visibility", iVisibility)
 
+    Events.Call("WGUI::WidgetVisibilityChanged", self, iVisibility)
     return self
 end
 
@@ -404,10 +405,16 @@ function BaseWidget:GetVisibility()
     return self:GetValue("__Visibility", WGUIVisibility.NotHitTestableSelf)
 end
 
--- Returns true if the widget is Visible and HitTestable
+-- Returns true if the widget is currently visible.
 ---@return boolean
 function BaseWidget:IsVisible()
-    return self:GetVisibility() == (WGUIVisibility.Visible or WGUIVisibility.NotHitTestableAll or WGUIVisibility.NotHitTestableSelf)
+    return self:GetVisibility() == WGUIVisibility.Visible or self:GetVisibility() == WGUIVisibility.NotHitTestableSelf or self:GetVisibility() == WGUIVisibility.NotHitTestableAll
+end
+
+-- Returns true if the widget is currently hit testable.
+---@return boolean
+function BaseWidget:IsHitTestable()
+    return self:GetVisibility() == WGUIVisibility.Visible
 end
 
 -- Returns true if the widget is currently being hovered.

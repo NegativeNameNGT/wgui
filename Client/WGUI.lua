@@ -51,6 +51,12 @@ function WGUI.Create(cClass, oParentPanel, ...)
     -- Stores the widget
     WGUI.Widgets[iCurWidgetID] = oWidget
 
+    oWidget:BindDispatcher("RefreshData", function (_, iVisibility)
+        oWidget:SetValue("__Visibility", iVisibility)
+
+        oWidget:UnbindDispatcher("RefreshData")
+    end)
+
     -- Initialize the widget properties by sending the toolkit blueprint & the widget unique ID
     oWidget:CallBlueprintEvent("InitializeProperties", WGUI.ToolkitBlueprint, iCurWidgetID)
 

@@ -5,6 +5,9 @@ Package.Require("WGUI.lua")
 Package.Require("Widgets/BaseWidget.lua")
 Package.Require("Widgets/PanelWidget.lua")
 
+-- Load input handler
+Package.Require("InputHandler/InputHandler.lua")
+
 -- Load styling files
 Package.Require("Structures/Brush.lua")
 Package.Require("Structures/OutlineSettings.lua")

@@ -42,6 +42,10 @@
 --- @field font_size? number | string @The font size of the widget.
 --- @field percent? number | string @The percentage of the widget.
 --- @field fill_color? Color | string @The fill color of the widget.
+--- @field min_desired_width? number | string @The minimum desired width of the widget.
+--- @field min_desired_height? number | string @The minimum desired height of the widget.
+--- @field max_desired_width? number | string @The maximum desired width of the widget.
+--- @field max_desired_height? number | string @The maximum desired height of the widget.
 
 -- 'Base Widget' properties
 WSS.Extend({
@@ -111,4 +115,12 @@ WSS.Extend({
 WSS.Extend({
     ["percent"] = {"SetPercent", WSSParserType.Number},
     ["fill_color"] = {"SetFillColor", WSSParserType.Color},
+})
+
+-- 'Size Box' properties
+WSS.Extend({
+    ["min_desired_width"] = {"SetMinDesiredWidth", WSSParserType.Number},
+    ["min_desired_height"] = {"SetMinDesiredHeight", WSSParserType.Number},
+    ["max_desired_width"] = {"SetMaxDesiredWidth", WSSParserType.Number},
+    ["max_desired_height"] = {"SetMaxDesiredHeight", WSSParserType.Number},
 })
