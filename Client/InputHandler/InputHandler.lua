@@ -17,7 +17,7 @@ function WGUI.GetInputRules()
     local bKeyboardEnabled = true
 
     for oWidget, _ in pairs(tWidgetToHandle) do
-        if not oWidget:IsVisible() then
+        if not oWidget:IsVisible() or not oWidget:GetParent() then
             goto continue
         end
 
@@ -47,6 +47,8 @@ function BaseWidget:SetMouseEnabled(bIsEnabled)
     end
 
     WGUI.HandleInputRules()
+
+    return self
 end
 
 -- Returns whether or not the mouse is enabled for this widget.
@@ -67,6 +69,8 @@ function BaseWidget:SetKeyboardEnabled(bIsEnabled)
     end
 
     WGUI.HandleInputRules()
+
+    return self
 end
 
 -- Returns whether or not the keyboard is enabled for this widget.
@@ -76,6 +80,8 @@ function BaseWidget:GetKeyboardEnabled()
 end
 
 Events.Subscribe("WGUI::WidgetVisibilityChanged", WGUI.HandleInputRules)
+Events.Subscribe("WGUI::ChildrenAdded", WGUI.HandleInputRules)
+Events.Subscribe("WGUI::ChildrenRemoved", WGUI.HandleInputRules)
 BaseWidget.Subscribe("Destroy", function (self)
     if tWidgetToHandle[self] then
         tWidgetToHandle[self] = nil

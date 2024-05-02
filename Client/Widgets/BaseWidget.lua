@@ -1,5 +1,7 @@
 -- Base class for WGUI widgets
 ---@class BaseWidget : Entity
+---@field Super BaseWidget
+---@field Constructor function
 BaseWidget = Widget.Inherit("BaseWidget")
 
 ---@param self BaseWidget

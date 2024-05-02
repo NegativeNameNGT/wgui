@@ -54,7 +54,7 @@ function BaseWidget:GetZPosition() end
 ---@generic T
 ---@param self T
 ---@param Size Vector2D
----@overload fun(SizeValue: number, SizeRule: SizeRule)
+---@overload fun(self: BaseWidget, SizeValue: number, SizeRule: SizeRule)
 ---@return T
 function BaseWidget:SetSize(Size) end
 

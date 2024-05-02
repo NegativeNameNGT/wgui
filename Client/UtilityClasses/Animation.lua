@@ -17,6 +17,7 @@ local function Tick()
         local fElapsed = os.clock() - oAnimation.fStartTime
 
         local fDelta = fElapsed / oAnimation.fDuration
+        fDelta = math.floor(fDelta * 1000) / 1000
 
         if oAnimation.fnEasingFunction then
             fDelta = oAnimation.fnEasingFunction(fDelta)

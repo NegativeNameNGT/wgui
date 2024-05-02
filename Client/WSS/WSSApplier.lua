@@ -168,6 +168,10 @@ function _WSS.ApplyStyleSheet(oWidget, tStyleSheet)
             tOrderedFields = {tFields["font_family"], tFields["font_typeface"], tFields["font_size"]}
         end
 
+        if sFunction == "SetShadowSettings" then
+            tOrderedFields = {tFields["text_shadow_color"], tFields["text_shadow_offset"]}
+        end
+
         oWidget[sFunction](oWidget, table.unpack(tOrderedFields))
     end
 end
@@ -180,6 +184,15 @@ local function BuildBrushFromStyleSheet(oBrush, tStyleSheet)
     for sField, xValue in pairs(tStyleSheet) do
         if not _WSS.BrushExtension[sField] then
             goto continue
+        end
+
+        if type(xValue) == "string" and xValue:sub(1, 1) == "$" then
+            local xDynamicValue = WSS.GetDynamicAttributeValue(xValue:sub(2))
+            if xDynamicValue ~= nil then
+                xValue = xDynamicValue
+            else
+                xValue = "null"
+            end
         end
 
         local sFunction = _WSS.BrushExtension[sField][1]

@@ -27,6 +27,7 @@
 --- @field border_corner? Quat | string @The border corner of the widget.
 --- @field border_width? number | string @The border width of the widget.
 --- @field border_use_alpha? boolean | string @Whether the border uses alpha.
+--- @field border_type? RoundingType | string @The border type of the widget.
 --- @field pos? Vector2D | string @The position of the widget.
 --- @field z_pos? number | string @The z position of the widget.
 --- @field size? Vector2D | string @The size of the widget.
@@ -37,6 +38,11 @@
 --- @field v_align? VAlign | string @The vertical alignment of the widget.
 --- @field flex_size? table<number, SizeRule> | number | string @The flex size of the widget.
 --- @field text? string | string @The text of the widget.
+--- @field text_justify? TextJustify | string @The text justification of the widget.
+--- @field text_case_mode? CaseMode | string @The text case mode of the widget.
+--- @field text_shadow_offset? Vector2D | string @The text shadow offset of the widget.
+--- @field text_shadow_color? Color | string @The text shadow color of the widget.
+--- @field text_auto_wrap? boolean | string @Whether the text auto wraps.
 --- @field font_family? string | string @The font family of the widget.
 --- @field font_typeface? string  | string@The font typeface of the widget.
 --- @field font_size? number | string @The font size of the widget.
@@ -104,6 +110,11 @@ WSS.Extend({
 -- 'Text' properties
 WSS.Extend({
     ["text"] = {"SetText", WSSParserType.String},
+    ["text_justify"] = {"SetJustification", WSSParserType.String},
+    ["text_shadow_offset"] = {"SetShadowSettings", WSSParserType.String, nil, IsBatchable = true},
+    ["text_shadow_color"] = {"SetShadowSettings", WSSParserType.Color, nil, IsBatchable = true},
+    ["text_auto_wrap"] = {"SetAutoWrapText", WSSParserType.Boolean},
+    ["text_case_mode"] = {"SetCaseMode", WSSParserType.Enum},
 
     -- Font properties
     ["font_family"] = {"SetFont", WSSParserType.String, nil, IsBatchable = true},

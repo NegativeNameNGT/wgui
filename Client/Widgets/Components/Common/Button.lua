@@ -7,7 +7,7 @@ Button = PanelWidget.Inherit("Button", {
 
 function Button:Constructor()
     self.Super:Constructor("wgui-assets::WBP_WGUI_Button")
-
+    self:SetCursor(CursorType.GrabHand)
     return self
 end
 

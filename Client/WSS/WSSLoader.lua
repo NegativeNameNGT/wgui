@@ -165,38 +165,29 @@ function ExtendStylesheets(...)
 
     local i = 1
     while i <= #tStylesheets do
-        local xIdentifier = tStylesheets[i]
+        local identifiers = {}
+
+        -- Collect all identifiers until a table is found
+        while i <= #tStylesheets and (type(tStylesheets[i]) == "string" or 
+            (type(tStylesheets[i]) == "table" and getmetatable(tStylesheets[i]) ~= nil and NanosUtils.IsEntityValid(tStylesheets[i]))) do
+            table.insert(identifiers, tStylesheets[i])
+            i = i + 1
+        end
+
+        -- Check if the next element is a table, which should be the fields for all previous identifiers
         local tFields = nil
-
-        -- Checking if the value is a string (pair of identifier and fields)
-        if type(xIdentifier) == "string" or (type(xIdentifier == "table") and getmetatable(xIdentifier) ~= nil and NanosUtils.IsEntityValid(xIdentifier)) then
-            xIdentifier = tStylesheets[i]
-
-            -- Checking if the next value is a table (fields)
-            if type(tStylesheets[i + 1]) == "table" then
-                tFields = tStylesheets[i + 1]
-            else
-                if type(tStylesheets[i + 1]) == "string" then
-                    if type(tStylesheets[i + 2]) == "table" then
-                        tFields = tStylesheets[i + 2]
-
-                        i = i - 1
-                        goto continue
-                    end
-                end
-                Console.Error("[WSS] The fields for the identifier '" .. xIdentifier .. "' should be a table.")
-                break
-            end
+        if i <= #tStylesheets and type(tStylesheets[i]) == "table" then
+            tFields = tStylesheets[i]
+            i = i + 1  -- Move past the table
         else
-            Console.Error("[WSS] The identifier should be a string or a BaseWidget.")
+            Console.Error("[WSS] The fields for the identifiers should be a table.")
             break
         end
 
-        ::continue::
-
-        ProcessStylesheet(xIdentifier, tFields)
-
-        i = i + 2
+        -- Apply styles to all collected identifiers
+        for _, identifier in ipairs(identifiers) do
+            ProcessStylesheet(identifier, tFields)
+        end
     end
 end
 Package.Export("ExtendStylesheets", ExtendStylesheets)

@@ -72,6 +72,7 @@ function PanelWidget:AddChild(oContent, ...)
 
     _WSS.ApplySlotFields(oContent)
 
+    Events.Call("WGUI::ChildrenAdded", self, oContent)
     return self
 end
 
@@ -119,6 +120,7 @@ function PanelWidget:RemoveChild(oContent)
         end
     end
 
+    Events.Call("WGUI::ChildrenRemoved", self, oContent)
     return true
 end
 
