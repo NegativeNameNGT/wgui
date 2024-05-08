@@ -1,5 +1,5 @@
 ---@class Geometry
--- `Geometries` are paired with widgets to provide information about the widget's position and size.
+-- `Geometry` is a static class that provides information about widgets positions and sizes.
 Geometry = {}
 
 -- Translates absolute coordinates into local coordinates.
