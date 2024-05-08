@@ -28,7 +28,8 @@ end
 -- Translates local coordinate of the geometry provided into local viewport coordinates.
 ---@param oWidget BaseWidget
 ---@param tLocalCoordinate Vector2D
----@return Vector2D
+---@return Vector2D @The pixel position
+---@return Vector2D @The viewport position
 function Geometry.LocalToViewport(oWidget, tLocalCoordinate)
     return oWidget:CallBlueprintEvent("LocalToViewport", tLocalCoordinate)
 end
