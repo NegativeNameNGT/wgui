@@ -35,6 +35,8 @@ end
 ---@return T
 function GridPanel:SetColumnFill(iColumnIndex, fCoefficient)
     self:CallBlueprintEvent("SetColumnFill", iColumnIndex, fCoefficient)
+
+    return self
 end
 
 ---@generic T
@@ -44,4 +46,6 @@ end
 ---@return T
 function GridPanel:SetRowFill(iRowIndex, fCoefficient)
     self:CallBlueprintEvent("SetRowFill", iRowIndex, fCoefficient)
+
+    return self
 end
