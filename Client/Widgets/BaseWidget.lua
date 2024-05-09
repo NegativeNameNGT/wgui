@@ -2,6 +2,7 @@
 ---@class BaseWidget : Entity
 ---@field Super BaseWidget
 ---@field Constructor function
+---@field CallBlueprintEvent fun(self: BaseWidget, sEventName: string, ...) : any
 BaseWidget = Widget.Inherit("BaseWidget")
 
 ---@param self BaseWidget
@@ -106,7 +107,7 @@ end
 ---@param cParentClass PanelWidget
 ---@return boolean
 function BaseWidget:IsChildOfParent(cParentClass)
-    return self:GetParent():IsA(cParentClass)
+    return self:GetParent() and self:GetParent():IsA(cParentClass)
 end
 
 -- Sets the padding of the widget, putting a larger gap between the widget border and it's root widget.

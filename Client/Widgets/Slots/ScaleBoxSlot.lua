@@ -6,6 +6,7 @@ ScaleBoxSlot = {}
 ---@param Alignment HAlign
 function ScaleBoxSlot.SetHAlign(self, Alignment)
     if not (self and self:IsChildOfParent(ScaleBox)) then
+        assert(false, "Widget is not a child of a ScaleBox.")
         return
     end
 
@@ -24,7 +25,8 @@ end
 ---@return HAlign
 function ScaleBoxSlot.GetHAlign(self)
     if not (self and self:IsChildOfParent(ScaleBox)) then
-        return
+        assert(false, "Widget is not a child of a ScaleBox.")
+        return HAlign.Fill
     end
 
     return self:GetSlotData().HorizontalAlignment or HAlign.Fill
@@ -35,6 +37,7 @@ end
 ---@param Alignment VAlign
 function ScaleBoxSlot.SetVAlign(self, Alignment)
     if not (self and self:IsChildOfParent(ScaleBox)) then
+        assert(false, "Widget is not a child of a ScaleBox.")
         return
     end
 
@@ -53,7 +56,8 @@ end
 ---@return VAlign
 function ScaleBoxSlot.GetVAlign(self)
     if not (self and self:IsChildOfParent(ScaleBox)) then
-        return
+        assert(false, "Widget is not a child of a ScaleBox.")
+        return VAlign.Fill
     end
 
     return self:GetSlotData().VerticalAlignment or VAlign.Fill

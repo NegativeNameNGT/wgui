@@ -6,6 +6,7 @@ UniformGridPanelSlot = {}
 ---@param iColumnIndex integer
 function UniformGridPanelSlot.SetColumnIndex(self, iColumnIndex)
     if not (self and self:IsChildOfParent(UniformGridPanel)) then
+        assert(false, "Widget is not a child of a UniformGridPanel.")
         return
     end
 
@@ -24,6 +25,7 @@ end
 ---@return integer
 function UniformGridPanelSlot.GetColumnIndex(self)
     if not (self and self:IsChildOfParent(UniformGridPanel)) then
+        assert(false, "Widget is not a child of a UniformGridPanel.")
         return -1
     end
 
@@ -35,6 +37,7 @@ end
 ---@param iRowIndex integer
 function UniformGridPanelSlot.SetRowIndex(self, iRowIndex)
     if not (self and self:IsChildOfParent(UniformGridPanel)) then
+        assert(false, "Widget is not a child of a UniformGridPanel.")
         return
     end
 
@@ -53,6 +56,7 @@ end
 ---@return integer
 function UniformGridPanelSlot.GetRowIndex(self)
     if not (self and self:IsChildOfParent(UniformGridPanel)) then
+        assert(false, "Widget is not a child of a UniformGridPanel.")
         return -1
     end
 
@@ -64,6 +68,7 @@ end
 ---@param Alignment HAlign
 function UniformGridPanelSlot.SetHAlign(self, Alignment)
     if not (self and self:IsChildOfParent(UniformGridPanel)) then
+        assert(false, "Widget is not a child of a UniformGridPanel.")
         return
     end
 
@@ -82,7 +87,8 @@ end
 ---@return HAlign
 function UniformGridPanelSlot.GetHAlign(self)
     if not (self and self:IsChildOfParent(UniformGridPanel)) then
-        return
+        assert(false, "Widget is not a child of a UniformGridPanel.")
+        return HAlign.Fill
     end
 
     return self:GetSlotData().HorizontalAlignment or HAlign.Fill
@@ -93,6 +99,7 @@ end
 ---@param Alignment VAlign
 function UniformGridPanelSlot.SetVAlign(self, Alignment)
     if not (self and self:IsChildOfParent(UniformGridPanel)) then
+        assert(false, "Widget is not a child of a UniformGridPanel.")
         return
     end
 
@@ -111,7 +118,8 @@ end
 ---@return VAlign
 function UniformGridPanelSlot.GetVAlign(self)
     if not (self and self:IsChildOfParent(UniformGridPanel)) then
-        return
+        assert(false, "Widget is not a child of a UniformGridPanel.")
+        return VAlign.Fill
     end
 
     return self:GetSlotData().VerticalAlignment or VAlign.Fill

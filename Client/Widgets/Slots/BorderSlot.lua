@@ -6,6 +6,7 @@ BorderSlot = {}
 ---@param Alignment HAlign
 function BorderSlot.SetHAlign(self, Alignment)
     if not (self and self:IsChildOfParent(Border)) then
+        assert(false, "Widget is not a child of a Border.")
         return
     end
 
@@ -24,7 +25,8 @@ end
 ---@return HAlign
 function BorderSlot.GetHAlign(self)
     if not (self and self:IsChildOfParent(Border)) then
-        return
+        assert(false, "Widget is not a child of a Border.")
+        return HAlign.Fill
     end
 
     return self:GetSlotData().HorizontalAlignment or HAlign.Fill
@@ -35,6 +37,7 @@ end
 ---@param Alignment VAlign
 function BorderSlot.SetVAlign(self, Alignment)
     if not (self and self:IsChildOfParent(Border)) then
+        assert(false, "Widget is not a child of a Border.")
         return
     end
 
@@ -53,7 +56,8 @@ end
 ---@return VAlign
 function BorderSlot.GetVAlign(self)
     if not (self and self:IsChildOfParent(Border)) then
-        return
+        assert(false, "Widget is not a child of a Border.")
+        return VAlign.Fill
     end
 
     return self:GetSlotData().VerticalAlignment or VAlign.Fill

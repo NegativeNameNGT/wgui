@@ -118,7 +118,7 @@ function WGUI.DetermineImageType(sImagePath)
 end
 
 -- Registers a new font by the specified name and path.
----@param sFontName string
+---@param sFontName FontName
 ---@param sFontPath string
 function WGUI.RegisterFont(sFontName, sFontPath)
     -- Checks if the font name is valid
@@ -161,7 +161,7 @@ function WGUI.IsFontRegistered(sFontName)
 end
 
 -- Returns the path of the specified font.
----@param sFontName string
+---@param sFontName FontName
 ---@return string
 function WGUI.GetFontPath(sFontName)
     return WGUI.Fonts[sFontName]

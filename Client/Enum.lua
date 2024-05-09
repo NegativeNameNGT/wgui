@@ -1,4 +1,20 @@
+---@class AnchorData
+---@field Min Vector2D
+---@field Max Vector2D
+---@field Alignment Vector2D
+---@field bResetOffsetRight boolean
+---@field bResetOffsetBottom boolean
+
 -- Returns a anchor table depending on the specified parameters.
+---@param MinX number | nil
+---@param MinY number | nil
+---@param MaxX number | nil
+---@param MaxY number | nil
+---@param AlignX number | nil
+---@param AlignY number | nil
+---@param ResetOffsetRight boolean | nil
+---@param ResetOffsetBottom boolean | nil
+---@return AnchorData
 local function CreateAnchor(MinX, MinY, MaxX, MaxY, AlignX, AlignY, ResetOffsetRight, ResetOffsetBottom)
     return {
         Min = Vector2D(MinX, MinY),

@@ -6,6 +6,7 @@ WidgetSwitcherSlot = {}
 ---@param Alignment HAlign
 function WidgetSwitcherSlot.SetHAlign(self, Alignment)
     if not (self and self:IsChildOfParent(WidgetSwitcher)) then
+        assert(false, "Widget is not a child of a WidgetSwitcher.")
         return
     end
 
@@ -24,7 +25,8 @@ end
 ---@return HAlign
 function WidgetSwitcherSlot.GetHAlign(self)
     if not (self and self:IsChildOfParent(WidgetSwitcher)) then
-        return
+        assert(false, "Widget is not a child of a WidgetSwitcher.")
+        return HAlign.Fill
     end
 
     return self:GetSlotData().HorizontalAlignment or HAlign.Fill
@@ -35,6 +37,7 @@ end
 ---@param Alignment VAlign
 function WidgetSwitcherSlot.SetVAlign(self, Alignment)
     if not (self and self:IsChildOfParent(WidgetSwitcher)) then
+        assert(false, "Widget is not a child of a WidgetSwitcher.")
         return
     end
 
@@ -53,7 +56,8 @@ end
 ---@return VAlign
 function WidgetSwitcherSlot.GetVAlign(self)
     if not (self and self:IsChildOfParent(WidgetSwitcher)) then
-        return
+        assert(false, "Widget is not a child of a WidgetSwitcher.")
+        return VAlign.Fill
     end
 
     return self:GetSlotData().VerticalAlignment or VAlign.Fill

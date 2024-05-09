@@ -22,6 +22,8 @@ function Slider:SetStyleSheet(oStyle)
     )
 
     self.__StyleSheet = oStyle
+
+    return self
 end
 
 -- Gets the style of the slider.
@@ -54,6 +56,8 @@ function Slider:SetSliderValue(fValue)
     self:CallBlueprintEvent("SetValue", fValue)
 
     self:SetValue("__CachedValue", fValue)
+
+    return self
 end
 
 -- Gets the value of the slider.

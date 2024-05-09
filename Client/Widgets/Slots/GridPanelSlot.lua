@@ -6,6 +6,7 @@ GridPanelSlot = {}
 ---@param iColumnIndex integer
 function GridPanelSlot.SetColumnIndex(self, iColumnIndex)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return
     end
 
@@ -24,6 +25,7 @@ end
 ---@return integer
 function GridPanelSlot.GetColumnIndex(self)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return -1
     end
 
@@ -35,6 +37,7 @@ end
 ---@param iRowIndex integer
 function GridPanelSlot.SetRowIndex(self, iRowIndex)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return
     end
 
@@ -53,6 +56,7 @@ end
 ---@return integer
 function GridPanelSlot.GetRowIndex(self)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return -1
     end
 
@@ -64,6 +68,7 @@ end
 ---@param iColumnSpan integer
 function GridPanelSlot.SetColumnSpan(self, iColumnSpan)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return
     end
 
@@ -77,6 +82,7 @@ end
 ---@param iRowSpan integer
 function GridPanelSlot.SetRowSpan(self, iRowSpan)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return
     end
 
@@ -90,6 +96,7 @@ end
 ---@param Alignment HAlign
 function GridPanelSlot.SetHAlign(self, Alignment)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return
     end
 
@@ -108,7 +115,8 @@ end
 ---@return HAlign
 function GridPanelSlot.GetHAlign(self)
     if not (self and self:IsChildOfParent(GridPanel)) then
-        return
+        assert(false, "Widget is not a child of a GridPanel.")
+        return HAlign.Fill
     end
 
     return self:GetSlotData().HorizontalAlignment or HAlign.Fill
@@ -119,6 +127,7 @@ end
 ---@param Alignment VAlign
 function GridPanelSlot.SetVAlign(self, Alignment)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return
     end
 
@@ -137,7 +146,8 @@ end
 ---@return VAlign
 function GridPanelSlot.GetVAlign(self)
     if not (self and self:IsChildOfParent(GridPanel)) then
-        return
+        assert(false, "Widget is not a child of a GridPanel.")
+        return VAlign.Fill
     end
 
     return self:GetSlotData().VerticalAlignment or VAlign.Fill
@@ -148,6 +158,7 @@ end
 ---@param iLayer integer
 function GridPanelSlot.SetLayer(self, iLayer)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return
     end
 
@@ -161,6 +172,7 @@ end
 ---@param Nudge Vector2D
 function GridPanelSlot.SetNudge(self, Nudge)
     if not (self and self:IsChildOfParent(GridPanel)) then
+        assert(false, "Widget is not a child of a GridPanel.")
         return
     end
 

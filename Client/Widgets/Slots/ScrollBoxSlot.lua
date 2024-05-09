@@ -6,6 +6,7 @@ ScrollBoxSlot = {}
 ---@param Alignment HAlign
 function ScrollBoxSlot.SetHAlign(self, Alignment)
     if not (self and self:IsChildOfParent(ScrollBox)) then
+        assert(false, "Widget is not a child of a ScrollBox.")
         return
     end
 
@@ -24,7 +25,8 @@ end
 ---@return HAlign
 function ScrollBoxSlot.GetHAlign(self)
     if not (self and self:IsChildOfParent(ScrollBox)) then
-        return
+        assert(false, "Widget is not a child of a ScrollBox.")
+        return HAlign.Fill
     end
 
     return self:GetSlotData().HorizontalAlignment or HAlign.Fill
@@ -35,6 +37,7 @@ end
 ---@param Alignment VAlign
 function ScrollBoxSlot.SetVAlign(self, Alignment)
     if not (self and self:IsChildOfParent(ScrollBox)) then
+        assert(false, "Widget is not a child of a ScrollBox.")
         return
     end
 
@@ -53,7 +56,8 @@ end
 ---@return VAlign
 function ScrollBoxSlot.GetVAlign(self)
     if not (self and self:IsChildOfParent(ScrollBox)) then
-        return
+        assert(false, "Widget is not a child of a ScrollBox.")
+        return VAlign.Fill
     end
 
     return self:GetSlotData().VerticalAlignment or VAlign.Fill

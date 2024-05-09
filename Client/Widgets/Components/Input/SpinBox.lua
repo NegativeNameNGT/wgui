@@ -57,7 +57,7 @@ end
 -- Sets the font of the text.
 ---@generic T
 ---@param self T
----@param sFontName string
+---@param sFontName FontName
 ---@param sFontTypeface string | nil
 ---@param fFontSize number | nil
 ---@return T

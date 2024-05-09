@@ -7,6 +7,7 @@ WrapBoxSlot = {}
 ---@param Alignment HAlign
 function WrapBoxSlot.SetHAlign(self, Alignment)
     if not (self and self:IsChildOfParent(WrapBox)) then
+        assert(false, "Widget is not a child of a WrapBox.")
         return
     end
 
@@ -25,7 +26,8 @@ end
 ---@return HAlign
 function WrapBoxSlot.GetHAlign(self)
     if not (self and self:IsChildOfParent(WrapBox)) then
-        return
+        assert(false, "Widget is not a child of a WrapBox.")
+        return HAlign.Fill
     end
 
     return self:GetSlotData().HorizontalAlignment or HAlign.Fill
@@ -36,6 +38,7 @@ end
 ---@param Alignment VAlign
 function WrapBoxSlot.SetVAlign(self, Alignment)
     if not (self and self:IsChildOfParent(WrapBox)) then
+        assert(false, "Widget is not a child of a WrapBox.")
         return
     end
 
@@ -54,7 +57,8 @@ end
 ---@return VAlign
 function WrapBoxSlot.GetVAlign(self)
     if not (self and self:IsChildOfParent(WrapBox)) then
-        return
+        assert(false, "Widget is not a child of a WrapBox.")
+        return VAlign.Fill
     end
 
     return self:GetSlotData().VerticalAlignment or VAlign.Fill
@@ -65,6 +69,7 @@ end
 ---@param bFillEmptySpace boolean
 function WrapBoxSlot.SetFillEmptySpace(self, bFillEmptySpace)
     if not (self and self:IsChildOfParent(WrapBox)) then
+        assert(false, "Widget is not a child of a WrapBox.")
         return
     end
 
@@ -77,6 +82,7 @@ end
 ---@param FillSpanWhenLessThan boolean
 function WrapBoxSlot.SetFillSpanWhenLessThan(self, FillSpanWhenLessThan)
     if not (self and self:IsChildOfParent(WrapBox)) then
+        assert(false, "Widget is not a child of a WrapBox.")
         return
     end
 
@@ -89,6 +95,7 @@ end
 ---@param bNewLine boolean
 function WrapBoxSlot.SetNewLine(self, bNewLine)
     if not (self and self:IsChildOfParent(WrapBox)) then
+        assert(false, "Widget is not a child of a WrapBox.")
         return
     end
 

@@ -6,6 +6,7 @@ OverlaySlot = {}
 ---@param Alignment HAlign
 function OverlaySlot.SetHAlign(self, Alignment)
     if not (self and self:IsChildOfParent(Overlay)) then
+        assert(false, "Widget is not a child of a OverlaySlot.")
         return
     end
 
@@ -24,7 +25,8 @@ end
 ---@return HAlign
 function OverlaySlot.GetHAlign(self)
     if not (self and self:IsChildOfParent(Overlay)) then
-        return
+        assert(false, "Widget is not a child of a OverlaySlot.")
+        return HAlign.Fill
     end
 
     return self:GetSlotData().HorizontalAlignment or HAlign.Fill
@@ -35,6 +37,7 @@ end
 ---@param Alignment VAlign
 function OverlaySlot.SetVAlign(self, Alignment)
     if not (self and self:IsChildOfParent(Overlay)) then
+        assert(false, "Widget is not a child of a OverlaySlot.")
         return
     end
 
@@ -53,7 +56,8 @@ end
 ---@return VAlign
 function OverlaySlot.GetVAlign(self)
     if not (self and self:IsChildOfParent(Overlay)) then
-        return
+        assert(false, "Widget is not a child of a OverlaySlot.")
+        return VAlign.Fill
     end
 
     return self:GetSlotData().VerticalAlignment or VAlign.Fill

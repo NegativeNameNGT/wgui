@@ -7,6 +7,7 @@ FlexBoxSlot = {}
 ---@param Rule SizeRule
 function FlexBoxSlot.SetSize(self, Value, Rule)
     if not (self and self:IsChildOfParent(FlexBox)) then
+        assert(false, "Widget is not a child of a FlexBox.")
         return
     end
 
@@ -28,7 +29,8 @@ end
 ---@return number, SizeRule
 function FlexBoxSlot.GetSize(self)
     if not (self and self:IsChildOfParent(FlexBox)) then
-        return
+        assert(false, "Widget is not a child of a FlexBox.")
+        return 0, SizeRule.Auto
     end
 
     return self:GetSlotData().SizeValue or 0, self:GetSlotData().SizeRule or SizeRule.Auto
@@ -39,6 +41,7 @@ end
 ---@param Alignment HAlign
 function FlexBoxSlot.SetHAlign(self, Alignment)
     if not (self and self:IsChildOfParent(FlexBox)) then
+        assert(false, "Widget is not a child of a FlexBox.")
         return
     end
 
@@ -57,7 +60,8 @@ end
 ---@return HAlign
 function FlexBoxSlot.GetHAlign(self)
     if not (self and self:IsChildOfParent(FlexBox)) then
-        return
+        assert(false, "Widget is not a child of a FlexBox.")
+        return HAlign.Fill
     end
 
     return self:GetSlotData().HorizontalAlignment or HAlign.Auto
@@ -68,6 +72,7 @@ end
 ---@param Alignment VAlign
 function FlexBoxSlot.SetVAlign(self, Alignment)
     if not (self and self:IsChildOfParent(FlexBox)) then
+        assert(false, "Widget is not a child of a FlexBox.")
         return
     end
 
@@ -86,7 +91,8 @@ end
 ---@return VAlign
 function FlexBoxSlot.GetVAlign(self)
     if not (self and self:IsChildOfParent(FlexBox)) then
-        return
+        assert(false, "Widget is not a child of a FlexBox.")
+        return VAlign.Fill
     end
 
     return self:GetSlotData().VerticalAlignment or VAlign.Auto
@@ -96,9 +102,9 @@ end
 ---@param self BaseWidget
 ---@param HorizontalAlignment HAlign
 ---@param VerticalAlignment VAlign
----@return FlexBoxSlot
 function FlexBoxSlot.SetAlign(self, HorizontalAlignment, VerticalAlignment)
     if not (self and self:IsChildOfParent(FlexBox)) then
+        assert(false, "Widget is not a child of a FlexBox.")
         return
     end
 

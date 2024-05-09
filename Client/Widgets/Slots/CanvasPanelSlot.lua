@@ -6,6 +6,7 @@ CanvasPanelSlot = {}
 ---@param tPos Vector2D
 function CanvasPanelSlot.SetPos(self, tPos)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
+        assert(false, "Widget is not a child of a CanvasPanel.")
         return
     end
 
@@ -24,6 +25,7 @@ end
 ---@return Vector2D
 function CanvasPanelSlot.GetPos(self)
     if not (self and self:IsChildOfParent(WGUI.CanvasPanel)) then
+        assert(false, "Widget is not a child of a CanvasPanel.")
         return Vector2D()
     end
 
@@ -35,6 +37,7 @@ end
 ---@param iZPosition integer
 function CanvasPanelSlot.SetZPosition(self, iZPosition)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
+        assert(false, "Widget is not a child of a CanvasPanel.")
         return
     end
 
@@ -53,7 +56,8 @@ end
 ---@return integer
 function CanvasPanelSlot.GetZPosition(self)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
-        return
+        assert(false, "Widget is not a child of a CanvasPanel.")
+        return -1
     end
 
     return self:GetSlotData().ZPosition or 0
@@ -64,6 +68,7 @@ end
 ---@param tSize Vector2D
 function CanvasPanelSlot.SetSize(self, tSize)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
+        assert(false, "Widget is not a child of a CanvasPanel.")
         return
     end
 
@@ -82,7 +87,8 @@ end
 ---@return Vector2D
 function CanvasPanelSlot.GetSize(self)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
-        return
+        assert(false, "Widget is not a child of a CanvasPanel.")
+        return Vector2D()
     end
 
     return self:GetSlotData().Size or Vector2D(100, 40)
@@ -93,6 +99,7 @@ end
 ---@param tAlignment Vector2D
 function CanvasPanelSlot.SetAlignment(self, tAlignment)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
+        assert(false, "Widget is not a child of a CanvasPanel.")
         return
     end
 
@@ -111,7 +118,8 @@ end
 ---@return Vector2D
 function CanvasPanelSlot.GetAlignment(self)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
-        return
+        assert(false, "Widget is not a child of a CanvasPanel.")
+        return Vector2D()
     end
 
     return self:GetSlotData().Alignment or Vector2D()
@@ -119,9 +127,10 @@ end
 
 -- Sets the anchor of the slot.
 ---@param self BaseWidget
----@param tAnchor Anchor
+---@param tAnchor AnchorData
 function CanvasPanelSlot.SetAnchor(self, tAnchor)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
+        assert(false, "Widget is not a child of a CanvasPanel.")
         return
     end
 
@@ -160,7 +169,8 @@ end
 ---@return Anchor
 function CanvasPanelSlot.GetAnchor(self)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
-        return
+        assert(false, "Widget is not a child of a CanvasPanel.")
+        return Anchor.Filled
     end
 
     return self:GetSlotData().Anchor or Anchor.TopLeft
@@ -170,6 +180,7 @@ end
 ---@param self BaseWidget
 function CanvasPanelSlot.SizeToContent(self)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
+        assert(false, "Widget is not a child of a CanvasPanel.")
         return
     end
 
@@ -182,6 +193,7 @@ end
 ---@param self BaseWidget
 function CanvasPanelSlot.SizeWithinBounds(self)
     if not (self and self:IsChildOfParent(CanvasPanel)) then
+        assert(false, "Widget is not a child of a CanvasPanel.")
         return
     end
 
