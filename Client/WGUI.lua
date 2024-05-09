@@ -228,3 +228,10 @@ function WGUI.RedirectPanelFunctions(oSourceWidget, oTargetWidget)
     -- Store the target widget
     oSourceWidget:SetValue("__RedirectedPanelFunctions", oTargetWidget)
 end
+
+-- Gets the platform's mouse cursor position. This the 'absolute' desktop location of the mouse. <br>
+---@see Viewport.GetMousePosition
+---@return Vector2D
+function WGUI.GetPlatformMousePosition()
+    return WGUI.ToolkitBlueprint:CallBlueprintEvent("GetPlatformMousePosition") ---@type Vector2D
+end

@@ -2,7 +2,6 @@
 ---@class BaseWidget : Entity
 ---@field Super BaseWidget
 ---@field Constructor function
----@field CallBlueprintEvent fun(self: BaseWidget, sEventName: string, ...) : any
 BaseWidget = Widget.Inherit("BaseWidget")
 
 ---@param self BaseWidget

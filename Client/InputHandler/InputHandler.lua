@@ -17,7 +17,9 @@ function WGUI.GetInputRules()
     local bKeyboardEnabled = true
 
     for oWidget, _ in pairs(tWidgetToHandle) do
-        if not oWidget:IsVisible() or not oWidget:GetParent() then
+        local bCanHandle = oWidget:GetForceInputRules() or oWidget:IsVisible() and oWidget:GetParent()
+
+        if not bCanHandle then
             goto continue
         end
 
@@ -77,6 +79,18 @@ end
 ---@return boolean
 function BaseWidget:GetKeyboardEnabled()
     return self:GetValue("__IsKeyboardEnabled", true)
+end
+
+-- Sets whether or not the widget should force the input rules to be recalculated no matter if it is visible or not.
+---@param bForce boolean
+function BaseWidget:SetForceInputRules(bForce)
+    self:SetValue("__ForceInputRules", bForce)
+end
+
+-- Returns whether or not the widget should force the input rules to be recalculated no matter if it is visible or not.
+---@return boolean
+function BaseWidget:GetForceInputRules()
+    return self:GetValue("__ForceInputRules", false)
 end
 
 Events.Subscribe("WGUI::WidgetVisibilityChanged", WGUI.HandleInputRules)

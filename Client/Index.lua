@@ -38,6 +38,11 @@ for _, sPath in pairs(Package.GetFiles("Client/Widgets/Components/", ".lua")) do
     Package.Require(sPath)
 end
 
+-- Auto-load widget library (widgets that are native to WGUI)
+for _, sPath in pairs(Package.GetFiles("Client/WidgetLibrary/", ".lua")) do
+    Package.Require(sPath)
+end
+
 -- Load WSS (Widget Style Sheets)
 Package.Require("WSS/WSS.lua")
 
