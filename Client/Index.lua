@@ -64,6 +64,3 @@ for sKey, xValue in pairs(_ENV) do
         Package.Export(sKey, xValue)
     end
 end
-
-local a = WGUI.Create(TextBlock)
-UniformGridPanelSlot.GetVAlign(a)
