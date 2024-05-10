@@ -467,6 +467,8 @@ end
 ---@param tTags table<string> | string
 ---@return T
 function BaseWidget:SetStyleTags(tTags)
+    Console.Warn("Please use `WSS.SetWidgetTags` instead of `BaseWidget:SetStyleTags`. This function will be removed in the future.")
+
     WSS.SetWidgetTags(self, tTags)
     return self
 end
@@ -477,6 +479,8 @@ end
 ---@param self T
 ---@return T
 function BaseWidget:ApplyWSS()
+    Console.Warn("Please use `WSS.Apply` instead of `BaseWidget:ApplyWSS`. This function will be removed in the future.")
+    
     WSS.Apply(self)
     return self
 end
