@@ -48,7 +48,7 @@ end
 ---@param tScreenPosition Vector2D
 ---@param bIncludeWindowPosition boolean
 ---@return Vector2D
-function Geometry.ScreenToWidget(oWidget, tScreenPosition, bIncludeWindowPosition)
+function Geometry.ScreenToLocal(oWidget, tScreenPosition, bIncludeWindowPosition)
     return oWidget:CallBlueprintEvent("ScreenToLocal", tScreenPosition, bIncludeWindowPosition) ---@type Vector2D
 end
 
