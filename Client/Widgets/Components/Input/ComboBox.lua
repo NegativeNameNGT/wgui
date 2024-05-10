@@ -22,6 +22,7 @@ function ComboBox:SetStyleSheet(oStyle)
         oStyle.Arrow or {}
     )
 
+    ---@private
     self.__StyleSheet = oStyle
 
     return self
@@ -99,7 +100,7 @@ function ComboBox:RemoveOption(sOption)
         self:SetValue("__Options", tOptions)
     end
 
-    return bSuccess
+    return bSuccess ---@type boolean
 end
 
 -- Sets the options of the combo box.
@@ -171,7 +172,7 @@ function ComboBox:RemoveSelectedOption(sOption)
     end
     self:SetValue("__SelectedOptions", tSelectedOptions)
 
-    return self:CallBlueprintEvent("RemoveSelectedOption", sOption)
+    return self:CallBlueprintEvent("RemoveSelectedOption", sOption) ---@type boolean
 end
 
 -- Sets whether or not the combo box is multi-select.

@@ -15,6 +15,7 @@ end
 function Image:SetBrush(oBrush)
     self:CallBlueprintEvent("SetBrush", oBrush)
 
+    ---@private
     self.__Brush = oBrush
 
     return self

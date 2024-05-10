@@ -42,7 +42,7 @@ end
 ---@param tOutput table
 ---@param tDynamicStyleSheet table
 function _WSS.CollectTagLayers(oWidget, tOutput, tDynamicStyleSheet)
-    local tStyleTags = oWidget:GetValue("__StyleTags", {})
+    local tStyleTags = WSS.GetWidgetTags(oWidget)
 
     for _, sTag in pairs(tStyleTags) do
         local tStyleSheet = _WSS.GetStyleSheet(sTag, LayerType.Tag)
@@ -122,8 +122,6 @@ function _WSS.ApplyStyleSheet(oWidget, tStyleSheet)
                 xValue = "null"
             end
         end
-
-        --Console.Warn("[WSS] Applying field '" .. sField .. "' with value '" .. tostring(xValue) .. "'")
 
         local sSetterFunction = _WSS.Fields[sField][1]
         local bIsBatched = _WSS.Fields[sField]["IsBatchable"] or false

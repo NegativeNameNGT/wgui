@@ -15,6 +15,7 @@ end
 function ProgressBar:SetStyleSheet(oStyle)
     self:CallBlueprintEvent("SetStyleSheet", oStyle.Background or {}, oStyle.Fill or {}, oStyle.Marquee or {}, oStyle.EnableFillAnimation or false)
 
+    ---@private
     self.__StyleSheet = oStyle
 
     return self

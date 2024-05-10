@@ -48,6 +48,7 @@ function CircularThrobber:SetBrush(oBrush)
     self:CallBlueprintEvent("SetBrush", oBrush)
 
     -- Stores the brush.
+    ---@private
     self.__Brush = oBrush
 
     return self

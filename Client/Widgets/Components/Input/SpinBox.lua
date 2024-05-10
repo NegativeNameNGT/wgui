@@ -26,6 +26,7 @@ function SpinBox:SetStyleSheet(oStyle)
     )
 
     -- Stores the style.
+    ---@private
     self.__StyleSheet = oStyle
 
     return self

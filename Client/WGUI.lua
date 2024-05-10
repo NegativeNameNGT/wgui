@@ -35,7 +35,7 @@ end
 ---@param oParentPanel PanelWidget | nil
 ---@vararg any
 ---@return T
-function WGUI.Create(cClass, oParentPanel, ...)
+local function Create(cClass, oParentPanel, ...)
     -- Checks if the class exists
     if not cClass then
         assert(false, "WGui.Create: Class '" .. cClass .. "' does not exist.")
@@ -68,6 +68,20 @@ function WGUI.Create(cClass, oParentPanel, ...)
     return oWidget
 end
 
+-- Creates a WGUI component by the specified class.
+---@generic T : BaseWidget
+---@param cClass T
+---@param oParentPanel PanelWidget | nil
+---@vararg any
+---@return T
+function WGUI.Create(cClass, oParentPanel, ...)
+    local oWidget = Create(cClass, oParentPanel, ...) ---@type BaseWidget | nil
+    if oWidget then
+        WSS.Apply(oWidget)
+    end
+    return oWidget
+end
+
 -- Creates a WGUI component by the specified class with the specified WSS tags.
 ---@generic T : BaseWidget
 ---@param cClass T
@@ -76,10 +90,11 @@ end
 ---@vararg any
 ---@return T
 function WGUI.CreateWithTags(cClass, tStyleTags, oParentPanel, ...)
-    local oWidget = WGUI.Create(cClass, oParentPanel, ...) ---@type BaseWidget
-
-    oWidget:SetStyleTags(tStyleTags)
-    oWidget:ApplyWSS()
+    local oWidget = Create(cClass, oParentPanel, ...) ---@type BaseWidget | nil
+    if oWidget then
+        WSS.SetWidgetTags(oWidget, tStyleTags)
+        WSS.Apply(oWidget)
+    end
 
     return oWidget
 end

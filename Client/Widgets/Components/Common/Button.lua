@@ -19,6 +19,7 @@ end
 function Button:SetStyleSheet(oStyle)
     self:CallBlueprintEvent("SetStyleSheet", oStyle.Normal or {}, oStyle.Hovered or {}, oStyle.Pressed or {}, oStyle.NormalPadding or Margin(12, 1.5, 12, 1.5), oStyle.PressedPadding or Margin(12, 2.5, 12, 0.5))
 
+    ---@private
     self.__StyleSheet = oStyle
 
     return self

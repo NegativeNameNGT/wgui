@@ -2,6 +2,7 @@
 ---@class BaseWidget : Entity
 ---@field Super BaseWidget
 ---@field Constructor function
+---@field WidgetTags string[]
 BaseWidget = Widget.Inherit("BaseWidget")
 
 ---@param self BaseWidget
@@ -251,7 +252,7 @@ end
 -- Returns the desired size of the widget.
 ---@return Vector2D
 function BaseWidget:GetDesiredSize()
-    return self:CallBlueprintEvent("GetDesiredSize")
+    return self:CallBlueprintEvent("GetDesiredSize") ---@type Vector2D
 end
 
 -- Sets the opacity of the widget.
@@ -422,7 +423,7 @@ end
 -- Returns true if the widget is currently being hovered.
 ---@return boolean
 function BaseWidget:IsHovered()
-    return self:CallBlueprintEvent("IsHovered")
+    return self:CallBlueprintEvent("IsHovered") ---@type boolean
 end
 
 -- Sets the input key that will be used to drag the widget.
@@ -460,33 +461,22 @@ function BaseWidget:CreateDragDropOperation(oDragVisual, oPayload, sMetaData, iP
 end
 
 -- Applies the WSS style tags of the widget.
+---@deprecated
 ---@generic T
 ---@param self T
 ---@param tTags table<string> | string
 ---@return T
 function BaseWidget:SetStyleTags(tTags)
-    if type(tTags) ~= "table" then
-        tTags = {tTags}
-    end
-
-    -- Remove the first character of each tag
-    for i = 1, #tTags do
-        tTags[i] = string.sub(tTags[i], 2)
-    end
-
-    self:SetValue("__StyleTags", tTags)
+    WSS.SetWidgetTags(self, tTags)
     return self
 end
 
 -- Applies the WSS style of the widget.
+---@deprecated
 ---@generic T
 ---@param self T
 ---@return T
 function BaseWidget:ApplyWSS()
-    local tFields, tDynamicStyleSheet = _WSS.CollectFields(self)
-
-    _WSS.ApplyStyleSheet(self, tFields)
-    _WSS.ApplyDynamicStyleSheet(self, tDynamicStyleSheet)
-
+    WSS.Apply(self)
     return self
 end

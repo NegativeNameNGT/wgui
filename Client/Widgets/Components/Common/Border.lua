@@ -21,6 +21,7 @@ end
 function Border:SetBrush(oBrush)
     self:CallBlueprintEvent("SetBrush", oBrush or {})
 
+    ---@private
     self.__Brush = oBrush
 
     return self

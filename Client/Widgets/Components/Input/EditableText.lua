@@ -18,6 +18,7 @@ end
 function EditableText:SetStyleSheet(oStyle)
     self:CallBlueprintEvent("SetStyleSheet", oStyle.HighlightShape, oStyle.StrikeBrush, oStyle.UnderlineBrush)
 
+    ---@private
     self.__StyleSheet = oStyle
 
     return self

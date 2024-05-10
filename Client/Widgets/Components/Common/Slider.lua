@@ -21,6 +21,7 @@ function Slider:SetStyleSheet(oStyle)
         oStyle.BarThickness or 4
     )
 
+    ---@private
     self.__StyleSheet = oStyle
 
     return self

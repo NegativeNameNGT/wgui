@@ -60,6 +60,7 @@ function Throbber:SetBrush(oBrush)
     self:CallBlueprintEvent("SetBrush", oBrush or {})
 
     -- Stores the brush.
+    ---@private
     self.__Brush = oBrush
 
     return self

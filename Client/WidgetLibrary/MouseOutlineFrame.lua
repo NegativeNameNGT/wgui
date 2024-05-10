@@ -18,6 +18,7 @@ function MouseOutlineFrame:Constructor()
 
     -- Creates the outline widget.
     local oOutlineWidget = WGUI.Create(Image, self)
+    oOutlineWidget:SetVisibility(WGUIVisibility.NotHitTestableAll)
     oOutlineWidget:SetSize(Vector2D())
     oOutlineWidget:SetBrush(Brush(
         DrawMode.RoundedBox,
@@ -41,6 +42,9 @@ function MouseOutlineFrame:OnTick()
     for i = #tOutlineList, 1, -1 do
         local oWidget = tOutlineList[i]
         if Geometry.IsUnderLocation(oWidget, tMousePosition) then
+            if self:GetValue("__OutlinedWidget") == oWidget then
+                break
+            end
             self:OutlineWidget(oWidget)
             break
         end
@@ -50,6 +54,9 @@ end
 -- Outlines the specified widget.
 ---@param oWidget BaseWidget
 function MouseOutlineFrame:OutlineWidget(oWidget)
+    -- Stores the widget to be outlined.
+    self:SetValue("__OutlinedWidget", oWidget)
+
     local oOutlineWidget = self:GetOutlineWidget()
 
     if oWidget:IsA(CanvasPanel) or oWidget:IsChildOfParent(CanvasPanel) then
@@ -66,6 +73,32 @@ function MouseOutlineFrame:OutlineWidget(oWidget)
     oOutlineWidget:SetSize(tLocalSize)
 end
 
+-- Sets the classes that should be excluded from the outline.
+---@param tExcludedClasses BaseWidget[]
+function MouseOutlineFrame:SetExcludedClasses(tExcludedClasses)
+    local _ExcludeClasses = {}
+
+    for _, oClass in ipairs(tExcludedClasses) do
+        _ExcludeClasses[oClass] = true
+    end
+
+    ---@private
+    self.__ExcludedClasses = _ExcludeClasses
+end
+
+-- Gets the classes that should be excluded from the outline.
+---@return BaseWidget[]
+function MouseOutlineFrame:GetExcludedClasses()
+    local tExcludedClasses = self.__ExcludedClasses or {}
+    local tClasses = {}
+
+    for oClass, _ in pairs(tExcludedClasses) do
+        table.insert(tClasses, oClass)
+    end
+
+    return tClasses
+end
+
 -- Collects all the widgets inside the layout panel to be added to the outline list.
 function MouseOutlineFrame:CollectWidgets()
     self:AddWidget(WGUI.GetLayout(), true)
@@ -75,6 +108,11 @@ end
 ---@param oWidget BaseWidget
 ---@param bRecursive boolean
 function MouseOutlineFrame:AddWidget(oWidget, bRecursive)
+    local tExcludedClasses = self.__ExcludedClasses or {}
+    if tExcludedClasses[oWidget:GetClass()] then
+        return
+    end
+
     local tOutlineList = self:GetOutlineList()
     table.insert(tOutlineList, oWidget)
     self:SetOutlineList(tOutlineList)

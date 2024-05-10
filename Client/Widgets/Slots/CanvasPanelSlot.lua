@@ -24,7 +24,7 @@ end
 ---@param self BaseWidget
 ---@return Vector2D
 function CanvasPanelSlot.GetPos(self)
-    if not (self and self:IsChildOfParent(WGUI.CanvasPanel)) then
+    if not (self and self:IsChildOfParent(CanvasPanel)) then
         assert(false, "Widget is not a child of a CanvasPanel.")
         return Vector2D()
     end

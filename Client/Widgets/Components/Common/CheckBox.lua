@@ -28,6 +28,7 @@ function CheckBox:SetStyleSheet(oStyle)
         oStyle.PressedChecked or {}
     )
 
+    ---@private
     self.__StyleSheet = oStyle
 
     return self
