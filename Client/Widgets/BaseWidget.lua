@@ -205,6 +205,25 @@ function BaseWidget:SetAngle(fAngle)
     return self
 end
 
+-- Sets the pivot of the widget.
+---@generic T
+---@param self T
+---@param tPivot Vector2D
+---@return T
+function BaseWidget:SetPivot(tPivot)
+    self:CallBlueprintEvent("SetRenderTransformPivot", tPivot)
+
+    self:SetValue("__Pivot", tPivot)
+
+    return self
+end
+
+-- Gets the pivot of the widget.
+---@return Vector2D
+function BaseWidget:GetPivot()
+    return self:GetValue("__Pivot", Vector2D(0.5))
+end
+
 -- Gets the angle of the widget.
 ---@return number
 function BaseWidget:GetAngle()
@@ -414,6 +433,12 @@ function BaseWidget:IsVisible()
     return self:GetVisibility() == WGUIVisibility.Visible or self:GetVisibility() == WGUIVisibility.NotHitTestableSelf or self:GetVisibility() == WGUIVisibility.NotHitTestableAll
 end
 
+-- Returns true if the widget is currently rendered.
+---@return boolean
+function BaseWidget:IsRendered()
+    return self:IsVisible() and self:GetOpacity() > 0
+end
+
 -- Returns true if the widget is currently hit testable.
 ---@return boolean
 function BaseWidget:IsHitTestable()
@@ -460,6 +485,22 @@ function BaseWidget:CreateDragDropOperation(oDragVisual, oPayload, sMetaData, iP
     return self
 end
 
+-- Cancels any ongoing drag & drop operation.
+---@generic T
+---@param self T
+---@return T
+function BaseWidget:CancelDragDropOperation()
+    self:CallBlueprintEvent("CancelDragDropOperation")
+
+    return self
+end
+
+-- Returns true if the widget is currently being dragged.
+---@return boolean
+function BaseWidget:IsDragDropping()
+    return self:CallBlueprintEvent("IsDragDropping") ---@type boolean
+end
+
 -- Applies the WSS style tags of the widget.
 ---@deprecated
 ---@generic T
@@ -480,7 +521,7 @@ end
 ---@return T
 function BaseWidget:ApplyWSS()
     Console.Warn("Please use `WSS.Apply` instead of `BaseWidget:ApplyWSS`. This function will be removed in the future.")
-    
+
     WSS.Apply(self)
     return self
 end
