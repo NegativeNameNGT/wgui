@@ -22,7 +22,8 @@ ExtendStylesheets(
 )
 
 ---@param sTabName string
-function WindowFrameTab:Constructor(sTabName)
+---@param oWindowFrame WindowFrame
+function WindowFrameTab:Constructor(sTabName, oWindowFrame)
     SizeBox.Constructor(self, Vector2D(75, 25))
 
     -- Background
@@ -37,11 +38,14 @@ function WindowFrameTab:Constructor(sTabName)
     )
 
     -- Tab Name
-    local oTextBlock = WGUI.CreateWithTags(TextBlock, "#WindowFrameTab_Text", self)
-    oTextBlock:SetText(sTabName)
+    self.TabName = WGUI.CreateWithTags(TextBlock, "#WindowFrameTab_Text", self)
+    self.TabName:SetText(sTabName)
 
     -- Events
-    oBackgroundBorder:BindDispatcher("MouseEnter", function ()
-        Chat.AddMessage("MouseEnter")
+    oBackgroundBorder:BindDispatcher("MouseButtonDown", function (_, tPointerEvent)
+        if not tPointerEvent.Key == "Left Mouse Button" then
+            return
+        end
+        oWindowFrame:SetActiveTab(sTabName)
     end)
 end

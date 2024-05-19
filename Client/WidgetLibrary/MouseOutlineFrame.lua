@@ -109,7 +109,7 @@ end
 ---@param bRecursive boolean
 function MouseOutlineFrame:AddWidget(oWidget, bRecursive)
     local tExcludedClasses = self.__ExcludedClasses or {}
-    if tExcludedClasses[oWidget:GetClass()] then
+    if tExcludedClasses[oWidget:GetClass()] or oWidget:GetClass() == MouseOutlineFrame then
         return
     end
 

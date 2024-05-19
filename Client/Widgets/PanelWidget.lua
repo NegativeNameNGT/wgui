@@ -124,13 +124,25 @@ function PanelWidget:RemoveChild(oContent)
     return true
 end
 
--- Removes all children from the panel.
+-- Removes all children from the panel. Does not destroy the childrens.
 ---@generic T
 ---@param self T
 ---@return T
 function PanelWidget:ClearChildren()
     for _,v in ipairs(self:GetAllChildren()) do
         self:RemoveChild(v)
+    end
+
+    return self
+end
+
+-- Destroys all children from the panel.
+---@generic T
+---@param self T
+---@return T
+function PanelWidget:DestroyAllChildren()
+    for _,v in ipairs(self:GetAllChildren()) do
+        v:Destroy()
     end
 
     return self
