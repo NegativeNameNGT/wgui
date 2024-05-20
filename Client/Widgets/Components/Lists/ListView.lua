@@ -21,6 +21,8 @@ ListView.Subscribe("Destroy", ClearInternalWidgets)
 ---@overload fun(self: BaseWidget, sEventName: "GenerateInternalWidget", fnCallback: fun(self: BaseWidget) : BaseWidget)
 ---@overload fun(self: BaseWidget, sEventName: "UpdateInternalWidget", fnCallback: fun(self: BaseWidget, ItemIndex: integer, EntryWidget: BaseWidget))
 ---@overload fun(self: BaseWidget, sEventName: "ListViewScrolled", fnCallback: fun(self: BaseWidget, ItemOffset: number, DistanceRemaining: number))
+---@overload fun(self: BaseWidget, sEventName: "EntrySelectionChanged", fnCallback: fun(self: BaseWidget, EntryWidget: BaseWidget, bIsSelected: boolean))
+---@overload fun(self: BaseWidget, sEventName: "ItemSelectionChanged", fnCallback: fun(self: BaseWidget, ItemIndex: integer, bIsSelected: boolean))
 ---@overload fun(self: BaseWidget, sEventName: "MouseButtonDown", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
 ---@overload fun(self: BaseWidget, sEventName: "MouseButtonUp", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
 ---@overload fun(self: BaseWidget, sEventName: "MouseMove", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
@@ -58,6 +60,17 @@ function ListView:BindDispatcher(sEventName, fnCallback)
             return
         end
 
+        if sEventName == "EntrySelectionChanged" then
+            local _, iInternalWidgetID, bIsSelected = ...
+            local oInternalWidget = WGUI.GetWidgetByID(iInternalWidgetID)
+            if not oInternalWidget then
+                return
+            end
+
+            fnCallback(self, oInternalWidget, bIsSelected)
+            return
+        end
+
         fnCallback(...)
     end)
 end
@@ -79,13 +92,14 @@ end
 -- Removes an item from the list view.
 ---@param iItemIndex integer
 function ListView:RemoveItem(iItemIndex)
-    print(iItemIndex)
     self:CallBlueprintEvent("RemoveItem", iItemIndex)
 
     -- Removes the item data
     local tItemData = self:GetValue("__ItemData", {})
     table.remove(tItemData, iItemIndex)
     self:SetValue("__ItemData", tItemData)
+
+    return self
 end
 
 -- Sets the data of an item in the list view.
@@ -118,4 +132,57 @@ function ListView:ClearListItems()
     -- Clears the current list view data
     ClearInternalWidgets(self)
     self:SetValue("__ItemData", {})
+
+    return self
+end
+
+-- Clears the selection in the list view.
+function ListView:ClearSelection()
+    self:CallBlueprintEvent("ListView_Selection_ClearAndUpdate")
+
+    return self
+end
+
+-- Sets the selection mode of the list view.
+---@param iSelectionMode ListViewSelectionMode
+function ListView:SetSelectionMode(iSelectionMode)
+    self:CallBlueprintEvent("ListView_SetSelectionMode", iSelectionMode)
+
+    self:SetValue("SelectionMode", iSelectionMode)
+    return self
+end
+
+-- Gets the selection mode of the list view.
+---@return ListViewSelectionMode
+function ListView:GetSelectionMode()
+    return self:GetValue("SelectionMode", ListViewSelectionMode.Single)
+end
+
+-- Scrolls the entire list up to the first item.
+function ListView:ScrollToTop()
+    self:CallBlueprintEvent("ListView_ScrollToTop")
+
+    return self
+end
+
+-- Scrolls the entire list down to the last item.
+function ListView:ScrollToBottom()
+    self:CallBlueprintEvent("ListView_ScrollToBottom")
+
+    return self
+end
+
+-- Requests that the item at the given index be scrolled into view.
+---@param iItemIndex integer
+function ListView:ScrollIntoView(iItemIndex)
+    self:CallBlueprintEvent("ListView_ScrollIntoView", iItemIndex)
+
+    return self
+end
+
+-- Selects all items in the list view.
+function ListView:SelectAll()
+    self:CallBlueprintEvent("ListView_Selection_SelectAll")
+
+    return self
 end

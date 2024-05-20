@@ -6,12 +6,22 @@ function WidgetHierarchy:Constructor()
     ListView.Constructor(self)
 
     self:BindDispatcher("GenerateInternalWidget", function ()
-        return WGUI.Create(TextBlock)
+        local oTextBlock = WGUI.Create(TextBlock)
+        oTextBlock:SetVisibility(WGUIVisibility.Visible)
+        return oTextBlock
     end)
 
     self:BindDispatcher("UpdateInternalWidget", function (_, ItemIndex, EntryWidget)
-        --local xData = self:GetItemData(ItemIndex)
-        --EntryWidget:SetText(tostring(xData))
+        local xData = self:GetItemData(ItemIndex)
+        EntryWidget:SetText(tostring(xData))
+    end)
+
+    self:BindDispatcher("EntrySelectionChanged", function (_, oWidget, bIsSelected)
+        if bIsSelected then
+            oWidget:SetColor(Color.RED)
+        else
+            oWidget:SetColor(Color.WHITE)
+        end
     end)
 end
 
@@ -24,9 +34,8 @@ local function AddWidget(self, oWidget)
     end
 
     local sClassName = tostring(oWidget:GetClass())
-
-    local oTextBlock = WGUI.Create(TextBlock, self)
-    oTextBlock:SetText(string.sub(sClassName, 1, #sClassName - 6)) -- Remove " Class" suffix
+    local sFriendlyClassName = string.sub(sClassName, 1, #sClassName - 6) -- Remove " Class" suffix
+    self:AddItem(sFriendlyClassName)
 end
 
 -- Rebuilds the widget hierarchy.
@@ -42,11 +51,11 @@ function WidgetHierarchy:Rebuild(oRootWidget)
     -- Clear the current list of widgets.
     self:ClearListItems()
 
-    for i = 1, 10 do
-        self:AddItem(i)
+    for i = 1, 100 do
+        self:AddItem(tostring(i))
     end
 
-    do return self end
+    do  return self end
     for _, oChildren in ipairs(oRootWidget:GetAllChildren()) do
         AddWidget(self, oChildren)
     end

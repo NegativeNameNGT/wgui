@@ -254,3 +254,11 @@ PixelSnapping = {
     Disabled = 1,
     SnapToPixel = 2
 }
+
+---@enum ListViewSelectionMode
+ListViewSelectionMode = {
+    None = 0,
+    Single = 1,
+    SingleToggle = 2,
+    Multi = 3,
+}
