@@ -69,6 +69,3 @@ for sKey, xValue in pairs(_ENV) do
         Package.Export(sKey, xValue)
     end
 end
-
-local oText = WGUI.Create(TextBlock, Layout)
-WGUI.EnableDebuggerMode()
