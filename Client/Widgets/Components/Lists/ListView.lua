@@ -174,8 +174,8 @@ end
 
 -- Requests that the item at the given index be scrolled into view.
 ---@param iItemIndex integer
-function ListView:ScrollIntoView(iItemIndex)
-    self:CallBlueprintEvent("ListView_ScrollIntoView", iItemIndex)
+function ListView:ScrollIndexIntoView(iItemIndex)
+    self:CallBlueprintEvent("ListView_ScrollIndexIntoView", iItemIndex)
 
     return self
 end
