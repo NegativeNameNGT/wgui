@@ -6,7 +6,7 @@ function WidgetHierarchy:Constructor()
     TreeView.Constructor(self)
 
     -- Sets the selection mode to multiple.
-    self:SetSelectionMode(ListViewSelectionMode.Multi)
+    self:SetSelectionMode(ListViewSelectionMode.Single)
 
     -- Called when a entry is generated.
     self:BindDispatcher("GenerateInternalWidget", function ()
@@ -16,64 +16,33 @@ function WidgetHierarchy:Constructor()
     end)
 
     -- Updates the internal widget with the data.
-    ---@param EntryWidget WidgetHierarchyItem
-    self:BindDispatcher("UpdateInternalWidget", function (_, ItemIndex, EntryWidget)
-        local oWidget = self:GetItemData(ItemIndex)
-        EntryWidget:Update(oWidget, ItemIndex)
+    ---@param InternalWidget WidgetHierarchyItem
+    self:BindDispatcher("UpdateInternalWidget", function (self, Item, InternalWidget)
+        local oAssociatedWidget = Item:GetData()
+        InternalWidget:Update(oAssociatedWidget)
     end)
 
     -- Called when the selection has changed.
-    ---@param oWidget WidgetHierarchyItem
-    self:BindDispatcher("EntrySelectionChanged", function (_, oWidget, bIsSelected)
-        oWidget:SetSelected(bIsSelected)
+    ---@param InternalWidget WidgetHierarchyItem
+    self:BindDispatcher("EntrySelectionChanged", function (self, InternalWidget, _, bIsSelected)
+        InternalWidget:SetSelected(bIsSelected)
     end)
 
-    -- Called when the item is expanded.
-    self:BindDispatcher("ItemExpansionChanged", function (self, ItemIndex, bIsExpanded)
-
+    -- Called when the expansion state of an item has changed.
+    ---@param InternalWidget WidgetHierarchyItem
+    self:BindDispatcher("ExpansionChanged", function (self, _, InternalWidget, bIsExpanded)
+        InternalWidget:SetExpanded(bIsExpanded)
     end)
 end
 
 --- Dynamically called when the childrens of a widget are requested.
----@param oWidget BaseWidget | PanelWidget
-function WidgetHierarchy:OnGetItemChildren(oWidget)
+---@param oRootItem ViewItem
+function WidgetHierarchy:OnGetItemChildrenData(oRootItem)
+    local oWidget = oRootItem:GetData() ---@type BaseWidget | PanelWidget
     if oWidget:IsA(PanelWidget) then
         return oWidget:GetAllChildren()
     end
     return {}
-end
-
--- Adds a widget to the hierarchy.
----@param self WidgetHierarchy
----@param oWidget BaseWidget | PanelWidget @The widget to add.
-local function AddWidget(self, oWidget)
-    if not oWidget or not oWidget:IsValid() then
-        return
-    end
-
-    local sClassName = tostring(oWidget:GetClass())
-    local sFriendlyClassName = string.sub(sClassName, 1, #sClassName - 6) -- Remove " Class" suffix
-    self:AddItem(sFriendlyClassName)
-end
-
--- Recursively adds all children of a widget to the hierarchy.
----@param self WidgetHierarchy
----@param oWidget BaseWidget | PanelWidget @The widget to add.
----@param bIgnoreRoot boolean @If true, the root widget will not be added to the hierarchy.
-local function AddHierarchy(self, oWidget, bIgnoreRoot)
-    if not oWidget or not oWidget:IsValid() then
-        return
-    end
-
-    if not bIgnoreRoot then
-        AddWidget(self, oWidget)
-    end
-
-    if oWidget:IsA(PanelWidget) then
-        for _, oChildren in ipairs(oWidget:GetAllChildren()) do
-            AddHierarchy(self, oChildren, false)
-        end
-    end
 end
 
 -- Rebuilds the widget hierarchy.
@@ -89,8 +58,10 @@ function WidgetHierarchy:Rebuild(oRootWidget)
     -- Clear the current list of widgets.
     self:ClearListItems()
 
-    --AddHierarchy(self, oRootWidget, true)
-    self:AddItem(oRootWidget)
+    local oRootItem = ViewItem()
+    oRootItem:SetData(oRootWidget)
+
+    self:AddItem(oRootItem)
 
     return self
 end

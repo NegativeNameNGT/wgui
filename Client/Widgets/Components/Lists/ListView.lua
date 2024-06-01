@@ -1,7 +1,9 @@
 -- A virtualized list that allows up to thousands of items to be displayed.
 ---@class ListView : BaseWidget
+---@field private __ItemData table<integer, ViewItem>
 ListView = BaseWidget.Inherit("ListView", {
-    Icon = "package://wgui/Client/Textures/Icons/ListView.png"
+    Icon = "package://wgui/Client/Textures/Icons/ListView.png",
+    __ItemData = {}
 })
 
 function ListView:Constructor()
@@ -21,10 +23,10 @@ ListView.Subscribe("Destroy", ClearInternalWidgets)
 ---@param sEventName string
 ---@param fnCallback function
 ---@overload fun(self: BaseWidget, sEventName: "GenerateInternalWidget", fnCallback: fun(self: BaseWidget) : BaseWidget)
----@overload fun(self: BaseWidget, sEventName: "UpdateInternalWidget", fnCallback: fun(self: BaseWidget, ItemIndex: integer, EntryWidget: BaseWidget))
+---@overload fun(self: BaseWidget, sEventName: "UpdateInternalWidget", fnCallback: fun(self: BaseWidget, Item: ViewItem, InternalWidget: BaseWidget))
 ---@overload fun(self: BaseWidget, sEventName: "ListViewScrolled", fnCallback: fun(self: BaseWidget, ItemOffset: number, DistanceRemaining: number))
----@overload fun(self: BaseWidget, sEventName: "EntrySelectionChanged", fnCallback: fun(self: BaseWidget, EntryWidget: BaseWidget, bIsSelected: boolean))
----@overload fun(self: BaseWidget, sEventName: "ItemSelectionChanged", fnCallback: fun(self: BaseWidget, ItemIndex: integer, bIsSelected: boolean))
+---@overload fun(self: BaseWidget, sEventName: "EntrySelectionChanged", fnCallback: fun(self: BaseWidget, InternalWidget: BaseWidget, Item: ViewItem, bIsSelected: boolean))s
+---@overload fun(self: BaseWidget, sEventName: "ItemSelectionChanged", fnCallback: fun(self: BaseWidget, Item: ViewItem, bIsSelected: boolean))
 ---@overload fun(self: BaseWidget, sEventName: "MouseButtonDown", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
 ---@overload fun(self: BaseWidget, sEventName: "MouseButtonUp", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
 ---@overload fun(self: BaseWidget, sEventName: "MouseMove", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
@@ -53,66 +55,30 @@ function ListView:BindDispatcher(sEventName, fnCallback)
 
         if sEventName == "UpdateInternalWidget" then
             local _, iItemIndex, iInternalWidgetID = ...
+            local oViewItem = self:GetItemAt(iItemIndex + 1)
             local oInternalWidget = WGUI.GetWidgetByID(iInternalWidgetID)
-            if not oInternalWidget then
-                return
-            end
 
-            fnCallback(self, iItemIndex + 1, oInternalWidget)
+            fnCallback(self, oViewItem, oInternalWidget)
             return
         end
 
         if sEventName == "EntrySelectionChanged" then
-            local _, iInternalWidgetID, bIsSelected = ...
-            local oInternalWidget = WGUI.GetWidgetByID(iInternalWidgetID)
-            if not oInternalWidget then
-                return
-            end
+            local _, iInternalWidgetID, iItemIndex, bIsSelected = ...
+            fnCallback(self, WGUI.GetWidgetByID(iInternalWidgetID), self:GetItemAt(iItemIndex), bIsSelected)
+            return
+        end
 
-            fnCallback(self, oInternalWidget, bIsSelected)
+        if sEventName == "ItemSelectionChanged" then
+            local _, iItemIndex, bIsSelected = ...
+            fnCallback(self, self:GetItemAt(iItemIndex), bIsSelected)
             return
         end
 
         -- [Only supported by TreeView]
-        if self:IsA(TreeView) and sEventName == "ItemExpansionChanged" and self["OnGetItemChildren"] then
-            local _, iItemIndex, bIsExpanded = ...
-
-            if bIsExpanded then
-                -- Case: Item should be expanded
-
-                local tChildren = self:OnGetItemChildren(self:GetItemData(iItemIndex)) or {}
-                if not tChildren then
-                    return
-                end
-
-                if type(tChildren) ~= "table" then
-                    tChildren = {tChildren}
-                end
-
-                if #tChildren ~= 0 then
-                    self:CallBlueprintEvent("TreeView_Expand", iItemIndex - 1, #tChildren or 0) -- First parameter is the item index, second is the number of items to generate.
-
-                    -- Update the lua data
-                    local tItemData = self:GetValue("__ItemData", {})
-                    for _, xData in ipairs(tChildren) do
-                        table.insert(tItemData, iItemIndex + 1, xData)
-                    end
-                    self:SetValue("__ItemData", tItemData)
-                end
-            else
-                -- Case: Item should be collapsed
-
-                self:CallBlueprintEvent("TreeView_Collapse", iItemIndex - 1)
-
-                -- Update the lua data
-                local tItemData = self:GetValue("__ItemData", {})
-                for i = #tItemData, 1, -1 do
-                    if i > iItemIndex and i <= iItemIndex + 1 then
-                        table.remove(tItemData, i)
-                    end
-                end
-                self:SetValue("__ItemData", tItemData)
-            end
+        if sEventName == "ExpansionChanged" then
+            local _, iItemIndex, iInternalWidgetID, bIsExpanded = ...
+            fnCallback(self, self:GetItemAt(iItemIndex), WGUI.GetWidgetByID(iInternalWidgetID), bIsExpanded)
+            return
         end
 
         fnCallback(...)
@@ -120,53 +86,66 @@ function ListView:BindDispatcher(sEventName, fnCallback)
 end
 
 -- Adds an item to the list view.
----@param xItemData any
----@return integer
-function ListView:AddItem(xItemData)
-    local iItemIndex = self:CallBlueprintEvent("AddItem")
+---@param oViewItem ViewItem
+function ListView:AddItem(oViewItem)
+    local iItemIndex = self:CallBlueprintEvent("AddItem") + 1
 
-    -- Stores the item data
-    local tItemData = self:GetValue("__ItemData", {})
-    table.insert(tItemData, xItemData)
-    self:SetValue("__ItemData", tItemData)
+    -- Stores the item
+    table.insert(self.__ItemData, oViewItem)
 
-    return iItemIndex ---@type integer
+    -- Updates the index of the item
+    oViewItem:StoreIndex(iItemIndex)
 end
 
--- Removes an item from the list view.
----@param iItemIndex integer
-function ListView:RemoveItem(iItemIndex)
-    self:CallBlueprintEvent("RemoveItem", iItemIndex)
+-- Inserts the specified items at the specified index.
+---@param Items ViewItem[]
+---@param iIndex integer
+---@param bIsAddedToRoot? boolean
+function ListView:InsertItemsAt(Items, iIndex, bIsAddedToRoot)
+    local bSuccess = self:CallBlueprintEvent("InsertItemsAt", iIndex - 1, #Items or 0, bIsAddedToRoot or false)
 
-    -- Removes the item data
-    local tItemData = self:GetValue("__ItemData", {})
-    table.remove(tItemData, iItemIndex)
-    self:SetValue("__ItemData", tItemData)
-
-    return self
-end
-
--- Sets the data of an item in the list view.
----@param iItemIndex integer
----@param xItemData any
-function ListView:SetItemData(iItemIndex, xItemData)
-    if xItemData == nil then
+    if not bSuccess then
         return self
     end
 
-    local tItemData = self:GetValue("__ItemData", {})
-    tItemData[iItemIndex] = xItemData
-    self:SetValue("__ItemData", tItemData)
+    for _, oViewItem in ipairs(Items) do
+        table.insert(self.__ItemData, iIndex + 1, oViewItem)
+    end
+
+    self:RefreshItemIndexes()
+end
+
+-- Removes an item from the list view.
+---@param oViewItem ViewItem
+function ListView:RemoveItem(oViewItem)
+    -- Ensures the data is a valid view item
+    if oViewItem == nil or getmetatable(oViewItem) ~= ViewItem then
+        return self
+    end
+
+    -- Gets the index of the item
+    local iItemIndex = oViewItem:GetIndex()
+
+    self:CallBlueprintEvent("RemoveItem", iItemIndex)
+    table.remove(self.__ItemData, iItemIndex)
+    self:RefreshItemIndexes()
+    return self
+end
+
+-- Refreshes the list view item indexes.
+function ListView:RefreshItemIndexes()
+    for i, oViewItem in ipairs(self.__ItemData) do
+        oViewItem:StoreIndex(i)
+    end
 
     return self
 end
 
--- Gets the data of an item in the list view.
+-- Gets the item at the given index.
 ---@param iItemIndex integer
----@return any
-function ListView:GetItemData(iItemIndex)
-    local tItemData = self:GetValue("__ItemData", {})
-    return tItemData[iItemIndex]
+---@return ViewItem
+function ListView:GetItemAt(iItemIndex)
+    return self.__ItemData[iItemIndex]
 end
 
 -- Removes all items from the list view.

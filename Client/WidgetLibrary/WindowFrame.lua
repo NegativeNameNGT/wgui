@@ -82,7 +82,6 @@ function WindowFrame:OnTitleBarPressed(tPointerEvent)
 
     self:SetValue("__ClickLocDiff", Viewport.GetMousePosition() - self:GetPos())
 
-
     if self.LocationTickUpdate then
         self:OnTitleBarReleased()
     end

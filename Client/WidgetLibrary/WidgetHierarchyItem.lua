@@ -31,8 +31,7 @@ end
 
 -- Updates the widget data.
 ---@param oWidget BaseWidget | PanelWidget
----@param iItemIndex integer
-function WidgetHierarchyItem:Update(oWidget, iItemIndex)
+function WidgetHierarchyItem:Update(oWidget)
     -- Display the widget class name
     local sClassName = tostring(oWidget:GetClass())
     local sFriendlyClassName = string.sub(sClassName, 1, #sClassName - 6)
@@ -54,10 +53,25 @@ function WidgetHierarchyItem:Update(oWidget, iItemIndex)
     -- Update the widget icon
     local sWidgetIcon = oWidget.Icon or "package://wgui/Client/Textures/Icons/Widget.png"
     self.WidgetIconImage:SetBrushFromSrc(sWidgetIcon, Vector2D(16, 16))
+
+    self:SetExpanded(false)
+    self:SetSelected(false)
+end
+
+function WidgetHierarchyItem:SetExpanded(bIsExpanded)
+    if bIsExpanded then
+        self.CaretImage:SetAngle(90)
+    else
+        self.CaretImage:SetAngle(0)
+    end
 end
 
 -- Updates the selected state of the widget.
 ---@param bIsSelected boolean
 function WidgetHierarchyItem:SetSelected(bIsSelected)
-
+    if bIsSelected then
+        self.WidgetNameBlock:SetColor(Color.RED)
+    else
+        self.WidgetNameBlock:SetColor(Color.WHITE)
+    end
 end
