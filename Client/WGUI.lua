@@ -1,16 +1,10 @@
 WGUI = WGUI or {}
-
--- A blueprint with utility functions for WGUI.
 WGUI.ToolkitBlueprint = Blueprint(Vector(), Rotator(), "wgui-assets::BP_WGUI_Toolkit")
--- Table of all registered fonts.
-WGUI.Fonts = {}
+WGUI.Widgets = {}
 
--- Callback properties for URL pre-loading.
+local tFonts = {}
 local tURLImageCallbacks = {}
 local iCurrentURLImageCallbackID = -1
-
--- Table containing all widgets.
-WGUI.Widgets = {}
 local iCurWidgetID = 0
 
 -- Adds a child to the specified parent panel.
@@ -143,7 +137,7 @@ function WGUI.RegisterFont(sFontName, sFontPath)
     end
 
     -- Checks if the font already exists
-    if WGUI.Fonts[sFontName] then
+    if WGUI.IsFontRegistered(sFontName) then
         assert(false, "WGui.RegisterFont: Font '" .. sFontName .. "' is already registered.")
         return
     end
@@ -165,21 +159,21 @@ function WGUI.RegisterFont(sFontName, sFontPath)
         end
     end
 
-    WGUI.Fonts[sFontName] = sFontPath
+    tFonts[sFontName] = sFontPath
 end
 
 -- Returns whether the specified font is registered.
 ---@param sFontName string
 ---@return boolean
 function WGUI.IsFontRegistered(sFontName)
-    return WGUI.Fonts[sFontName] ~= nil
+    return tFonts[sFontName] ~= nil
 end
 
 -- Returns the path of the specified font.
 ---@param sFontName FontName
 ---@return string
 function WGUI.GetFontPath(sFontName)
-    return WGUI.Fonts[sFontName]
+    return tFonts[sFontName]
 end
 
 -- Pre-loads a URL image.

@@ -157,7 +157,7 @@ end
 ---@return T
 function EditableText:SetFont(sFontName, sFontTypeface, fFontSize)
     -- Checks if the font is
-    local sFontPath = WGUI.Fonts[sFontName]
+    local sFontPath = WGUI.GetFontPath(sFontName)
     if not sFontPath then
         assert(false, "WGUI.EditableText:SetFont: Font '" .. sFontName .. "' is not registered.")
         return self

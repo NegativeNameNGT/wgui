@@ -1,7 +1,8 @@
 -- A widget switcher is like a tab control, but without tabs. At most one widget is visible at time.
 ---@class WidgetSwitcher : PanelWidget
 WidgetSwitcher = PanelWidget.Inherit("WidgetSwitcher", {
-    Slot = WidgetSwitcherSlot
+    Slot = WidgetSwitcherSlot,
+    Icon = "package://wgui/Client/Textures/Icons/WidgetSwitcher.png"
 })
 
 function WidgetSwitcher:Constructor()

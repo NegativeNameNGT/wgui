@@ -1,6 +1,8 @@
 -- The image widget allows you to display a Brush, or texture or material in the UI.
 ---@class Image : BaseWidget
-Image = BaseWidget.Inherit("Image")
+Image = BaseWidget.Inherit("Image", {
+    Icon = "package://wgui/Client/Textures/Icons/Image.png"
+})
 
 function Image:Constructor()
     self.Super:Constructor("wgui-assets::WBP_WGUI_Image")

@@ -24,7 +24,7 @@ for _, sPath in pairs(Package.GetFiles("Client/Structures/Styles/", ".lua")) do
 end
 
 -- Load utility file
-for _, sPath in pairs(Package.GetFiles("Client/UtilityClasses/", ".lua")) do
+for _, sPath in pairs(Package.GetFiles("Client/Classes/", ".lua")) do
     Package.Require(sPath)
 end
 

@@ -1,6 +1,8 @@
 -- A simple static text widget.
 ---@class TextBlock : BaseWidget
-TextBlock = BaseWidget.Inherit("TextBlock")
+TextBlock = BaseWidget.Inherit("TextBlock", {
+    Icon = "package://wgui/Client/Textures/Icons/TextBlock.png"
+})
 
 function TextBlock:Constructor(sDefaultText)
     self.Super:Constructor("wgui-assets::WBP_WGUI_Text")
@@ -78,7 +80,7 @@ end
 function TextBlock:SetFont(sFontName, sFontTypeface, fFontSize)
     sFontName = sFontName or "Roboto"
 
-    local sFontPath = WGUI.Fonts[sFontName]
+    local sFontPath = WGUI.GetFontPath(sFontName)
     if not sFontPath then
         assert(false, "WGUI.Text:SetFont: Font '" .. sFontName .. "' is not registered.")
         return self

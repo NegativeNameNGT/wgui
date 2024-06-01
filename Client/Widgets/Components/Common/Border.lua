@@ -4,7 +4,9 @@ Border = PanelWidget.Inherit("Border", {
     -- The border can only have one child widget.
     ChildrenLimit = 1,
 
-    Slot = BorderSlot
+    Slot = BorderSlot,
+
+    Icon = "package://wgui/Client/Textures/Icons/Border.png"
 })
 
 function Border:Constructor()

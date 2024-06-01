@@ -64,7 +64,7 @@ end
 ---@return T
 function SpinBox:SetFont(sFontName, sFontTypeface, fFontSize)
     -- Checks if the font is
-    local sFontPath = WGUI.Fonts[sFontName]
+    local sFontPath = WGUI.GetFontPath(sFontName)
     if not sFontPath then
         assert(false, "WGUI.SpinBox:SetFont: Font '" .. sFontName .. "' is not registered.")
         return self

@@ -1,6 +1,8 @@
 -- A virtualized list that allows up to thousands of items to be displayed.
 ---@class ListView : BaseWidget
-ListView = BaseWidget.Inherit("ListView")
+ListView = BaseWidget.Inherit("ListView", {
+    Icon = "package://wgui/Client/Textures/Icons/ListView.png"
+})
 
 function ListView:Constructor()
     self.Super:Constructor("wgui-assets::WBP_WGUI_ListView")
@@ -69,6 +71,48 @@ function ListView:BindDispatcher(sEventName, fnCallback)
 
             fnCallback(self, oInternalWidget, bIsSelected)
             return
+        end
+
+        -- [Only supported by TreeView]
+        if self:IsA(TreeView) and sEventName == "ItemExpansionChanged" and self["OnGetItemChildren"] then
+            local _, iItemIndex, bIsExpanded = ...
+
+            if bIsExpanded then
+                -- Case: Item should be expanded
+
+                local tChildren = self:OnGetItemChildren(self:GetItemData(iItemIndex)) or {}
+                if not tChildren then
+                    return
+                end
+
+                if type(tChildren) ~= "table" then
+                    tChildren = {tChildren}
+                end
+
+                if #tChildren ~= 0 then
+                    self:CallBlueprintEvent("TreeView_Expand", iItemIndex - 1, #tChildren or 0) -- First parameter is the item index, second is the number of items to generate.
+
+                    -- Update the lua data
+                    local tItemData = self:GetValue("__ItemData", {})
+                    for _, xData in ipairs(tChildren) do
+                        table.insert(tItemData, iItemIndex + 1, xData)
+                    end
+                    self:SetValue("__ItemData", tItemData)
+                end
+            else
+                -- Case: Item should be collapsed
+
+                self:CallBlueprintEvent("TreeView_Collapse", iItemIndex - 1)
+
+                -- Update the lua data
+                local tItemData = self:GetValue("__ItemData", {})
+                for i = #tItemData, 1, -1 do
+                    if i > iItemIndex and i <= iItemIndex + 1 then
+                        table.remove(tItemData, i)
+                    end
+                end
+                self:SetValue("__ItemData", tItemData)
+            end
         end
 
         fnCallback(...)

@@ -4,7 +4,8 @@ SizeBox = PanelWidget.Inherit("SizeBox", {
     -- The size box can only have one child widget.
     ChildrenLimit = 1,
 
-    Slot = SizeBoxSlot
+    Slot = SizeBoxSlot,
+    Icon = "package://wgui/Client/Textures/Icons/SizeBox.png"
 })
 
 ---@param tMinDesiredSize Vector2D | nil

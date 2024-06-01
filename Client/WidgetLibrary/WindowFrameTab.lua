@@ -18,6 +18,7 @@ ExtendStylesheets(
         color = Color(0.215, 0.215, 0.215, 1),
         h_align = HAlign.Left,
         v_align = VAlign.Center,
+        padding = Margin(5, 0, 5, 0)
     }
 )
 
@@ -29,16 +30,8 @@ function WindowFrameTab:Constructor(sTabName, oWindowFrame)
     -- Background
     local oBackgroundBorder = WGUI.CreateWithTags(Border, "#WindowFrameTab_Background", self)
 
-    WGUI.RedirectPanelFunctions(self,
-        WGUI.Create(
-            FlexBox,
-            oBackgroundBorder,
-            Orientation.Horizontal
-        ):SetPadding(Margin(4, 2))
-    )
-
     -- Tab Name
-    self.TabName = WGUI.CreateWithTags(TextBlock, "#WindowFrameTab_Text", self)
+    self.TabName = WGUI.CreateWithTags(TextBlock, "#WindowFrameTab_Text", oBackgroundBorder)
     self.TabName:SetText(sTabName)
 
     -- Events
