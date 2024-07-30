@@ -29,6 +29,7 @@ BaseWidget.Subscribe("Destroy", OnWidgetDestroy)
 ---@overload fun(self: BaseWidget, sEventName: "FocusReceived", fnCallback: fun(self: BaseWidget))
 ---@overload fun(self: BaseWidget, sEventName: "FocusLost", fnCallback: fun(self: BaseWidget))
 ---@overload fun(self: BaseWidget, sEventName: "DragDetected", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
+---@overload fun(self: BaseWidget, sEventName: "DragOver", fnCallback: fun(self: BaseWidget, PointerEvent: PointerEvent))
 ---@overload fun(self: BaseWidget, sEventName: "Drop", fnCallback: fun(self: BaseWidget, PayloadID: integer, Tag: string))
 ---@overload fun(self: BaseWidget, sEventName: "DragCancelled", fnCallback: fun(self: BaseWidget, PayloadID: integer, Tag: string))
 ---@return function | nil
@@ -339,15 +340,14 @@ end
 function BaseWidget:SetIsEnabled(bEnabled)
     self:CallBlueprintEvent("SetIsEnabled", bEnabled)
 
-    self:SetValue("__IsEnabled", bEnabled)
-
+    WSS.SetWidgetPropertyValue(self, "is_enabled", bEnabled)
     return self
 end
 
 -- Gets the current enabled status of the widget.
 ---@return boolean
 function BaseWidget:GetIsEnabled()
-    return self:GetValue("__IsEnabled", true)
+    return WSS.GetWidgetPropertyValue(self, "is_enabled", true)
 end
 
 -- Sets the cursor to show over the widget.
@@ -470,7 +470,7 @@ function BaseWidget:GetDragKey()
     return self:GetValue("__DragKey", "")
 end
 
--- Creates a new drag & drop operation. Should be called inside a OnDragDetected event.
+-- Creates a new drag & drop operation. <br> Should be called inside a OnDragDetected event.
 ---@generic T
 ---@param self T
 ---@param oDragVisual BaseWidget

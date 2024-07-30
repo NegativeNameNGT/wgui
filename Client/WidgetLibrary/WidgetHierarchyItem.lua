@@ -1,18 +1,23 @@
----@class WidgetHierarchyItem : FlexBox
+---@class WidgetHierarchyItem : Border
 -- 'WidgetHierarchyItem' is a class that represents a widget in the widget hierarchy
-WidgetHierarchyItem = FlexBox.Inherit("WidgetHierarchyItem")
+WidgetHierarchyItem = Border.Inherit("WidgetHierarchyItem")
 
 function WidgetHierarchyItem:Constructor()
-    FlexBox.Constructor(self, Orientation.Horizontal)
+    Border.Constructor(self)
 
-    self.CaretImage = WGUI.Create(Image, self)
+    self.RootFlexBox = WGUI.Create(FlexBox, self, Orientation.Horizontal)
+
+    self.CaretImage = WGUI.Create(Image, self.RootFlexBox)
                                 :SetBrushFromSrc("/WGui/Textures/T_Caret", Vector2D(16, 16))
 
-    self.WidgetIconImage = WGUI.Create(Image, self)
+    self.WidgetIconImage = WGUI.Create(Image, self.RootFlexBox)
                                 :SetPadding(Margin(0, 0, 3, 0))
 
-    self.WidgetNameBlock = WGUI.Create(TextBlock, self)
+    self.WidgetNameBlock = WGUI.Create(TextBlock, self.RootFlexBox)
                                 :SetFont("Roboto", "Regular", 10)
+
+    self.DefaultBrush = Brush(DrawMode.Image, Color.TRANSPARENT)
+    self.SelectedBrush = Brush(DrawMode.Image, Color(0, 0.162, 0.745, 1))
 end
 
 -- Calculates the padding that should be applied to the hierarchy item.
@@ -41,7 +46,7 @@ function WidgetHierarchyItem:Update(oWidget)
     -- Update the left padding
     local iCalculatedPadding = CalculatePadding(oWidget)
 
-    self:SetPadding(Margin(iCalculatedPadding, 0, 0, 0))
+    self.RootFlexBox:SetPadding(Margin(iCalculatedPadding, 0, 0, 0))
 
     -- Display the caret if the widget has children
     if oWidget:IsA(PanelWidget) and #oWidget:GetAllChildren() > 0 then
@@ -70,8 +75,8 @@ end
 ---@param bIsSelected boolean
 function WidgetHierarchyItem:SetSelected(bIsSelected)
     if bIsSelected then
-        self.WidgetNameBlock:SetColor(Color.RED)
+        self:SetBrush(self.SelectedBrush)
     else
-        self.WidgetNameBlock:SetColor(Color.WHITE)
+        self:SetBrush(self.DefaultBrush)
     end
 end

@@ -126,7 +126,7 @@ end
 
 -- Removes all children from the panel. Does not destroy the childrens.
 ---@generic T
----@param self T
+---@param self T<PanelWidget>
 ---@return T
 function PanelWidget:ClearChildren()
     for _,v in ipairs(self:GetAllChildren()) do

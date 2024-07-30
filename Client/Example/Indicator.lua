@@ -3,9 +3,9 @@ Indicator = SizeBox.Inherit("Indicator")
 
 -- Static Brush to be used by all Indicators to draw the border.
 local BorderBrush = Brush()
-BorderBrush.SetDrawMode(DrawMode.RoundedBox)
-BorderBrush.SetColor(Color(0.041, 0.041, 0.041, 0.8))
-BorderBrush.SetOutlineSettings(OutlineSettings(Quat(4)))
+BorderBrush:SetDrawMode(DrawMode.RoundedBox)
+BorderBrush:SetColor(Color(0.041, 0.041, 0.041, 0.8))
+BorderBrush:SetOutlineSettings(OutlineSettings(Quat(4)))
 
 function Indicator:Constructor()
     -- Calls the SizeBox constructor with a minimum desired size of 125x50.

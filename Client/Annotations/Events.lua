@@ -16,6 +16,7 @@
 ---@overload fun(self: Button, sEventName: "FocusReceived", fnCallback: fun(self: Button))
 ---@overload fun(self: Button, sEventName: "FocusLost", fnCallback: fun(self: Button))
 ---@overload fun(self: Button, sEventName: "DragDetected", fnCallback: fun(self: Button, PointerEvent: PointerEvent))
+---@overload fun(self: Button, sEventName: "DragOver", fnCallback: fun(self: Button, PointerEvent: PointerEvent))
 ---@overload fun(self: Button, sEventName: "Drop", fnCallback: fun(self: Button, PayloadID: integer, Tag: string))
 ---@overload fun(self: Button, sEventName: "DragCancelled", fnCallback: fun(self: Button, PayloadID: integer, Tag: string))
 ---@return function | nil
@@ -35,6 +36,7 @@ function Button:BindDispatcher(sEventName, fnCallback) end
 ---@overload fun(self: CheckBox, sEventName: "FocusReceived", fnCallback: fun(self: CheckBox))
 ---@overload fun(self: CheckBox, sEventName: "FocusLost", fnCallback: fun(self: CheckBox))
 ---@overload fun(self: CheckBox, sEventName: "DragDetected", fnCallback: fun(self: CheckBox, PointerEvent: PointerEvent))
+---@overload fun(self: CheckBox, sEventName: "DragOver", fnCallback: fun(self: CheckBox, PointerEvent: PointerEvent))
 ---@overload fun(self: CheckBox, sEventName: "Drop", fnCallback: fun(self: CheckBox, PayloadID: integer, Tag: string))
 ---@overload fun(self: CheckBox, sEventName: "DragCancelled", fnCallback: fun(self: CheckBox, PayloadID: integer, Tag: string))
 ---@return function | nil
@@ -56,6 +58,7 @@ function CheckBox:BindDispatcher(sEventName, fnCallback) end
 ---@overload fun(self: Slider, sEventName: "FocusReceived", fnCallback: fun(self: Slider))
 ---@overload fun(self: Slider, sEventName: "FocusLost", fnCallback: fun(self: Slider))
 ---@overload fun(self: Slider, sEventName: "DragDetected", fnCallback: fun(self: Slider, PointerEvent: PointerEvent))
+---@overload fun(self: Slider, sEventName: "DragOver", fnCallback: fun(self: Slider, PointerEvent: PointerEvent))
 ---@overload fun(self: Slider, sEventName: "Drop", fnCallback: fun(self: Slider, PayloadID: integer, Tag: string))
 ---@overload fun(self: Slider, sEventName: "DragCancelled", fnCallback: fun(self: Slider, PayloadID: integer, Tag: string))
 ---@return function | nil
@@ -76,6 +79,7 @@ function Slider:BindDispatcher(sEventName, fnCallback) end
 ---@overload fun(self: ComboBox, sEventName: "FocusReceived", fnCallback: fun(self: ComboBox))
 ---@overload fun(self: ComboBox, sEventName: "FocusLost", fnCallback: fun(self: ComboBox))
 ---@overload fun(self: ComboBox, sEventName: "DragDetected", fnCallback: fun(self: ComboBox, PointerEvent: PointerEvent))
+---@overload fun(self: ComboBox, sEventName: "DragOver", fnCallback: fun(self: ComboBox, PointerEvent: PointerEvent))
 ---@overload fun(self: ComboBox, sEventName: "Drop", fnCallback: fun(self: ComboBox, PayloadID: integer, Tag: string))
 ---@overload fun(self: ComboBox, sEventName: "DragCancelled", fnCallback: fun(self: ComboBox, PayloadID: integer, Tag: string))
 ---@return function | nil
@@ -96,6 +100,7 @@ function ComboBox:BindDispatcher(sEventName, fnCallback) end
 ---@overload fun(self: EditableText, sEventName: "FocusReceived", fnCallback: fun(self: EditableText))
 ---@overload fun(self: EditableText, sEventName: "FocusLost", fnCallback: fun(self: EditableText))
 ---@overload fun(self: EditableText, sEventName: "DragDetected", fnCallback: fun(self: EditableText, PointerEvent: PointerEvent))
+---@overload fun(self: EditableText, sEventName: "DragOver", fnCallback: fun(self: EditableText, PointerEvent: PointerEvent))
 ---@overload fun(self: EditableText, sEventName: "Drop", fnCallback: fun(self: EditableText, PayloadID: integer, Tag: string))
 ---@overload fun(self: EditableText, sEventName: "DragCancelled", fnCallback: fun(self: EditableText, PayloadID: integer, Tag: string))
 ---@return function | nil
@@ -118,6 +123,7 @@ function EditableText:BindDispatcher(sEventName, fnCallback) end
 ---@overload fun(self: SpinBox, sEventName: "FocusReceived", fnCallback: fun(self: SpinBox))
 ---@overload fun(self: SpinBox, sEventName: "FocusLost", fnCallback: fun(self: SpinBox))
 ---@overload fun(self: SpinBox, sEventName: "DragDetected", fnCallback: fun(self: SpinBox, PointerEvent: PointerEvent))
+---@overload fun(self: SpinBox, sEventName: "DragOver", fnCallback: fun(self: SpinBox, PointerEvent: PointerEvent))
 ---@overload fun(self: SpinBox, sEventName: "Drop", fnCallback: fun(self: SpinBox, PayloadID: integer, Tag: string))
 ---@overload fun(self: SpinBox, sEventName: "DragCancelled", fnCallback: fun(self: SpinBox, PayloadID: integer, Tag: string))
 ---@return function | nil

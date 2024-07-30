@@ -1,3 +1,10 @@
+if true then
+    return
+end
+
+-- Load internal utilities
+Package.Require("InternalLib.lua")
+
 -- Load WGUI
 Package.Require("WGUI.lua")
 
@@ -9,17 +16,17 @@ Package.Require("Widgets/PanelWidget.lua")
 Package.Require("InputHandler/InputHandler.lua")
 
 -- Load styling files
-Package.Require("Structures/Brush.lua")
-Package.Require("Structures/OutlineSettings.lua")
-Package.Require("Structures/FontOutlineSettings.lua")
-Package.Require("Structures/DynamicMaterialInstance.lua")
-Package.Require("Structures/Margin.lua")
+Package.Require("Structs/Brush.lua")
+Package.Require("Structs/OutlineSettings.lua")
+Package.Require("Structs/FontOutlineSettings.lua")
+Package.Require("Structs/DynamicMaterialInstance.lua")
+Package.Require("Structs/Margin.lua")
 
 -- Enumerations
 Package.Require("Enum.lua")
 
 -- Auto-load styling files
-for _, sPath in pairs(Package.GetFiles("Client/Structures/Styles/", ".lua")) do
+for _, sPath in pairs(Package.GetFiles("Client/Structs/Styles/", ".lua")) do
     Package.Require(sPath)
 end
 
@@ -46,6 +53,9 @@ for _, sPath in pairs(Package.GetFiles("Client/WidgetLibrary/", ".lua")) do
     Package.Require(sPath)
 end
 
+-- Load the property editor scripts
+Package.Require("PropertyEditor/PropertyEditor.lua")
+
 ---@alias FontName "Roboto" | "Rufing" | "Oswald" | "PoiretOne" | "GothicA1" | "OpenSans" | string
 WGUI.RegisterFont("Roboto", "/Engine/EngineFonts/Roboto")
 WGUI.RegisterFont("Rufing", "/Game/NanosWorld/UI/Fonts/Rufing/Font_Rufing")
@@ -65,7 +75,18 @@ end
 
 -- Auto export classes, enums and functions
 for sKey, xValue in pairs(_ENV) do
-    if not _G[sKey] then
+    if not _G[sKey] and sKey ~= "InternalLib" then
         Package.Export(sKey, xValue)
     end
 end
+
+local oBorder = WGUI.Create(Border, Layout)
+
+local oTextBlock = WGUI.Create(TextBlock, oBorder)
+oTextBlock:SetColor(Color.RED)
+WGUI.EnableDebuggerMode()
+
+Timer.SetTimeout(function ()
+    print("Disabling border")
+    oBorder:SetIsEnabled(false)
+end, 5000)

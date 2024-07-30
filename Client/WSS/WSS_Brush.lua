@@ -11,7 +11,7 @@ function _WSS.HandleBrushProperty(oWidget, sProperty, xValue)
     end
 
     local sFunction = tBrushPropertyData[1]
-    oBrush[sFunction](xValue)
+    oBrush[sFunction](oBrush, xValue)
 
     oWidget.__Brush = oBrush
 end

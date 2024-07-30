@@ -262,3 +262,9 @@ ListViewSelectionMode = {
     SingleToggle = 2,
     Multi = 3,
 }
+
+---@enum WidgetPropertyType
+WidgetPropertyType = {
+    Unsupported = 0,
+    Boolean = 1,
+}

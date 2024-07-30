@@ -38,3 +38,17 @@ function Border:GetBrush()
     end
     return oBrush
 end
+
+-- Scales the computed desired size of the border.
+---@param tSizeScale Vector2D
+function Border:SetDesiredSizeScale(tSizeScale)
+    self:CallBlueprintEvent("SetDesiredSizeScale", tSizeScale)
+
+    return self
+end
+
+-- Gets the computed desired size scale of the border.
+---@return Vector2D
+function Border:GetDesiredSizeScale()
+    return self:CallBlueprintFunction("GetDesiredSizeScale", Vector2D(1, 1))
+end

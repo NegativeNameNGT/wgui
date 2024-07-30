@@ -7,6 +7,12 @@ ScaleBox = PanelWidget.Inherit("ScaleBox", {
     Slot = ScaleBoxSlot
 })
 
+function ScaleBox:Constructor()
+    self.Super:Constructor("wgui-assets::WBP_WGUI_ScaleBox")
+
+    return self
+end
+
 -- Sets the stretching rule to apply when content is stretched.
 ---@generic T
 ---@param self T

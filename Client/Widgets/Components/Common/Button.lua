@@ -3,6 +3,8 @@
 Button = PanelWidget.Inherit("Button", {
     -- The button can only have one child widget.
     ChildrenLimit = 1,
+
+    Slot = ButtonSlot
 })
 
 function Button:Constructor()

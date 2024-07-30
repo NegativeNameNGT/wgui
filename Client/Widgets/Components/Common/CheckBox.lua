@@ -68,7 +68,7 @@ end
 ---@param bChecked boolean
 ---@return T
 function CheckBox:SetChecked(bChecked)
-    self:CallBlueprintEvent("SetChecked", bChecked)
+    self:CallBlueprintEvent("SetIsChecked", bChecked)
 
     self:SetValue("__CachedChecked", bChecked)
 

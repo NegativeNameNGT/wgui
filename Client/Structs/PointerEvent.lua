@@ -3,3 +3,4 @@
 ---@field public Key string
 ---@field public WheelDelta number
 ---@field public ScreenPosition Vector2D
+---@field public LastScreenPosition Vector2D

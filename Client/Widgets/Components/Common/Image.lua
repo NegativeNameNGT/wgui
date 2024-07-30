@@ -41,9 +41,9 @@ end
 ---@return T
 function Image:SetBrushFromSrc(sSrc, tSrcSize)
     local oCurrentBrush = self:GetBrush()
-    oCurrentBrush.SetDrawMode(DrawMode.Image)
-    oCurrentBrush.SetSrc(sSrc)
-    oCurrentBrush.SetSrcSize(tSrcSize or oCurrentBrush.SrcSize)
+    oCurrentBrush:SetDrawMode(DrawMode.Image)
+    oCurrentBrush:SetSrc(sSrc)
+    oCurrentBrush:SetSrcSize(tSrcSize or oCurrentBrush.SrcSize)
 
     self:SetBrush(oCurrentBrush)
 
@@ -58,9 +58,9 @@ end
 ---@return T
 function Image:SetBrushFromMaterial(Material, Size)
     local oCurrentBrush = self:GetBrush()
-    oCurrentBrush.SetDrawMode(DrawMode.Image)
-    oCurrentBrush.SetSrcSize(Size or oCurrentBrush.Size)
-    oCurrentBrush.SetMaterial(Material)
+    oCurrentBrush:SetDrawMode(DrawMode.Image)
+    oCurrentBrush:SetSrcSize(Size or oCurrentBrush.Size)
+    oCurrentBrush:SetMaterial(Material)
 
     self:SetBrush(oCurrentBrush)
 

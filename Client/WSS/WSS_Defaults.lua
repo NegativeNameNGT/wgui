@@ -24,7 +24,7 @@
 --- @field margin? Margin | string @The margin of the widget.
 --- @field tiling? Vector2D | string @The tiling of the widget.
 --- @field border_color? Color | string @The border color of the widget.
---- @field border_corner? Quat | string @The border corner of the widget.
+--- @field border_radius? Quat | string @The border corner of the widget.
 --- @field border_width? number | string @The border width of the widget.
 --- @field border_use_alpha? boolean | string @Whether the border uses alpha.
 --- @field border_type? RoundingType | string @The border type of the widget.
@@ -82,7 +82,7 @@ _WSS.BrushExtension = {
     ["margin"] = {"SetMargin", WSSParserType.Margin},
     ["tiling"] = {"SetTiling", WSSParserType.Vector2D},
     ["border_color"] = {"SetOutlineColor", WSSParserType.Color},
-    ["border_corner"] = {"SetOutlineCorners", WSSParserType.Quat},
+    ["border_radius"] = {"SetOutlineRadius", WSSParserType.Quat},
     ["border_width"] = {"SetOutlineWidth", WSSParserType.Number},
     ["border_type"] = {"SetOutlineType", WSSParserType.Enum},
     ["border_use_alpha"] = {"SetOutlineUseAlpha", WSSParserType.Boolean},
@@ -135,3 +135,5 @@ WSS.Extend({
     ["max_desired_width"] = {"SetMaxDesiredWidth", WSSParserType.Number},
     ["max_desired_height"] = {"SetMaxDesiredHeight", WSSParserType.Number},
 })
+
+WSS.AddWidgetClassProperty(BaseWidget, "is_enabled", BaseWidget.SetIsEnabled, BaseWidget.GetIsEnabled, WidgetPropertyType.Boolean)
