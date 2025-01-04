@@ -1,48 +1,21 @@
----@class AnchorData
----@field Min Vector2D
----@field Max Vector2D
----@field Alignment Vector2D
----@field bResetOffsetRight boolean
----@field bResetOffsetBottom boolean
-
--- Returns a anchor table depending on the specified parameters.
----@param MinX number | nil
----@param MinY number | nil
----@param MaxX number | nil
----@param MaxY number | nil
----@param AlignX number | nil
----@param AlignY number | nil
----@param ResetOffsetRight boolean | nil
----@param ResetOffsetBottom boolean | nil
----@return AnchorData
-local function CreateAnchor(MinX, MinY, MaxX, MaxY, AlignX, AlignY, ResetOffsetRight, ResetOffsetBottom)
-    return {
-        Min = Vector2D(MinX, MinY),
-        Max = Vector2D(MaxX, MaxY),
-        Alignment = Vector2D(AlignX or MinX, AlignY or MinY),
-        bResetOffsetRight = ResetOffsetRight or false,
-        bResetOffsetBottom = ResetOffsetBottom or false
-    }
-end
-
 ---@enum Anchor
 Anchor = {
-    TopRight = CreateAnchor(1, 0, 1, 0),
-    TopCenter = CreateAnchor(0.5, 0, 0.5, 0),
-    TopLeft = CreateAnchor(0, 0, 0, 0),
-    CenterRight = CreateAnchor(1, 0.5, 1, 0.5),
-    Center = CreateAnchor(0.5, 0.5, 0.5, 0.5),
-    CenterLeft = CreateAnchor(0, 0.5, 0, 0.5),
-    BottomRight = CreateAnchor(1, 1, 1, 1),
-    BottomCenter = CreateAnchor(0.5, 1, 0.5, 1),
-    BottomLeft = CreateAnchor(0, 1, 0, 1),
-    StretchTop = CreateAnchor(0, 0, 1, 0, nil, nil, true),
-    StretchHorizontalCenter = CreateAnchor(0, 0.5, 1, 0.5, 0, 0.5, true),
-    StretchVerticalCenter = CreateAnchor(0.5, 0, 0.5, 1, 0.5, 0, nil, true),
-    StretchBottom = CreateAnchor(0, 1, 1, 1, 0, 1, true),
-    StretchRight = CreateAnchor(1, 0, 1, 1, 1, 0, nil, true),
-    StretchLeft = CreateAnchor(0, 0, 0, 1, nil, nil, nil, true),
-    Filled = CreateAnchor(0, 0, 1, 1, nil, nil, true, true),
+    TopRight = 0,
+    TopCenter = 1,
+    TopLeft = 2,
+    CenterRight = 3,
+    Center = 4,
+    CenterLeft = 5,
+    BottomRight = 6,
+    BottomCenter = 7,
+    BottomLeft = 8,
+    StretchTop = 9,
+    StretchHorizontalCenter = 10,
+    StretchVerticalCenter = 11,
+    StretchBottom = 12,
+    StretchRight = 13,
+    StretchLeft = 14,
+    Filled = 15
 }
 
 ---@enum WGUI_ImageType

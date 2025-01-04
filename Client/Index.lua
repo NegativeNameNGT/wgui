@@ -1,25 +1,24 @@
 -- Load WGUI
 Package.Require("WGUI.lua")
 
--- Load widget files
-Package.Require("Widgets/BaseWidget.lua")
-Package.Require("Widgets/PanelWidget.lua")
+-- Auto-load base widget classes files
+for _, sPath in pairs(Package.GetFiles("Client/Classes/Base/", ".lua")) do
+    Package.Require(sPath)
+end
 
 -- Load input handler
-Package.Require("InputHandler/InputHandler.lua")
+Package.Require("InputHandler.lua")
 
--- Load styling files
-Package.Require("Structures/Brush.lua")
-Package.Require("Structures/OutlineSettings.lua")
-Package.Require("Structures/FontOutlineSettings.lua")
-Package.Require("Structures/DynamicMaterialInstance.lua")
-Package.Require("Structures/Margin.lua")
+-- Auto-load structures
+for _, sPath in pairs(Package.GetFiles("Client/Classes/Structs/", ".lua")) do
+    Package.Require(sPath)
+end
 
 -- Enumerations
 Package.Require("Enum.lua")
 
--- Auto-load styling files
-for _, sPath in pairs(Package.GetFiles("Client/Structures/Styles/", ".lua")) do
+-- Auto-load stylesheet files
+for _, sPath in pairs(Package.GetFiles("Client/Classes/Stylesheets", ".lua")) do
     Package.Require(sPath)
 end
 
@@ -29,20 +28,12 @@ for _, sPath in pairs(Package.GetFiles("Client/Classes/", ".lua")) do
 end
 
 -- Auto-load widget slots
-for _, sPath in pairs(Package.GetFiles("Client/Widgets/Slots/", ".lua")) do
+for _, sPath in pairs(Package.GetFiles("Client/Classes/Slots/", ".lua")) do
     Package.Require(sPath)
 end
 
 -- Auto-load widget components
-for _, sPath in pairs(Package.GetFiles("Client/Widgets/Components/", ".lua")) do
-    Package.Require(sPath)
-end
-
--- Load WSS (Widget Style Sheets)
-Package.Require("WSS/WSS.lua")
-
--- Auto-load widget library (widgets that are native to WGUI)
-for _, sPath in pairs(Package.GetFiles("Client/WidgetLibrary/", ".lua")) do
+for _, sPath in pairs(Package.GetFiles("Client/WidgetClasses/", ".lua")) do
     Package.Require(sPath)
 end
 
@@ -56,6 +47,7 @@ WGUI.RegisterFont("OpenSans", "/Game/NanosWorld/UI/Fonts/OpenSans/Font_OpenSans"
 
 -- Creating the default WGUI canvas panel widget.
 local Layout = WGUI.Create(CanvasPanel)
+Layout.Super:AddToViewport()
 
 -- Returns the default WGUI canvas panel widget.
 ---@return CanvasPanel

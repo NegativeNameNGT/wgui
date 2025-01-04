@@ -70,26 +70,6 @@ end
 ---@return T
 function WGUI.Create(cClass, oParentPanel, ...)
     local oWidget = Create(cClass, oParentPanel, ...) ---@type BaseWidget | nil
-    if oWidget then
-        WSS.Apply(oWidget)
-    end
-    return oWidget
-end
-
--- Creates a WGUI component by the specified class with the specified WSS tags.
----@generic T : BaseWidget
----@param cClass T
----@param tStyleTags table | string
----@param oParentPanel PanelWidget | nil
----@vararg any
----@return T
-function WGUI.CreateWithTags(cClass, tStyleTags, oParentPanel, ...)
-    local oWidget = Create(cClass, oParentPanel, ...) ---@type BaseWidget | nil
-    if oWidget then
-        WSS.SetWidgetTags(oWidget, tStyleTags)
-        WSS.Apply(oWidget)
-    end
-
     return oWidget
 end
 
